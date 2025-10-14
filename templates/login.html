@@ -1,0 +1,37 @@
+<!-- filename: templates/login.html -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+  <style>
+    :root { --bg:#f7fafc; --card:#ffffff; --text:#2d3748; --muted:#718096; --primary:#3182ce; --primary-hover:#2b6cb0; --border:#e2e8f0; }
+    body { margin:0; display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; }
+    .card { background:var(--card); border:1px solid var(--border); padding:24px; border-radius:12px; width:360px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .title { font-weight:700; margin-bottom:12px; }
+    label { display:block; font-size:0.9rem; color:var(--muted); margin-bottom:4px; }
+    input { width:100%; padding:12px; border:1px solid var(--border); border-radius:8px; margin-bottom:12px; }
+    button { width:100%; padding:12px; border:0; background:var(--primary); color:#fff; border-radius:8px; font-weight:600; cursor:pointer; }
+    button:hover { background:var(--primary-hover); }
+    .hint { font-size:0.875rem; color:var(--muted); margin-top:8px; }
+    .flash { background:#edf2f7; border:1px solid #e2e8f0; padding:10px 12px; border-radius:8px; margin-top:12px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="title">Acessar</div>
+    <form action="{{ url_for('login') }}" method="post">
+      <label for="username">Usuário</label>
+      <input id="username" name="username" type="text" required>
+      <label for="password">Senha</label>
+      <input id="password" name="password" type="password" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <div class="hint">Use: usuário <strong>admin</strong> e senha <strong>admin١٢٣</strong>.</div>
+    {% for m in get_flashed_messages() %}
+    <div class="flash">{{ m }}</div>
+    {% endfor %}
+  </div>
+</body>
+</html>

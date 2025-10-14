@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel</title>
+  <style>
+    :root{
+      --bg:#f7fafc; --card:#fff; --text:#1f2937; --muted:#6b7280;
+      --primary:#2563eb; --primary-hover:#1d4ed8; --border:#e5e7eb; --ok:#10b981; --err:#ef4444;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+      background:var(--bg);
+      color:var(--text);
+      display:flex;
+      align-items:center;        /* centraliza verticalmente */
+      justify-content:center;    /* centraliza horizontalmente */
+      height:100vh;              /* ocupa a tela toda */
+    }
+    .logout{
+      color:var(--muted);
+      text-decoration:none;
+      font-size:.95rem;
+      position:absolute;
+      top:16px;
+      right:24px;
+    }
+    .card{
+      width:100%; 
+      max-width:500px;
+      background:var(--card); 
+      border:1px solid var(--border);
+      border-radius:16px; 
+      padding:28px; 
+      box-shadow:0 8px 24px rgba(0,0,0,.06);
+      text-align:center; /* centraliza texto dentro do card */
+    }
+    button{
+      appearance:none;border:0;background:var(--primary);color:#fff;padding:12px 18px;border-radius:10px;
+      font-weight:700;cursor:pointer;transition:.15s transform ease, .15s background ease;
+      display:inline-block; margin-top:10px;
+    }
+    button:hover{background:var(--primary-hover)}
+    button:disabled{opacity:.6; cursor:not-allowed; transform:none}
+    .hint{font-size:.9rem; color:var(--muted); margin-top:8px}
+    .msg{margin-top:10px; font-weight:600}
+    .msg.ok{color:var(--ok)}
+    .msg.err{color:var(--err)}
+
+    /* overlay */
+    .overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;z-index:9999}
+    .overlay.hidden{display:none}
+    .box{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px 24px;box-shadow:0 16px 40px rgba(0,0,0,.25);display:flex;gap:12px;align-items:center;font-weight:700}
+    .spinner{width:26px;height:26px;border:3px solid #e5e7eb;border-top-color:#2563eb;border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <a class="logout" href="{{ url_for('logout') }}">Sair</a>
+
+  <div class="card">
+    <button id="btn-start">Iniciar Processo</button>
+    <div id="upload-msg" class="msg" aria-live="polite"></div>
+    <div id="arquivo-atual" class="hint" style="margin-top:6px;"></div>
+  </div>
+
+  <!-- overlay -->
+  <div id="overlay" class="overlay hidden">
+    <div class="box">
+      <div class="spinner"></div>
+      <div>Processando…</div>
+    </div>
+  </div>
+
+  <script>
+    const btnStart  = document.getElementById("btn-start");
+    const overlay   = document.getElementById("overlay");
+    const uploadMsg = document.getElementById("upload-msg");
+    const arquivoAtual = document.getElementById("arquivo-atual");
+
+    // Atualiza status do arquivo atual
+    async function checarArquivo(){
+      try{
+        const r = await fetch("/api/arquivo-atual?t=" + Date.now());
+        const j = await r.json();
+        if(j.ok){
+          const data = new Date(j.mtime * 1000).toLocaleString();
+          
+        }else{
+          arquivoAtual.textContent = "Nenhum arquivo encontrado ainda.";
+        }
+      }catch(e){
+        arquivoAtual.textContent = "Erro ao checar arquivo.";
+      }
+    }
+
+    checarArquivo();
+
+    // Iniciar processo completo
+    btnStart.addEventListener("click", async ()=> {
+      overlay.classList.remove("hidden");
+      btnStart.disabled = true;
+      uploadMsg.textContent = "Baixando arquivo do Drive...";
+      uploadMsg.className = "msg";
+
+      try{
+        // 1) Baixa o zip do Drive
+        const r1 = await fetch("{{ url_for('upload_zip_automatico') }}", { method:"POST" });
+        const j1 = await r1.json();
+        if(!j1.ok) throw new Error(j1.error || "Falha ao baixar ZIP do Drive");
+
+        uploadMsg.textContent = "Arquivo baixado. Iniciando processo...";
+        uploadMsg.className = "msg ok";
+        checarArquivo();
+
+        // 2) Inicia o processo
+        const res = await fetch("{{ url_for('start_async') }}", { method:"POST" });
+        const data = await res.json();
+        if(!data.ok) throw new Error(data.error || "Falha ao iniciar processo");
+
+        // 3) Poll até aparecer o relatório
+        const startedAt = data.started_at || Math.floor(Date.now()/1000);
+        async function poll(){
+          try{
+            const r = await fetch("{{ url_for('api_report') }}?t=" + Date.now(), { cache:'no-store' });
+            const j = await r.json();
+            if(j.ready && (j.mtime || 0) >= startedAt){
+              window.location.href = "{{ url_for('report') }}";
+              return;
+            }
+          }catch(_){}
+          setTimeout(poll, 1500);
+        }
+        poll();
+
+      }catch(e){
+        overlay.classList.add("hidden");
+        btnStart.disabled = false;
+        uploadMsg.textContent = e.message || "Erro geral.";
+        uploadMsg.className = "msg err";
+      }
+    });
+  </script>
+</body>
+</html>

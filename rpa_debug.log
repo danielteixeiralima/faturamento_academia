@@ -1,0 +1,1550 @@
+[2025-08-28T22:10:00.529616] Executando Incorporadora: ['python', 'C:\\AUTOMACAO\\conciliacao\\bots\\conc_incorporadora.py']
+[2025-08-28T22:17:16.859529] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-08-28T22:17:17.196574] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-08-28T22:17:17.401595] Chromium aberto.
+[2025-08-28T22:17:17.482130] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-191717-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-191717-01-pos-launch.html
+[2025-08-28T22:17:21.838241] goto OK: https://dev.aztronic.com.br/collect_sc_homolog/
+[2025-08-28T22:17:22.052240] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-191721-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-191721-02-pos-goto.html
+[2025-08-28T22:17:38.318863] login via IDs: OK
+[2025-08-28T22:17:38.425862] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-191738-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-191738-03-pos-login.html
+[2025-08-28T22:17:42.984442] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-08-28T22:17:42.985442] botao Processar: clique OK
+[2025-08-28T22:17:43.040452] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-191742-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-191742-04-pos-processar.html
+[2025-08-28T22:17:43.045452] botao Processar: clique OK
+[2025-08-28T22:17:43.123452] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-191743-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-191743-04-pos-processar.html
+[2025-08-28T22:17:43.128452] botao Processar: clique OK
+[2025-08-28T22:17:43.190452] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-191743-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-191743-04-pos-processar.html
+[2025-08-28T22:17:43.194453] botao Processar: clique OK
+[2025-08-28T22:17:43.274129] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-191743-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-191743-04-pos-processar.html
+[2025-08-28T22:17:43.277693] botao Processar: clique OK
+[2025-08-28T22:17:43.340225] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-191743-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-191743-04-pos-processar.html
+[2025-08-28T22:20:05.197171] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-08-28T22:20:05.518692] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-08-28T22:20:05.710691] Chromium aberto.
+[2025-08-28T22:20:05.777581] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-192005-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-192005-01-pos-launch.html
+[2025-08-28T22:20:09.365815] goto OK: https://dev.aztronic.com.br/collect_sc_homolog/
+[2025-08-28T22:20:09.576132] [snap] C:\Users\User\Downloads\conc_incorporadora\20250828-192009-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250828-192009-02-pos-goto.html
+[2025-09-12T15:06:43.431392] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-12T15:06:46.909392] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-12T15:06:47.443389] Chromium aberto.
+[2025-09-12T15:06:47.541390] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120647-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120647-01-pos-launch.html
+[2025-09-12T15:06:52.000021] goto OK: https://dev.aztronic.com.br/collect_sc_homolog/
+[2025-09-12T15:06:52.234019] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120652-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120652-02-pos-goto.html
+[2025-09-12T15:07:08.558818] login via IDs: OK
+[2025-09-12T15:07:08.661446] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120708-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120708-03-pos-login.html
+[2025-09-12T15:07:14.746937] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-12T15:07:14.747937] botao Processar: clique OK
+[2025-09-12T15:07:14.812936] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120714-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120714-04-pos-processar.html
+[2025-09-12T15:07:14.816935] botao Processar: clique OK
+[2025-09-12T15:07:14.897936] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120714-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120714-04-pos-processar.html
+[2025-09-12T15:07:14.901935] botao Processar: clique OK
+[2025-09-12T15:07:14.980935] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120714-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120714-04-pos-processar.html
+[2025-09-12T15:07:14.984935] botao Processar: clique OK
+[2025-09-12T15:07:15.043934] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120714-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120714-04-pos-processar.html
+[2025-09-12T15:07:15.046935] botao Processar: clique OK
+[2025-09-12T15:07:15.131535] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120715-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120715-04-pos-processar.html
+[2025-09-12T15:08:05.298924] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-12T15:08:05.616925] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-12T15:08:05.812925] Chromium aberto.
+[2025-09-12T15:08:05.891935] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120805-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120805-01-pos-launch.html
+[2025-09-12T15:08:09.484952] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-12T15:08:09.730952] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120809-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120809-02-pos-goto.html
+[2025-09-12T15:08:26.041648] login via IDs: OK
+[2025-09-12T15:08:26.308274] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120826-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120826-03-pos-login.html
+[2025-09-12T15:08:30.893880] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-12T15:08:30.894881] botao Processar: clique OK
+[2025-09-12T15:08:30.961880] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120830-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120830-04-pos-processar.html
+[2025-09-12T15:08:30.967878] botao Processar: clique OK
+[2025-09-12T15:08:31.057878] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120830-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120830-04-pos-processar.html
+[2025-09-12T15:08:31.061877] botao Processar: clique OK
+[2025-09-12T15:08:31.126879] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120831-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120831-04-pos-processar.html
+[2025-09-12T15:08:31.129878] botao Processar: clique OK
+[2025-09-12T15:08:31.210546] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120831-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120831-04-pos-processar.html
+[2025-09-12T15:08:31.214546] botao Processar: clique OK
+[2025-09-12T15:08:31.275545] [snap] C:\Users\User\Downloads\conc_incorporadora\20250912-120831-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250912-120831-04-pos-processar.html
+[2025-09-16T18:14:57.207657] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T18:14:59.815656] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T18:15:00.403682] Chromium aberto.
+[2025-09-16T18:15:00.492680] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-151500-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-151500-01-pos-launch.html
+[2025-09-16T18:15:04.119777] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T18:15:04.332776] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-151504-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-151504-02-pos-goto.html
+[2025-09-16T18:15:20.631004] login via IDs: OK
+[2025-09-16T18:15:20.912004] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-151520-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-151520-03-pos-login.html
+[2025-09-16T18:15:25.561617] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T18:15:25.562617] botao Processar: clique OK
+[2025-09-16T18:15:25.633616] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.html
+[2025-09-16T18:15:25.637616] botao Processar: clique OK
+[2025-09-16T18:15:25.716615] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.html
+[2025-09-16T18:15:25.720616] botao Processar: clique OK
+[2025-09-16T18:15:25.783262] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.html
+[2025-09-16T18:15:25.787261] botao Processar: clique OK
+[2025-09-16T18:15:25.866261] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.html
+[2025-09-16T18:15:25.870261] botao Processar: clique OK
+[2025-09-16T18:15:25.932262] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-151525-04-pos-processar.html
+[2025-09-16T18:24:56.884120] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T18:24:57.189121] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T18:24:57.393223] Chromium aberto.
+[2025-09-16T18:24:57.466221] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-152457-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-152457-01-pos-launch.html
+[2025-09-16T18:25:01.063748] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T18:25:01.279748] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-152501-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-152501-02-pos-goto.html
+[2025-09-16T18:25:17.545764] login via IDs: OK
+[2025-09-16T18:25:17.824763] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-152517-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-152517-03-pos-login.html
+[2025-09-16T18:25:22.395392] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T18:25:22.396391] botao Processar: clique OK
+[2025-09-16T18:25:22.464390] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.html
+[2025-09-16T18:25:22.469390] botao Processar: clique OK
+[2025-09-16T18:25:22.547390] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.html
+[2025-09-16T18:25:22.551393] botao Processar: clique OK
+[2025-09-16T18:25:22.614390] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.html
+[2025-09-16T18:25:22.618392] botao Processar: clique OK
+[2025-09-16T18:25:22.698391] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.html
+[2025-09-16T18:25:22.703392] botao Processar: clique OK
+[2025-09-16T18:25:22.766390] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-152522-04-pos-processar.html
+[2025-09-16T18:25:29.721044] Screenshot salvo em C:\Users\User\Downloads\conc_incorporadora\conciliacao_20250916_152529.png
+[2025-09-16T18:25:50.875547] Falha ao enviar e-mail: [WinError 10060] Uma tentativa de conexão falhou porque o componente conectado não respondeu
+corretamente após um período de tempo ou a conexão estabelecida falhou
+porque o host conectado não respondeu
+[2025-09-16T19:04:18.190896] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:04:18.520897] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T19:04:18.733909] Chromium aberto.
+[2025-09-16T19:04:18.825912] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-160418-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-160418-01-pos-launch.html
+[2025-09-16T19:04:22.422142] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T19:04:22.663141] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-160422-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-160422-02-pos-goto.html
+[2025-09-16T19:04:38.922372] login via IDs: OK
+[2025-09-16T19:04:39.030221] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-160438-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-160438-03-pos-login.html
+[2025-09-16T19:04:43.712961] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:04:43.713962] botao Processar: clique OK
+[2025-09-16T19:04:43.775962] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-160443-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-160443-04-pos-processar.html
+[2025-09-16T19:04:43.779960] botao Processar: clique OK
+[2025-09-16T19:04:43.857961] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-160443-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-160443-04-pos-processar.html
+[2025-09-16T19:04:43.861963] botao Processar: clique OK
+[2025-09-16T19:04:43.924961] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-160443-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-160443-04-pos-processar.html
+[2025-09-16T19:04:43.928962] botao Processar: clique OK
+[2025-09-16T19:04:44.008961] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-160443-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-160443-04-pos-processar.html
+[2025-09-16T19:04:44.012962] botao Processar: clique OK
+[2025-09-16T19:04:44.092619] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-160444-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-160444-04-pos-processar.html
+[2025-09-16T19:04:50.830840] Screenshot salvo em C:\Users\User\Downloads\conc_incorporadora\conciliacao_20250916_160450.png
+[2025-09-16T19:04:52.166618] E-mail enviado com sucesso via Gmail API.
+[2025-09-16T19:26:19.467859] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:26:19.802860] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T19:26:20.006885] Chromium aberto.
+[2025-09-16T19:26:20.084882] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-162620-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-162620-01-pos-launch.html
+[2025-09-16T19:26:23.689505] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T19:26:23.888505] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-162623-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-162623-02-pos-goto.html
+[2025-09-16T19:26:40.165726] login via IDs: OK
+[2025-09-16T19:26:40.466368] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-162640-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-162640-03-pos-login.html
+[2025-09-16T19:26:45.099781] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:26:45.100784] botao Processar: clique OK
+[2025-09-16T19:26:45.168781] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.html
+[2025-09-16T19:26:45.172781] botao Processar: clique OK
+[2025-09-16T19:26:45.250780] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.html
+[2025-09-16T19:26:45.254782] botao Processar: clique OK
+[2025-09-16T19:26:45.317781] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.html
+[2025-09-16T19:26:45.321781] botao Processar: clique OK
+[2025-09-16T19:26:45.401451] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.html
+[2025-09-16T19:26:45.405453] botao Processar: clique OK
+[2025-09-16T19:26:45.471453] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-162645-04-pos-processar.html
+[2025-09-16T19:26:57.571964] Screenshot salvo em C:\Users\User\Downloads\conc_incorporadora\conciliacao_20250916_162657.png
+[2025-09-16T19:26:59.007237] E-mail enviado com sucesso via Gmail API.
+[2025-09-16T19:33:41.911632] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:33:42.234629] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T19:33:42.441629] Chromium aberto.
+[2025-09-16T19:33:42.537627] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-163342-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-163342-01-pos-launch.html
+[2025-09-16T19:33:46.146553] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T19:33:46.352551] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-163346-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-163346-02-pos-goto.html
+[2025-09-16T19:34:02.635008] login via IDs: OK
+[2025-09-16T19:34:02.902009] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-163402-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-163402-03-pos-login.html
+[2025-09-16T19:34:07.529680] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:34:07.530681] botao Processar: clique OK
+[2025-09-16T19:34:07.592681] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.html
+[2025-09-16T19:34:07.598378] botao Processar: clique OK
+[2025-09-16T19:34:07.670188] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.html
+[2025-09-16T19:34:07.674193] botao Processar: clique OK
+[2025-09-16T19:34:07.754199] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.html
+[2025-09-16T19:34:07.758201] botao Processar: clique OK
+[2025-09-16T19:34:07.821848] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.html
+[2025-09-16T19:34:07.825845] botao Processar: clique OK
+[2025-09-16T19:34:07.905412] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-163407-04-pos-processar.html
+[2025-09-16T19:34:18.208553] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-16T19:41:53.984560] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:41:54.299190] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T19:41:54.523393] Chromium aberto.
+[2025-09-16T19:41:54.621392] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164154-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164154-01-pos-launch.html
+[2025-09-16T19:41:58.220013] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T19:41:58.426013] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164158-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164158-02-pos-goto.html
+[2025-09-16T19:42:14.686220] login via IDs: OK
+[2025-09-16T19:42:14.916220] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164214-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164214-03-pos-login.html
+[2025-09-16T19:42:19.495915] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:42:19.496914] botao Processar: clique OK
+[2025-09-16T19:42:19.555914] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.html
+[2025-09-16T19:42:19.559914] botao Processar: clique OK
+[2025-09-16T19:42:19.638913] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.html
+[2025-09-16T19:42:19.642914] botao Processar: clique OK
+[2025-09-16T19:42:19.705914] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.html
+[2025-09-16T19:42:19.710189] botao Processar: clique OK
+[2025-09-16T19:42:19.788914] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.html
+[2025-09-16T19:42:19.792915] botao Processar: clique OK
+[2025-09-16T19:42:19.854913] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164219-04-pos-processar.html
+[2025-09-16T19:42:28.041358] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-16T19:46:14.693423] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:46:15.013048] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T19:46:15.225568] Chromium aberto.
+[2025-09-16T19:46:15.300565] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164615-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164615-01-pos-launch.html
+[2025-09-16T19:46:18.898182] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T19:46:19.137131] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164618-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164618-02-pos-goto.html
+[2025-09-16T19:46:35.377950] login via IDs: OK
+[2025-09-16T19:46:35.480949] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164635-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164635-03-pos-login.html
+[2025-09-16T19:46:40.145693] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:46:40.146695] botao Processar: clique OK
+[2025-09-16T19:46:40.217693] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.html
+[2025-09-16T19:46:40.221691] botao Processar: clique OK
+[2025-09-16T19:46:40.296691] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.html
+[2025-09-16T19:46:40.300693] botao Processar: clique OK
+[2025-09-16T19:46:40.380691] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.html
+[2025-09-16T19:46:40.384693] botao Processar: clique OK
+[2025-09-16T19:46:40.463692] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.html
+[2025-09-16T19:46:40.467692] botao Processar: clique OK
+[2025-09-16T19:46:40.531693] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-164640-04-pos-processar.html
+[2025-09-16T19:46:48.724662] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-16T19:53:04.862943] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:53:05.183941] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T19:53:05.394941] Chromium aberto.
+[2025-09-16T19:53:05.467950] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-165305-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-165305-01-pos-launch.html
+[2025-09-16T19:53:09.083346] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T19:53:09.283344] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-165309-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-165309-02-pos-goto.html
+[2025-09-16T19:53:25.564735] login via IDs: OK
+[2025-09-16T19:53:25.815138] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-165325-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-165325-03-pos-login.html
+[2025-09-16T19:53:30.351124] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T19:53:30.351124] botao Processar: clique OK
+[2025-09-16T19:53:30.419777] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.html
+[2025-09-16T19:53:30.424780] botao Processar: clique OK
+[2025-09-16T19:53:30.501790] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.html
+[2025-09-16T19:53:30.505788] botao Processar: clique OK
+[2025-09-16T19:53:30.567789] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.html
+[2025-09-16T19:53:30.572788] botao Processar: clique OK
+[2025-09-16T19:53:30.650841] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.html
+[2025-09-16T19:53:30.653839] botao Processar: clique OK
+[2025-09-16T19:53:30.717853] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-165330-04-pos-processar.html
+[2025-09-16T19:53:38.704700] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-16T20:41:33.932498] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T20:41:37.240221] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T20:41:37.749247] Chromium aberto.
+[2025-09-16T20:41:37.841245] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-174137-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-174137-01-pos-launch.html
+[2025-09-16T20:41:41.493057] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T20:41:41.712076] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-174141-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-174141-02-pos-goto.html
+[2025-09-16T20:41:58.008390] login via IDs: OK
+[2025-09-16T20:41:58.294099] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-174158-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-174158-03-pos-login.html
+[2025-09-16T20:42:02.933327] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T20:42:02.934327] botao Processar: clique OK
+[2025-09-16T20:42:02.997326] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-174202-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-174202-04-pos-processar.html
+[2025-09-16T20:42:03.002326] botao Processar: clique OK
+[2025-09-16T20:42:03.078325] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-174203-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-174203-04-pos-processar.html
+[2025-09-16T20:42:03.082327] botao Processar: clique OK
+[2025-09-16T20:42:03.147944] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-174203-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-174203-04-pos-processar.html
+[2025-09-16T20:42:03.151943] botao Processar: clique OK
+[2025-09-16T20:42:03.229982] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-174203-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-174203-04-pos-processar.html
+[2025-09-16T20:42:03.233982] botao Processar: clique OK
+[2025-09-16T20:42:03.294981] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-174203-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-174203-04-pos-processar.html
+[2025-09-16T20:42:16.494441] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-16T20:52:58.151369] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T20:53:01.663550] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-16T20:53:01.998161] Chromium aberto.
+[2025-09-16T20:53:02.082158] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-175301-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-175301-01-pos-launch.html
+[2025-09-16T20:53:05.697358] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-16T20:53:05.895358] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-175305-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-175305-02-pos-goto.html
+[2025-09-16T20:53:22.185198] login via IDs: OK
+[2025-09-16T20:53:22.430433] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-175322-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-175322-03-pos-login.html
+[2025-09-16T20:53:27.065535] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-16T20:53:27.066536] botao Processar: clique OK
+[2025-09-16T20:53:27.123172] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.html
+[2025-09-16T20:53:27.128174] botao Processar: clique OK
+[2025-09-16T20:53:27.187173] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.html
+[2025-09-16T20:53:27.191172] botao Processar: clique OK
+[2025-09-16T20:53:27.275174] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.html
+[2025-09-16T20:53:27.280173] botao Processar: clique OK
+[2025-09-16T20:53:27.337173] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.html
+[2025-09-16T20:53:27.341175] botao Processar: clique OK
+[2025-09-16T20:53:27.421173] [snap] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250916-175327-04-pos-processar.html
+[2025-09-16T20:53:36.199020] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T14:45:18.060924] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T14:45:22.407924] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T14:45:22.951925] Chromium aberto.
+[2025-09-17T14:45:23.045924] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-114522-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-114522-01-pos-launch.html
+[2025-09-17T14:45:26.757536] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T14:45:26.984536] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-114526-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-114526-02-pos-goto.html
+[2025-09-17T14:45:43.262113] login via IDs: OK
+[2025-09-17T14:45:43.544113] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-114543-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-114543-03-pos-login.html
+[2025-09-17T14:45:48.362845] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T14:45:48.363844] botao Processar: clique OK
+[2025-09-17T14:45:48.442842] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.html
+[2025-09-17T14:45:48.446842] botao Processar: clique OK
+[2025-09-17T14:45:48.514842] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.html
+[2025-09-17T14:45:48.518843] botao Processar: clique OK
+[2025-09-17T14:45:48.599844] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.html
+[2025-09-17T14:45:48.603843] botao Processar: clique OK
+[2025-09-17T14:45:48.664844] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.html
+[2025-09-17T14:45:48.668844] botao Processar: clique OK
+[2025-09-17T14:45:48.748842] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-114548-04-pos-processar.html
+[2025-09-17T14:46:01.960971] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T14:54:08.221985] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T14:54:08.561972] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T14:54:08.774637] Chromium aberto.
+[2025-09-17T14:54:08.844635] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115408-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115408-01-pos-launch.html
+[2025-09-17T14:54:12.445152] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T14:54:12.629191] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115412-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115412-02-pos-goto.html
+[2025-09-17T14:54:28.890906] login via IDs: OK
+[2025-09-17T14:54:29.139546] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115428-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115428-03-pos-login.html
+[2025-09-17T14:54:33.883747] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T14:54:33.883747] botao Processar: clique OK
+[2025-09-17T14:54:33.942748] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115433-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115433-04-pos-processar.html
+[2025-09-17T14:54:33.947749] botao Processar: clique OK
+[2025-09-17T14:54:34.027747] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115433-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115433-04-pos-processar.html
+[2025-09-17T14:54:34.031748] botao Processar: clique OK
+[2025-09-17T14:54:34.093748] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115434-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115434-04-pos-processar.html
+[2025-09-17T14:54:34.097750] botao Processar: clique OK
+[2025-09-17T14:54:34.176747] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115434-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115434-04-pos-processar.html
+[2025-09-17T14:54:34.181749] botao Processar: clique OK
+[2025-09-17T14:54:34.244764] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115434-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115434-04-pos-processar.html
+[2025-09-17T14:54:44.571791] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T14:58:41.663040] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T14:58:41.980036] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T14:58:42.168038] Chromium aberto.
+[2025-09-17T14:58:42.252140] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115842-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115842-01-pos-launch.html
+[2025-09-17T14:58:45.847738] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T14:58:46.052054] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115845-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115845-02-pos-goto.html
+[2025-09-17T14:59:02.316982] login via IDs: OK
+[2025-09-17T14:59:02.591507] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115902-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115902-03-pos-login.html
+[2025-09-17T14:59:07.306257] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T14:59:07.307257] botao Processar: clique OK
+[2025-09-17T14:59:07.367257] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.html
+[2025-09-17T14:59:07.371259] botao Processar: clique OK
+[2025-09-17T14:59:07.453102] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.html
+[2025-09-17T14:59:07.458002] botao Processar: clique OK
+[2025-09-17T14:59:07.517285] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.html
+[2025-09-17T14:59:07.520285] botao Processar: clique OK
+[2025-09-17T14:59:07.601322] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.html
+[2025-09-17T14:59:07.605322] botao Processar: clique OK
+[2025-09-17T14:59:07.668329] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-115907-04-pos-processar.html
+[2025-09-17T14:59:16.402826] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T15:00:12.693603] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:00:13.039656] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T15:00:13.235838] Chromium aberto.
+[2025-09-17T15:00:13.316837] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120013-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120013-01-pos-launch.html
+[2025-09-17T15:00:16.930290] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T15:00:17.129416] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120016-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120016-02-pos-goto.html
+[2025-09-17T15:00:33.396274] login via IDs: OK
+[2025-09-17T15:00:33.619282] [snap] falhou: Error('Page.content: Unable to retrieve content because the page is navigating and changing the content.')
+[2025-09-17T15:00:38.222918] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:00:38.223917] botao Processar: clique OK
+[2025-09-17T15:00:38.282918] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.html
+[2025-09-17T15:00:38.287918] botao Processar: clique OK
+[2025-09-17T15:00:38.364916] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.html
+[2025-09-17T15:00:38.368918] botao Processar: clique OK
+[2025-09-17T15:00:38.449186] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.html
+[2025-09-17T15:00:38.453186] botao Processar: clique OK
+[2025-09-17T15:00:38.515185] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.html
+[2025-09-17T15:00:38.518186] botao Processar: clique OK
+[2025-09-17T15:00:38.598185] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120038-04-pos-processar.html
+[2025-09-17T15:00:47.255837] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T15:03:58.863928] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:03:59.192929] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T15:03:59.391929] Chromium aberto.
+[2025-09-17T15:03:59.491929] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120359-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120359-01-pos-launch.html
+[2025-09-17T15:04:03.086308] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T15:04:03.288931] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120403-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120403-02-pos-goto.html
+[2025-09-17T15:04:19.556745] login via IDs: OK
+[2025-09-17T15:04:19.825745] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120419-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120419-03-pos-login.html
+[2025-09-17T15:04:24.408276] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:04:24.409277] botao Processar: clique OK
+[2025-09-17T15:04:24.491276] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.html
+[2025-09-17T15:04:24.495282] botao Processar: clique OK
+[2025-09-17T15:04:24.576276] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.html
+[2025-09-17T15:04:24.580276] botao Processar: clique OK
+[2025-09-17T15:04:24.641895] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.html
+[2025-09-17T15:04:24.645894] botao Processar: clique OK
+[2025-09-17T15:04:24.723893] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.html
+[2025-09-17T15:04:24.727895] botao Processar: clique OK
+[2025-09-17T15:04:24.791894] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120424-04-pos-processar.html
+[2025-09-17T15:04:33.169390] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T15:05:13.174248] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:05:13.497882] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T15:05:13.695881] Chromium aberto.
+[2025-09-17T15:05:13.774881] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120513-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120513-01-pos-launch.html
+[2025-09-17T15:05:17.369802] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T15:05:17.574833] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120517-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120517-02-pos-goto.html
+[2025-09-17T15:05:33.853442] login via IDs: OK
+[2025-09-17T15:05:34.091442] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120533-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120533-03-pos-login.html
+[2025-09-17T15:05:38.564236] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:05:38.565236] botao Processar: clique OK
+[2025-09-17T15:05:38.623234] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.html
+[2025-09-17T15:05:38.627234] botao Processar: clique OK
+[2025-09-17T15:05:38.705234] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.html
+[2025-09-17T15:05:38.710234] botao Processar: clique OK
+[2025-09-17T15:05:38.772233] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.html
+[2025-09-17T15:05:38.776235] botao Processar: clique OK
+[2025-09-17T15:05:38.855235] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.html
+[2025-09-17T15:05:38.858233] botao Processar: clique OK
+[2025-09-17T15:05:38.923235] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120538-04-pos-processar.html
+[2025-09-17T15:05:47.425608] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T15:06:51.767176] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:06:52.089242] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T15:06:52.283239] Chromium aberto.
+[2025-09-17T15:06:52.353241] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120652-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120652-01-pos-launch.html
+[2025-09-17T15:06:55.952796] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T15:06:56.155795] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120655-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120655-02-pos-goto.html
+[2025-09-17T15:07:12.416007] login via IDs: OK
+[2025-09-17T15:07:12.696010] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120712-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120712-03-pos-login.html
+[2025-09-17T15:07:17.284650] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:07:17.285651] botao Processar: clique OK
+[2025-09-17T15:07:17.357651] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.html
+[2025-09-17T15:07:17.361649] botao Processar: clique OK
+[2025-09-17T15:07:17.436648] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.html
+[2025-09-17T15:07:17.439875] botao Processar: clique OK
+[2025-09-17T15:07:17.501648] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.html
+[2025-09-17T15:07:17.506583] botao Processar: clique OK
+[2025-09-17T15:07:17.586647] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.html
+[2025-09-17T15:07:17.590649] botao Processar: clique OK
+[2025-09-17T15:07:17.651650] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-120717-04-pos-processar.html
+[2025-09-17T15:07:26.197942] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T15:13:18.865170] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:13:19.204812] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T15:13:19.407438] Chromium aberto.
+[2025-09-17T15:13:19.523437] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121319-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121319-01-pos-launch.html
+[2025-09-17T15:13:23.133615] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T15:13:23.342646] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121323-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121323-02-pos-goto.html
+[2025-09-17T15:13:39.603995] login via IDs: OK
+[2025-09-17T15:13:39.868807] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121339-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121339-03-pos-login.html
+[2025-09-17T15:13:44.550072] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:13:44.551075] botao Processar: clique OK
+[2025-09-17T15:13:44.608073] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.html
+[2025-09-17T15:13:44.612074] botao Processar: clique OK
+[2025-09-17T15:13:44.690071] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.html
+[2025-09-17T15:13:44.695073] botao Processar: clique OK
+[2025-09-17T15:13:44.757074] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.html
+[2025-09-17T15:13:44.761072] botao Processar: clique OK
+[2025-09-17T15:13:44.840094] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.html
+[2025-09-17T15:13:44.844095] botao Processar: clique OK
+[2025-09-17T15:13:44.907106] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121344-04-pos-processar.html
+[2025-09-17T15:13:53.323569] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T15:16:38.020211] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:16:38.346366] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T15:16:38.541713] Chromium aberto.
+[2025-09-17T15:16:38.618364] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121638-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121638-01-pos-launch.html
+[2025-09-17T15:16:42.210690] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T15:16:42.415597] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121642-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121642-02-pos-goto.html
+[2025-09-17T15:16:58.682366] login via IDs: OK
+[2025-09-17T15:16:58.961367] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121658-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121658-03-pos-login.html
+[2025-09-17T15:17:03.565593] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:17:03.566592] botao Processar: clique OK
+[2025-09-17T15:17:03.638592] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.html
+[2025-09-17T15:17:03.643595] botao Processar: clique OK
+[2025-09-17T15:17:03.699591] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.html
+[2025-09-17T15:17:03.703591] botao Processar: clique OK
+[2025-09-17T15:17:03.786591] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.html
+[2025-09-17T15:17:03.790593] botao Processar: clique OK
+[2025-09-17T15:17:03.850591] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.html
+[2025-09-17T15:17:03.853593] botao Processar: clique OK
+[2025-09-17T15:17:03.937594] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-121703-04-pos-processar.html
+[2025-09-17T15:17:12.463459] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T15:21:40.275158] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:21:40.590466] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T15:21:40.787099] Chromium aberto.
+[2025-09-17T15:21:40.877100] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-122140-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-122140-01-pos-launch.html
+[2025-09-17T15:21:44.475024] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T15:21:44.692938] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-122144-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-122144-02-pos-goto.html
+[2025-09-17T15:22:00.955503] login via IDs: OK
+[2025-09-17T15:22:01.200503] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-122200-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-122200-03-pos-login.html
+[2025-09-17T15:22:05.886450] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:22:05.887450] botao Processar: clique OK
+[2025-09-17T15:22:05.958449] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-122205-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-122205-04-pos-processar.html
+[2025-09-17T15:22:05.962450] botao Processar: clique OK
+[2025-09-17T15:22:06.044448] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-122205-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-122205-04-pos-processar.html
+[2025-09-17T15:22:06.048449] botao Processar: clique OK
+[2025-09-17T15:22:06.109448] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-122206-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-122206-04-pos-processar.html
+[2025-09-17T15:22:06.113450] botao Processar: clique OK
+[2025-09-17T15:22:06.193450] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-122206-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-122206-04-pos-processar.html
+[2025-09-17T15:22:06.197448] botao Processar: clique OK
+[2025-09-17T15:22:06.259450] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-122206-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-122206-04-pos-processar.html
+[2025-09-17T15:22:14.804282] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T15:37:20.137041] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:37:20.454038] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T15:37:20.665039] Chromium aberto.
+[2025-09-17T15:37:20.746052] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-123720-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-123720-01-pos-launch.html
+[2025-09-17T15:37:24.341992] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T15:37:24.547003] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-123724-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-123724-02-pos-goto.html
+[2025-09-17T15:37:40.861519] login via IDs: OK
+[2025-09-17T15:37:41.142622] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-123740-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-123740-03-pos-login.html
+[2025-09-17T15:37:45.712472] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T15:37:45.712472] botao Processar: clique OK
+[2025-09-17T15:37:45.781472] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-123745-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-123745-04-pos-processar.html
+[2025-09-17T15:37:45.784470] botao Processar: clique OK
+[2025-09-17T15:37:45.864198] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-123745-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-123745-04-pos-processar.html
+[2025-09-17T15:37:45.867197] botao Processar: clique OK
+[2025-09-17T15:37:45.928197] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-123745-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-123745-04-pos-processar.html
+[2025-09-17T15:37:45.932196] botao Processar: clique OK
+[2025-09-17T15:37:46.013196] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-123745-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-123745-04-pos-processar.html
+[2025-09-17T15:37:46.017197] botao Processar: clique OK
+[2025-09-17T15:37:46.079198] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-123746-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-123746-04-pos-processar.html
+[2025-09-17T15:37:54.743236] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T16:23:18.782772] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T16:23:19.112771] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T16:23:19.308770] Chromium aberto.
+[2025-09-17T16:23:19.378769] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-132319-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-132319-01-pos-launch.html
+[2025-09-17T16:23:23.015378] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T16:23:23.225027] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-132323-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-132323-02-pos-goto.html
+[2025-09-17T16:23:39.490938] login via IDs: OK
+[2025-09-17T16:23:39.795281] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-132339-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-132339-03-pos-login.html
+[2025-09-17T16:23:44.489087] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T16:23:44.490088] botao Processar: clique OK
+[2025-09-17T16:23:44.551090] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.html
+[2025-09-17T16:23:44.556088] botao Processar: clique OK
+[2025-09-17T16:23:44.628087] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.html
+[2025-09-17T16:23:44.632089] botao Processar: clique OK
+[2025-09-17T16:23:44.694087] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.html
+[2025-09-17T16:23:44.697089] botao Processar: clique OK
+[2025-09-17T16:23:44.780088] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.html
+[2025-09-17T16:23:44.784087] botao Processar: clique OK
+[2025-09-17T16:23:44.845143] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-132344-04-pos-processar.html
+[2025-09-17T16:23:55.891489] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-17T16:23:56.684068] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T20:54:29.355111] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T20:54:32.909905] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T20:54:33.182906] Chromium aberto.
+[2025-09-17T20:54:33.255904] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-175433-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-175433-01-pos-launch.html
+[2025-09-17T20:54:36.860152] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T20:54:37.073784] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-175436-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-175436-02-pos-goto.html
+[2025-09-17T20:54:53.352975] login via IDs: OK
+[2025-09-17T20:54:53.635974] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-175453-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-175453-03-pos-login.html
+[2025-09-17T20:54:58.199148] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T20:54:58.200147] botao Processar: clique OK
+[2025-09-17T20:54:58.258147] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.html
+[2025-09-17T20:54:58.262147] botao Processar: clique OK
+[2025-09-17T20:54:58.341148] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.html
+[2025-09-17T20:54:58.345148] botao Processar: clique OK
+[2025-09-17T20:54:58.406884] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.html
+[2025-09-17T20:54:58.410883] botao Processar: clique OK
+[2025-09-17T20:54:58.489883] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.html
+[2025-09-17T20:54:58.494884] botao Processar: clique OK
+[2025-09-17T20:54:58.557884] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-175458-04-pos-processar.html
+[2025-09-17T20:55:11.157481] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-17T20:55:12.208488] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T21:08:59.548243] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:08:59.868241] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T21:09:00.082476] Chromium aberto.
+[2025-09-17T21:09:00.190502] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-180900-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-180900-01-pos-launch.html
+[2025-09-17T21:09:03.845234] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T21:09:04.046231] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-180903-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-180903-02-pos-goto.html
+[2025-09-17T21:09:20.328471] login via IDs: OK
+[2025-09-17T21:09:20.595509] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-180920-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-180920-03-pos-login.html
+[2025-09-17T21:09:25.184570] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:09:25.185570] botao Processar: clique OK
+[2025-09-17T21:09:25.264569] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.html
+[2025-09-17T21:09:25.268569] botao Processar: clique OK
+[2025-09-17T21:09:25.346571] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.html
+[2025-09-17T21:09:25.350571] botao Processar: clique OK
+[2025-09-17T21:09:25.414570] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.html
+[2025-09-17T21:09:25.418570] botao Processar: clique OK
+[2025-09-17T21:09:25.496569] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.html
+[2025-09-17T21:09:25.500571] botao Processar: clique OK
+[2025-09-17T21:09:25.564570] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-180925-04-pos-processar.html
+[2025-09-17T21:09:33.769774] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-17T21:09:35.153544] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T21:18:17.297222] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:18:17.605886] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T21:18:17.812895] Chromium aberto.
+[2025-09-17T21:18:17.879893] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-181817-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-181817-01-pos-launch.html
+[2025-09-17T21:18:21.560165] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T21:18:21.761164] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-181821-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-181821-02-pos-goto.html
+[2025-09-17T21:18:38.042289] login via IDs: OK
+[2025-09-17T21:18:38.296291] [snap] falhou: Error('Page.content: Unable to retrieve content because the page is navigating and changing the content.')
+[2025-09-17T21:18:42.879674] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:18:42.880675] botao Processar: clique OK
+[2025-09-17T21:18:42.946673] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-181842-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-181842-04-pos-processar.html
+[2025-09-17T21:18:42.951672] botao Processar: clique OK
+[2025-09-17T21:18:43.029995] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-181842-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-181842-04-pos-processar.html
+[2025-09-17T21:18:43.033673] botao Processar: clique OK
+[2025-09-17T21:18:43.096672] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-181843-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-181843-04-pos-processar.html
+[2025-09-17T21:18:43.099673] botao Processar: clique OK
+[2025-09-17T21:18:43.179674] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-181843-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-181843-04-pos-processar.html
+[2025-09-17T21:18:43.183674] botao Processar: clique OK
+[2025-09-17T21:18:43.246319] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-181843-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-181843-04-pos-processar.html
+[2025-09-17T21:18:51.467375] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-17T21:18:52.968501] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T21:25:44.218941] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:25:44.533566] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T21:25:44.741692] Chromium aberto.
+[2025-09-17T21:25:44.815693] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-182544-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-182544-01-pos-launch.html
+[2025-09-17T21:25:48.459340] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T21:25:48.666967] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-182548-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-182548-02-pos-goto.html
+[2025-09-17T21:26:04.913376] login via IDs: OK
+[2025-09-17T21:26:05.176378] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-182604-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-182604-03-pos-login.html
+[2025-09-17T21:26:09.755899] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:26:09.756898] botao Processar: clique OK
+[2025-09-17T21:26:09.815543] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-182609-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-182609-04-pos-processar.html
+[2025-09-17T21:26:09.820542] botao Processar: clique OK
+[2025-09-17T21:26:09.900544] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-182609-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-182609-04-pos-processar.html
+[2025-09-17T21:26:09.905543] botao Processar: clique OK
+[2025-09-17T21:26:09.965543] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-182609-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-182609-04-pos-processar.html
+[2025-09-17T21:26:09.970543] botao Processar: clique OK
+[2025-09-17T21:26:10.049542] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-182609-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-182609-04-pos-processar.html
+[2025-09-17T21:26:10.053545] botao Processar: clique OK
+[2025-09-17T21:26:10.117541] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-182610-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-182610-04-pos-processar.html
+[2025-09-17T21:31:54.356949] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:31:54.672947] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T21:31:54.866946] Chromium aberto.
+[2025-09-17T21:31:54.954945] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-183154-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-183154-01-pos-launch.html
+[2025-09-17T21:31:58.599960] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T21:31:58.803960] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-183158-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-183158-02-pos-goto.html
+[2025-09-17T21:32:15.068476] login via IDs: OK
+[2025-09-17T21:32:15.346477] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-183215-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-183215-03-pos-login.html
+[2025-09-17T21:32:19.882137] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:32:19.883137] botao Processar: clique OK
+[2025-09-17T21:32:19.954136] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-183219-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-183219-04-pos-processar.html
+[2025-09-17T21:32:19.958137] botao Processar: clique OK
+[2025-09-17T21:32:20.037136] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-183219-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-183219-04-pos-processar.html
+[2025-09-17T21:32:20.041137] botao Processar: clique OK
+[2025-09-17T21:32:20.109135] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-183220-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-183220-04-pos-processar.html
+[2025-09-17T21:32:20.113135] botao Processar: clique OK
+[2025-09-17T21:32:20.187136] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-183220-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-183220-04-pos-processar.html
+[2025-09-17T21:32:20.191137] botao Processar: clique OK
+[2025-09-17T21:32:20.256137] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-183220-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-183220-04-pos-processar.html
+[2025-09-17T21:42:16.614129] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:42:16.929753] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T21:42:17.144288] Chromium aberto.
+[2025-09-17T21:42:17.235306] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184217-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184217-01-pos-launch.html
+[2025-09-17T21:42:20.878313] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T21:42:21.092950] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184220-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184220-02-pos-goto.html
+[2025-09-17T21:42:37.349884] login via IDs: OK
+[2025-09-17T21:42:37.615551] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184237-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184237-03-pos-login.html
+[2025-09-17T21:42:42.204459] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:42:42.205460] botao Processar: clique OK
+[2025-09-17T21:42:42.286459] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.html
+[2025-09-17T21:42:42.291458] botao Processar: clique OK
+[2025-09-17T21:42:42.370458] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.html
+[2025-09-17T21:42:42.374460] botao Processar: clique OK
+[2025-09-17T21:42:42.434460] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.html
+[2025-09-17T21:42:42.439459] botao Processar: clique OK
+[2025-09-17T21:42:42.518458] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.html
+[2025-09-17T21:42:42.522460] botao Processar: clique OK
+[2025-09-17T21:42:42.584458] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184242-04-pos-processar.html
+[2025-09-17T21:48:36.945264] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:48:37.264903] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T21:48:37.472508] Chromium aberto.
+[2025-09-17T21:48:37.558603] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184837-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184837-01-pos-launch.html
+[2025-09-17T21:48:41.161542] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T21:48:41.357550] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184841-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184841-02-pos-goto.html
+[2025-09-17T21:48:57.619920] login via IDs: OK
+[2025-09-17T21:48:57.873107] [snap] falhou: Error('Page.content: Unable to retrieve content because the page is navigating and changing the content.')
+[2025-09-17T21:49:02.484663] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:49:02.485665] botao Processar: clique OK
+[2025-09-17T21:49:02.577663] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.html
+[2025-09-17T21:49:02.581662] botao Processar: clique OK
+[2025-09-17T21:49:02.656661] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.html
+[2025-09-17T21:49:02.661662] botao Processar: clique OK
+[2025-09-17T21:49:02.723661] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.html
+[2025-09-17T21:49:02.727661] botao Processar: clique OK
+[2025-09-17T21:49:02.807662] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.html
+[2025-09-17T21:49:02.811662] botao Processar: clique OK
+[2025-09-17T21:49:02.872662] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-184902-04-pos-processar.html
+[2025-09-17T21:49:07.797186] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-17T21:49:09.140432] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T21:55:49.022239] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:55:49.351852] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T21:55:49.554878] Chromium aberto.
+[2025-09-17T21:55:49.626921] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-185549-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-185549-01-pos-launch.html
+[2025-09-17T21:55:53.227316] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T21:55:53.427315] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-185553-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-185553-02-pos-goto.html
+[2025-09-17T21:56:09.706917] login via IDs: OK
+[2025-09-17T21:56:09.960743] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-185609-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-185609-03-pos-login.html
+[2025-09-17T21:56:14.578650] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T21:56:14.578650] botao Processar: clique OK
+[2025-09-17T21:56:14.644649] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.html
+[2025-09-17T21:56:14.649649] botao Processar: clique OK
+[2025-09-17T21:56:14.709650] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.html
+[2025-09-17T21:56:14.712648] botao Processar: clique OK
+[2025-09-17T21:56:14.795649] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.html
+[2025-09-17T21:56:14.799649] botao Processar: clique OK
+[2025-09-17T21:56:14.860649] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.html
+[2025-09-17T21:56:14.864649] botao Processar: clique OK
+[2025-09-17T21:56:14.942746] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-185614-04-pos-processar.html
+[2025-09-17T21:56:19.618978] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-17T21:56:20.613579] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-17T22:06:10.398333] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T22:06:10.709335] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-17T22:06:10.910554] Chromium aberto.
+[2025-09-17T22:06:11.008551] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-190610-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-190610-01-pos-launch.html
+[2025-09-17T22:06:14.608094] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-17T22:06:14.807260] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-190614-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-190614-02-pos-goto.html
+[2025-09-17T22:06:31.105612] login via IDs: OK
+[2025-09-17T22:06:31.386638] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-190631-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-190631-03-pos-login.html
+[2025-09-17T22:06:36.085358] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-17T22:06:36.085358] botao Processar: clique OK
+[2025-09-17T22:06:36.158358] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.html
+[2025-09-17T22:06:36.163359] botao Processar: clique OK
+[2025-09-17T22:06:36.240358] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.html
+[2025-09-17T22:06:36.243358] botao Processar: clique OK
+[2025-09-17T22:06:36.308357] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.html
+[2025-09-17T22:06:36.312357] botao Processar: clique OK
+[2025-09-17T22:06:36.391358] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.html
+[2025-09-17T22:06:36.395359] botao Processar: clique OK
+[2025-09-17T22:06:36.458357] [snap] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250917-190636-04-pos-processar.html
+[2025-09-17T22:06:43.288902] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-17T22:06:44.451200] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-18T16:51:32.277876] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-18T16:51:36.556831] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-18T16:51:37.241829] Chromium aberto.
+[2025-09-18T16:51:37.340829] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-135137-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-135137-01-pos-launch.html
+[2025-09-18T16:51:40.971225] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-18T16:51:41.188223] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-135140-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-135140-02-pos-goto.html
+[2025-09-18T16:51:57.477528] login via IDs: OK
+[2025-09-18T16:51:57.761984] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-135157-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-135157-03-pos-login.html
+[2025-09-18T16:52:02.670377] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-18T16:52:02.671376] botao Processar: clique OK
+[2025-09-18T16:52:02.730376] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.html
+[2025-09-18T16:52:02.734377] botao Processar: clique OK
+[2025-09-18T16:52:02.830375] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.html
+[2025-09-18T16:52:02.834376] botao Processar: clique OK
+[2025-09-18T16:52:02.897012] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.html
+[2025-09-18T16:52:02.901176] botao Processar: clique OK
+[2025-09-18T16:52:02.979012] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.html
+[2025-09-18T16:52:02.983012] botao Processar: clique OK
+[2025-09-18T16:52:03.048012] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-135202-04-pos-processar.html
+[2025-09-18T16:52:12.357332] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-18T16:52:13.667801] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-18T17:02:58.507800] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-18T17:02:58.840931] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-18T17:02:59.057369] Chromium aberto.
+[2025-09-18T17:02:59.126307] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-140259-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-140259-01-pos-launch.html
+[2025-09-18T17:03:02.725468] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-18T17:03:02.944468] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-140302-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-140302-02-pos-goto.html
+[2025-09-18T17:03:19.223085] login via IDs: OK
+[2025-09-18T17:03:19.466097] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-140319-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-140319-03-pos-login.html
+[2025-09-18T17:03:24.066069] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-18T17:03:24.067071] botao Processar: clique OK
+[2025-09-18T17:03:24.129071] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.html
+[2025-09-18T17:03:24.132907] botao Processar: clique OK
+[2025-09-18T17:03:24.208905] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.html
+[2025-09-18T17:03:24.212906] botao Processar: clique OK
+[2025-09-18T17:03:24.276907] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.html
+[2025-09-18T17:03:24.279907] botao Processar: clique OK
+[2025-09-18T17:03:24.359906] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.html
+[2025-09-18T17:03:24.364906] botao Processar: clique OK
+[2025-09-18T17:03:24.428906] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-140324-04-pos-processar.html
+[2025-09-18T17:03:30.893343] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-18T17:03:32.160434] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-18T17:12:46.982398] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-18T17:12:47.321395] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-18T17:12:47.520393] Chromium aberto.
+[2025-09-18T17:12:47.607393] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141247-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141247-01-pos-launch.html
+[2025-09-18T17:12:51.203888] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-18T17:12:51.410494] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141251-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141251-02-pos-goto.html
+[2025-09-18T17:13:07.702856] login via IDs: OK
+[2025-09-18T17:13:07.811579] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141307-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141307-03-pos-login.html
+[2025-09-18T17:13:12.492054] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-18T17:13:12.494055] botao Processar: clique OK
+[2025-09-18T17:13:12.557052] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.html
+[2025-09-18T17:13:12.561053] botao Processar: clique OK
+[2025-09-18T17:13:12.639063] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.html
+[2025-09-18T17:13:12.644062] botao Processar: clique OK
+[2025-09-18T17:13:12.709071] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.html
+[2025-09-18T17:13:12.714071] botao Processar: clique OK
+[2025-09-18T17:13:12.789940] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.html
+[2025-09-18T17:13:12.794941] botao Processar: clique OK
+[2025-09-18T17:13:12.858534] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141312-04-pos-processar.html
+[2025-09-18T17:13:22.010198] Enviado e-mail com 1 linhas problemáticas.
+[2025-09-18T17:13:23.397799] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-18T17:17:16.362481] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-18T17:17:16.689742] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-18T17:17:16.891742] Chromium aberto.
+[2025-09-18T17:17:16.965750] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141716-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141716-01-pos-launch.html
+[2025-09-18T17:17:20.565768] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-18T17:17:20.773769] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141720-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141720-02-pos-goto.html
+[2025-09-18T17:17:37.045805] login via IDs: OK
+[2025-09-18T17:17:37.338805] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141737-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141737-03-pos-login.html
+[2025-09-18T17:17:42.007489] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-18T17:17:42.007489] botao Processar: clique OK
+[2025-09-18T17:17:42.065487] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.html
+[2025-09-18T17:17:42.069486] botao Processar: clique OK
+[2025-09-18T17:17:42.148487] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.html
+[2025-09-18T17:17:42.153486] botao Processar: clique OK
+[2025-09-18T17:17:42.217486] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.html
+[2025-09-18T17:17:42.220485] botao Processar: clique OK
+[2025-09-18T17:17:42.298485] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.html
+[2025-09-18T17:17:42.302485] botao Processar: clique OK
+[2025-09-18T17:17:42.365484] [snap] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250918-141742-04-pos-processar.html
+[2025-09-18T17:17:47.152688] Enviado e-mail linha problemática para ratinho2345@gmail.com: [SEM PROJETO]
+[2025-09-18T17:17:48.735635] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-23T16:06:18.800905] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-23T16:06:21.726899] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-23T16:06:22.457899] Chromium aberto.
+[2025-09-23T16:06:22.552897] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130622-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130622-01-pos-launch.html
+[2025-09-23T16:06:26.188394] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-23T16:06:26.428393] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130626-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130626-02-pos-goto.html
+[2025-09-23T16:06:42.755989] login via IDs: OK
+[2025-09-23T16:06:43.086653] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130642-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130642-03-pos-login.html
+[2025-09-23T16:06:48.505355] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-23T16:06:48.506356] botao Processar: clique OK
+[2025-09-23T16:06:48.574357] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.html
+[2025-09-23T16:06:48.580357] botao Processar: clique OK
+[2025-09-23T16:06:48.658003] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.html
+[2025-09-23T16:06:48.664003] botao Processar: clique OK
+[2025-09-23T16:06:48.742003] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.html
+[2025-09-23T16:06:48.748003] botao Processar: clique OK
+[2025-09-23T16:06:48.808001] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.html
+[2025-09-23T16:06:48.815003] botao Processar: clique OK
+[2025-09-23T16:06:48.893004] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130648-04-pos-processar.html
+[2025-09-23T16:09:18.145982] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-23T16:09:18.464978] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-23T16:09:18.651979] Chromium aberto.
+[2025-09-23T16:09:18.731980] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130918-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130918-01-pos-launch.html
+[2025-09-23T16:09:22.348026] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-23T16:09:22.549025] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130922-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130922-02-pos-goto.html
+[2025-09-23T16:09:38.884694] login via IDs: OK
+[2025-09-23T16:09:39.128689] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130938-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130938-03-pos-login.html
+[2025-09-23T16:09:44.147706] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-23T16:09:44.148707] botao Processar: clique OK
+[2025-09-23T16:09:44.225708] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.html
+[2025-09-23T16:09:44.230707] botao Processar: clique OK
+[2025-09-23T16:09:44.300706] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.html
+[2025-09-23T16:09:44.306707] botao Processar: clique OK
+[2025-09-23T16:09:44.368706] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.html
+[2025-09-23T16:09:44.374707] botao Processar: clique OK
+[2025-09-23T16:09:44.434707] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.html
+[2025-09-23T16:09:44.440706] botao Processar: clique OK
+[2025-09-23T16:09:44.520707] [snap] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250923-130944-04-pos-processar.html
+[2025-09-23T16:09:51.526135] Enviado e-mail linha problemática para gd_faturamento@sacavalcante.com.br: [SEM PROJETO]
+[2025-09-23T16:09:53.088310] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T13:41:15.352867] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T13:41:20.166916] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T13:41:20.807916] Chromium aberto.
+[2025-09-24T13:41:20.912917] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-104120-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-104120-01-pos-launch.html
+[2025-09-24T13:41:24.684483] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T13:41:24.962483] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-104124-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-104124-02-pos-goto.html
+[2025-09-24T13:41:41.360873] login via IDs: OK
+[2025-09-24T13:41:41.674871] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-104141-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-104141-03-pos-login.html
+[2025-09-24T13:41:47.224502] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T13:41:47.225502] botao Processar: clique OK
+[2025-09-24T13:41:47.296504] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.html
+[2025-09-24T13:41:47.304506] botao Processar: clique OK
+[2025-09-24T13:41:47.379504] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.html
+[2025-09-24T13:41:47.386504] botao Processar: clique OK
+[2025-09-24T13:41:47.462503] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.html
+[2025-09-24T13:41:47.469501] botao Processar: clique OK
+[2025-09-24T13:41:47.547502] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.html
+[2025-09-24T13:41:47.554504] botao Processar: clique OK
+[2025-09-24T13:41:47.630501] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-104147-04-pos-processar.html
+[2025-09-24T13:41:58.160731] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T15:04:27.582874] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T15:04:27.921508] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T15:04:28.139508] Chromium aberto.
+[2025-09-24T15:04:28.216509] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120428-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120428-01-pos-launch.html
+[2025-09-24T15:04:31.832962] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T15:04:32.030959] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120431-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120431-02-pos-goto.html
+[2025-09-24T15:04:48.347271] login via IDs: OK
+[2025-09-24T15:04:48.631270] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120448-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120448-03-pos-login.html
+[2025-09-24T15:04:53.258643] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T15:04:53.259643] botao Processar: clique OK
+[2025-09-24T15:04:53.335641] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.html
+[2025-09-24T15:04:53.339643] botao Processar: clique OK
+[2025-09-24T15:04:53.414641] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.html
+[2025-09-24T15:04:53.418641] botao Processar: clique OK
+[2025-09-24T15:04:53.482641] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.html
+[2025-09-24T15:04:53.486641] botao Processar: clique OK
+[2025-09-24T15:04:53.566641] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.html
+[2025-09-24T15:04:53.570642] botao Processar: clique OK
+[2025-09-24T15:04:53.631641] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120453-04-pos-processar.html
+[2025-09-24T15:04:59.088496] Pendência enviada para daniel@inovailab.com: RPE 01/08/2025
+[2025-09-24T15:04:59.575275] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:00.246988] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:01.918622] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:02.613152] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:03.092935] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:03.683967] Pendência enviada para daniel@inovailab.com: LA RESERVE 01/08/2025
+[2025-09-24T15:05:04.707635] Pendência enviada para daniel@inovailab.com: RPE 01/08/2025
+[2025-09-24T15:05:06.299506] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:07.004295] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:08.372038] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:09.334944] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:09.834846] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:05:11.065862] Pendência enviada para daniel@inovailab.com: LA RESERVE 01/08/2025
+[2025-09-24T15:05:12.409651] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T15:07:49.484140] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T15:07:49.811137] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T15:07:50.005139] Chromium aberto.
+[2025-09-24T15:07:50.076138] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120750-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120750-01-pos-launch.html
+[2025-09-24T15:07:53.682795] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T15:07:53.891527] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120753-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120753-02-pos-goto.html
+[2025-09-24T15:08:10.173219] login via IDs: OK
+[2025-09-24T15:08:10.408222] [snap] falhou: Error('Page.content: Unable to retrieve content because the page is navigating and changing the content.')
+[2025-09-24T15:08:15.038013] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T15:08:15.038013] botao Processar: clique OK
+[2025-09-24T15:08:15.093014] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.html
+[2025-09-24T15:08:15.097014] botao Processar: clique OK
+[2025-09-24T15:08:15.175013] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.html
+[2025-09-24T15:08:15.179014] botao Processar: clique OK
+[2025-09-24T15:08:15.244014] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.html
+[2025-09-24T15:08:15.247015] botao Processar: clique OK
+[2025-09-24T15:08:15.326012] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.html
+[2025-09-24T15:08:15.330014] botao Processar: clique OK
+[2025-09-24T15:08:15.394013] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-120815-04-pos-processar.html
+[2025-09-24T15:08:19.425167] Pendência enviada para daniel@inovailab.com: RPE 01/08/2025
+[2025-09-24T15:08:20.016167] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:20.680495] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:21.646232] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:23.031249] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:24.099248] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:24.682919] Pendência enviada para daniel@inovailab.com: LA RESERVE 01/08/2025
+[2025-09-24T15:08:25.938528] Pendência enviada para daniel@inovailab.com: RPE 01/08/2025
+[2025-09-24T15:08:26.661536] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:27.617541] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:28.686535] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:30.086312] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:30.894925] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:08:31.596556] Pendência enviada para daniel@inovailab.com: LA RESERVE 01/08/2025
+[2025-09-24T15:08:32.559810] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T15:10:28.742846] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T15:10:29.067844] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T15:10:29.264844] Chromium aberto.
+[2025-09-24T15:10:29.337843] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-121029-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-121029-01-pos-launch.html
+[2025-09-24T15:10:32.933330] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T15:10:33.137965] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-121032-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-121032-02-pos-goto.html
+[2025-09-24T15:10:49.435169] login via IDs: OK
+[2025-09-24T15:10:49.668168] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-121049-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-121049-03-pos-login.html
+[2025-09-24T15:10:54.277655] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T15:10:54.278655] botao Processar: clique OK
+[2025-09-24T15:10:54.339303] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.html
+[2025-09-24T15:10:54.343303] botao Processar: clique OK
+[2025-09-24T15:10:54.420301] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.html
+[2025-09-24T15:10:54.424303] botao Processar: clique OK
+[2025-09-24T15:10:54.487303] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.html
+[2025-09-24T15:10:54.492303] botao Processar: clique OK
+[2025-09-24T15:10:54.570954] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.html
+[2025-09-24T15:10:54.574954] botao Processar: clique OK
+[2025-09-24T15:10:54.638954] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-121054-04-pos-processar.html
+[2025-09-24T15:10:58.540885] Pendência enviada para daniel@inovailab.com: RPE 01/08/2025
+[2025-09-24T15:10:59.016530] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:10:59.477538] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:11:00.043200] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:11:01.851834] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:11:03.240543] Pendência enviada para daniel@inovailab.com: CONDCESRP1E2 01/08/2025
+[2025-09-24T15:11:04.476305] Pendência enviada para daniel@inovailab.com: LA RESERVE 01/08/2025
+[2025-09-24T15:11:06.172333] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T15:49:58.736424] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T15:49:59.065058] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T15:49:59.272057] Chromium aberto.
+[2025-09-24T15:49:59.346058] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-124959-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-124959-01-pos-launch.html
+[2025-09-24T15:50:02.984082] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T15:50:03.179829] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-125002-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-125002-02-pos-goto.html
+[2025-09-24T15:50:19.460002] login via IDs: OK
+[2025-09-24T15:50:19.784002] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-125019-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-125019-03-pos-login.html
+[2025-09-24T15:50:24.393028] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T15:50:24.394028] botao Processar: clique OK
+[2025-09-24T15:50:24.463029] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.html
+[2025-09-24T15:50:24.468028] botao Processar: clique OK
+[2025-09-24T15:50:24.546029] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.html
+[2025-09-24T15:50:24.550029] botao Processar: clique OK
+[2025-09-24T15:50:24.614028] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.html
+[2025-09-24T15:50:24.618029] botao Processar: clique OK
+[2025-09-24T15:50:24.694027] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.html
+[2025-09-24T15:50:24.698028] botao Processar: clique OK
+[2025-09-24T15:50:24.762027] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-125024-04-pos-processar.html
+[2025-09-24T15:50:29.462777] E-mail enviado para daniel@inovailab.com com 1 linhas do projeto RPE
+[2025-09-24T15:50:30.228390] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-09-24T15:50:30.958635] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-09-24T15:50:32.518351] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T16:19:46.057098] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T16:19:46.396098] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T16:19:46.613093] Chromium aberto.
+[2025-09-24T16:19:46.689092] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-131946-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-131946-01-pos-launch.html
+[2025-09-24T16:19:50.295874] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T16:19:50.502871] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-131950-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-131950-02-pos-goto.html
+[2025-09-24T16:20:06.786397] login via IDs: OK
+[2025-09-24T16:20:07.046048] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-132006-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-132006-03-pos-login.html
+[2025-09-24T16:20:11.648830] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T16:20:11.649831] botao Processar: clique OK
+[2025-09-24T16:20:11.704830] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.html
+[2025-09-24T16:20:11.708831] botao Processar: clique OK
+[2025-09-24T16:20:11.770830] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.html
+[2025-09-24T16:20:11.774831] botao Processar: clique OK
+[2025-09-24T16:20:11.870832] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.html
+[2025-09-24T16:20:11.874831] botao Processar: clique OK
+[2025-09-24T16:20:11.937564] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.html
+[2025-09-24T16:20:11.941569] botao Processar: clique OK
+[2025-09-24T16:20:12.022565] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-132011-04-pos-processar.html
+[2025-09-24T16:20:16.878150] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-09-24T16:20:17.418509] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-09-24T16:20:18.089266] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-09-24T16:20:19.695881] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T16:34:12.872166] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T16:34:13.192776] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T16:34:13.397777] Chromium aberto.
+[2025-09-24T16:34:13.479776] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-133413-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-133413-01-pos-launch.html
+[2025-09-24T16:34:17.091260] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T16:34:17.296260] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-133417-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-133417-02-pos-goto.html
+[2025-09-24T16:34:33.593919] login via IDs: OK
+[2025-09-24T16:34:33.849920] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-133433-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-133433-03-pos-login.html
+[2025-09-24T16:34:39.142626] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T16:34:39.143625] botao Processar: clique OK
+[2025-09-24T16:34:39.211623] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.html
+[2025-09-24T16:34:39.218625] botao Processar: clique OK
+[2025-09-24T16:34:39.296624] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.html
+[2025-09-24T16:34:39.302623] botao Processar: clique OK
+[2025-09-24T16:34:39.362624] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.html
+[2025-09-24T16:34:39.368623] botao Processar: clique OK
+[2025-09-24T16:34:39.447624] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.html
+[2025-09-24T16:34:39.453624] botao Processar: clique OK
+[2025-09-24T16:34:39.512625] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-133439-04-pos-processar.html
+[2025-09-24T16:34:43.242681] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-09-24T16:34:43.850411] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-09-24T16:34:44.391668] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-09-24T16:34:46.001969] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T16:41:12.745054] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T16:41:13.068685] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T16:41:13.267686] Chromium aberto.
+[2025-09-24T16:41:13.348683] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-134113-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-134113-01-pos-launch.html
+[2025-09-24T16:41:16.952540] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T16:41:17.145173] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-134116-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-134116-02-pos-goto.html
+[2025-09-24T16:41:33.428846] login via IDs: OK
+[2025-09-24T16:41:33.677846] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-134133-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-134133-03-pos-login.html
+[2025-09-24T16:41:38.456111] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T16:41:38.457110] botao Processar: clique OK
+[2025-09-24T16:41:38.513109] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.html
+[2025-09-24T16:41:38.517111] botao Processar: clique OK
+[2025-09-24T16:41:38.596109] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.html
+[2025-09-24T16:41:38.600111] botao Processar: clique OK
+[2025-09-24T16:41:38.663109] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.html
+[2025-09-24T16:41:38.667110] botao Processar: clique OK
+[2025-09-24T16:41:38.745725] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.html
+[2025-09-24T16:41:38.750724] botao Processar: clique OK
+[2025-09-24T16:41:38.813723] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-134138-04-pos-processar.html
+[2025-09-24T16:41:42.543762] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-09-24T16:41:43.272391] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-09-24T16:41:44.268756] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-09-24T16:41:44.792762] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-09-24T16:41:45.877522] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T17:18:58.908929] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T17:18:59.233574] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T17:18:59.428574] Chromium aberto.
+[2025-09-24T17:18:59.507573] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-141859-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-141859-01-pos-launch.html
+[2025-09-24T17:19:03.112968] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T17:19:03.306969] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-141903-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-141903-02-pos-goto.html
+[2025-09-24T17:19:19.606780] login via IDs: OK
+[2025-09-24T17:19:19.841442] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-141919-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-141919-03-pos-login.html
+[2025-09-24T17:19:24.431419] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T17:19:24.432419] botao Processar: clique OK
+[2025-09-24T17:19:24.491418] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.html
+[2025-09-24T17:19:24.495419] botao Processar: clique OK
+[2025-09-24T17:19:24.557419] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.html
+[2025-09-24T17:19:24.561419] botao Processar: clique OK
+[2025-09-24T17:19:24.640163] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.html
+[2025-09-24T17:19:24.644164] botao Processar: clique OK
+[2025-09-24T17:19:24.706164] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.html
+[2025-09-24T17:19:24.710162] botao Processar: clique OK
+[2025-09-24T17:19:24.792163] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-141924-04-pos-processar.html
+[2025-09-24T17:19:29.294914] Falha ao enviar e-mail via Gmail API: EOF occurred in violation of protocol (_ssl.c:2393)
+[2025-09-24T17:24:10.059823] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T17:24:13.352638] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T17:24:13.608640] Chromium aberto.
+[2025-09-24T17:24:13.681637] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-142413-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-142413-01-pos-launch.html
+[2025-09-24T17:24:17.329416] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T17:24:17.553082] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-142417-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-142417-02-pos-goto.html
+[2025-09-24T17:24:33.866705] login via IDs: OK
+[2025-09-24T17:24:34.133704] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-142433-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-142433-03-pos-login.html
+[2025-09-24T17:24:39.213792] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T17:24:39.214792] botao Processar: clique OK
+[2025-09-24T17:24:39.283791] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.html
+[2025-09-24T17:24:39.289790] botao Processar: clique OK
+[2025-09-24T17:24:39.365792] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.html
+[2025-09-24T17:24:39.371791] botao Processar: clique OK
+[2025-09-24T17:24:39.432791] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.html
+[2025-09-24T17:24:39.438791] botao Processar: clique OK
+[2025-09-24T17:24:39.515791] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.html
+[2025-09-24T17:24:39.521791] botao Processar: clique OK
+[2025-09-24T17:24:39.582790] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-142439-04-pos-processar.html
+[2025-09-24T17:24:43.565461] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T19:08:41.801889] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T19:08:42.153889] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T19:08:42.430525] Chromium aberto.
+[2025-09-24T19:08:42.526524] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-160842-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-160842-01-pos-launch.html
+[2025-09-24T19:08:46.154156] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T19:08:46.348789] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-160846-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-160846-02-pos-goto.html
+[2025-09-24T19:09:02.697016] login via IDs: OK
+[2025-09-24T19:09:02.992046] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-160902-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-160902-03-pos-login.html
+[2025-09-24T19:09:08.104472] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T19:09:08.105473] botao Processar: clique OK
+[2025-09-24T19:09:08.169475] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.html
+[2025-09-24T19:09:08.177473] botao Processar: clique OK
+[2025-09-24T19:09:08.250130] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.html
+[2025-09-24T19:09:08.255129] botao Processar: clique OK
+[2025-09-24T19:09:08.334129] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.html
+[2025-09-24T19:09:08.341130] botao Processar: clique OK
+[2025-09-24T19:09:08.399129] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.html
+[2025-09-24T19:09:08.406130] botao Processar: clique OK
+[2025-09-24T19:09:08.485129] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-160908-04-pos-processar.html
+[2025-09-24T19:09:14.663161] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-24T19:10:23.976511] ZIP local encontrado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T19:10:24.297157] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-24T19:10:24.492154] Chromium aberto.
+[2025-09-24T19:10:24.561153] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-161024-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-161024-01-pos-launch.html
+[2025-09-24T19:10:28.158442] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-24T19:10:28.364438] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-161028-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-161028-02-pos-goto.html
+[2025-09-24T19:10:44.677712] login via IDs: OK
+[2025-09-24T19:10:44.954716] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-161044-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-161044-03-pos-login.html
+[2025-09-24T19:10:50.059224] arquivo enviado: /home/felipe/Downloads/arquivos\arquivos.zip
+[2025-09-24T19:10:50.060224] botao Processar: clique OK
+[2025-09-24T19:10:50.134225] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.html
+[2025-09-24T19:10:50.140223] botao Processar: clique OK
+[2025-09-24T19:10:50.213223] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.html
+[2025-09-24T19:10:50.219223] botao Processar: clique OK
+[2025-09-24T19:10:50.283223] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.html
+[2025-09-24T19:10:50.288223] botao Processar: clique OK
+[2025-09-24T19:10:50.364225] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.html
+[2025-09-24T19:10:50.370224] botao Processar: clique OK
+[2025-09-24T19:10:50.434225] [snap] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250924-161050-04-pos-processar.html
+[2025-09-24T19:10:54.884658] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-09-24T19:10:55.587164] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-09-24T19:10:56.343803] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-09-24T19:10:57.779079] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-09-24T19:10:58.393707] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-25T19:40:58.783266] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T19:40:58.785227] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T19:40:59.116192] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-25T19:40:59.395064] Chromium aberto.
+[2025-09-25T19:40:59.488122] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164059-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164059-01-pos-launch.html
+[2025-09-25T19:41:03.090659] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-25T19:41:03.284564] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164103-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164103-02-pos-goto.html
+[2025-09-25T19:41:19.551512] login via IDs: OK
+[2025-09-25T19:41:19.797514] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164119-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164119-03-pos-login.html
+[2025-09-25T19:41:24.362436] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T19:41:24.363438] botao Processar: clique OK
+[2025-09-25T19:41:24.424706] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.html
+[2025-09-25T19:41:24.428707] botao Processar: clique OK
+[2025-09-25T19:41:24.487201] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.html
+[2025-09-25T19:41:24.491758] botao Processar: clique OK
+[2025-09-25T19:41:24.570195] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.html
+[2025-09-25T19:41:24.573208] botao Processar: clique OK
+[2025-09-25T19:41:24.636289] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.html
+[2025-09-25T19:41:24.640289] botao Processar: clique OK
+[2025-09-25T19:41:24.720048] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164124-04-pos-processar.html
+[2025-09-25T19:44:37.288421] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T19:44:37.291420] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T19:44:37.633448] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-25T19:44:37.827458] Chromium aberto.
+[2025-09-25T19:44:37.918457] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164437-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164437-01-pos-launch.html
+[2025-09-25T19:44:41.518252] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-25T19:44:41.704121] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164441-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164441-02-pos-goto.html
+[2025-09-25T19:44:58.015751] login via IDs: OK
+[2025-09-25T19:44:58.274184] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164458-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164458-03-pos-login.html
+[2025-09-25T19:45:03.368876] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T19:45:03.369878] botao Processar: clique OK
+[2025-09-25T19:45:03.434277] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.html
+[2025-09-25T19:45:03.440278] botao Processar: clique OK
+[2025-09-25T19:45:03.497143] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.html
+[2025-09-25T19:45:03.504156] botao Processar: clique OK
+[2025-09-25T19:45:03.564402] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.html
+[2025-09-25T19:45:03.570344] botao Processar: clique OK
+[2025-09-25T19:45:03.630946] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.html
+[2025-09-25T19:45:03.636938] botao Processar: clique OK
+[2025-09-25T19:45:03.698401] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-164503-04-pos-processar.html
+[2025-09-25T19:45:07.366485] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-09-25T19:45:07.875217] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-09-25T19:45:08.422931] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-09-25T19:45:09.803310] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-09-25T19:45:10.649775] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-25T20:20:39.120709] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T20:20:39.122710] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T20:20:39.456347] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-25T20:20:39.665341] Chromium aberto.
+[2025-09-25T20:20:39.746296] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172039-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172039-01-pos-launch.html
+[2025-09-25T20:20:43.357064] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-25T20:20:43.561334] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172043-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172043-02-pos-goto.html
+[2025-09-25T20:20:59.864145] login via IDs: OK
+[2025-09-25T20:21:00.116161] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172059-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172059-03-pos-login.html
+[2025-09-25T20:21:05.210145] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T20:21:05.211146] botao Processar: clique OK
+[2025-09-25T20:21:05.283109] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.html
+[2025-09-25T20:21:05.289221] botao Processar: clique OK
+[2025-09-25T20:21:05.363970] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.html
+[2025-09-25T20:21:05.369968] botao Processar: clique OK
+[2025-09-25T20:21:05.430889] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.html
+[2025-09-25T20:21:05.436891] botao Processar: clique OK
+[2025-09-25T20:21:05.514949] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.html
+[2025-09-25T20:21:05.520949] botao Processar: clique OK
+[2025-09-25T20:21:05.581430] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172105-04-pos-processar.html
+[2025-09-25T20:21:08.983189] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-09-25T20:21:09.480043] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-09-25T20:21:10.450270] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-09-25T20:21:11.294573] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-09-25T20:21:11.869398] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-25T20:23:28.421974] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T20:23:28.423512] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T20:23:28.753151] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-25T20:23:28.954282] Chromium aberto.
+[2025-09-25T20:23:29.023236] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172328-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172328-01-pos-launch.html
+[2025-09-25T20:23:32.618250] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-25T20:23:32.826585] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172332-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172332-02-pos-goto.html
+[2025-09-25T20:26:35.727914] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T20:26:35.728914] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T20:26:36.049157] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-25T20:26:36.247736] Chromium aberto.
+[2025-09-25T20:26:36.316736] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172636-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172636-01-pos-launch.html
+[2025-09-25T20:26:39.924227] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-25T20:26:40.118787] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172639-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172639-02-pos-goto.html
+[2025-09-25T20:26:56.417899] login via IDs: OK
+[2025-09-25T20:26:56.662357] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172656-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172656-03-pos-login.html
+[2025-09-25T20:27:01.726157] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T20:27:01.727159] botao Processar: clique OK
+[2025-09-25T20:27:01.790158] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172701-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172701-04-pos-processar.html
+[2025-09-25T20:27:01.796159] botao Processar: clique OK
+[2025-09-25T20:27:01.870166] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172701-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172701-04-pos-processar.html
+[2025-09-25T20:27:01.877167] botao Processar: clique OK
+[2025-09-25T20:27:01.937175] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172701-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172701-04-pos-processar.html
+[2025-09-25T20:27:01.943196] botao Processar: clique OK
+[2025-09-25T20:27:02.020186] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172701-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172701-04-pos-processar.html
+[2025-09-25T20:27:02.027185] botao Processar: clique OK
+[2025-09-25T20:27:02.090469] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-172702-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-172702-04-pos-processar.html
+[2025-09-25T20:27:05.733683] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-09-25T20:27:06.250044] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-09-25T20:27:06.763589] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-09-25T20:27:07.592488] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-09-25T20:27:08.396050] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-09-25T21:54:19.195511] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T21:54:19.196512] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T21:54:19.534173] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-09-25T21:54:19.726287] Chromium aberto.
+[2025-09-25T21:54:19.801269] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-185419-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-185419-01-pos-launch.html
+[2025-09-25T21:54:23.399356] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-09-25T21:54:23.602318] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-185423-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-185423-02-pos-goto.html
+[2025-09-25T21:54:39.867060] login via IDs: OK
+[2025-09-25T21:54:40.117520] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-185439-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-185439-03-pos-login.html
+[2025-09-25T21:54:44.710777] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-09-25T21:54:44.711778] botao Processar: clique OK
+[2025-09-25T21:54:44.770462] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-185444-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-185444-04-pos-processar.html
+[2025-09-25T21:54:44.775361] botao Processar: clique OK
+[2025-09-25T21:54:44.852201] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-185444-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-185444-04-pos-processar.html
+[2025-09-25T21:54:44.856199] botao Processar: clique OK
+[2025-09-25T21:54:44.918823] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-185444-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-185444-04-pos-processar.html
+[2025-09-25T21:54:44.922594] botao Processar: clique OK
+[2025-09-25T21:54:45.003589] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-185444-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-185444-04-pos-processar.html
+[2025-09-25T21:54:45.007660] botao Processar: clique OK
+[2025-09-25T21:54:45.073585] [snap] C:\Users\User\Downloads\conc_incorporadora\20250925-185445-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20250925-185445-04-pos-processar.html
+[2025-09-25T21:54:49.530197] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-09-25T21:54:50.238367] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-09-25T21:54:51.863556] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-09-25T21:54:52.845982] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-09-25T21:54:53.778136] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-02T19:20:49.014355] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:20:49.018354] ZIP local encontrado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:20:52.791038] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-02T19:20:53.502038] Chromium aberto.
+[2025-10-02T19:20:53.618038] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-162053-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-162053-01-pos-launch.html
+[2025-10-02T19:20:57.299112] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-02T19:20:57.494111] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-162057-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-162057-02-pos-goto.html
+[2025-10-02T19:21:13.857187] login via IDs: OK
+[2025-10-02T19:21:14.135191] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-162113-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-162113-03-pos-login.html
+[2025-10-02T19:21:19.200786] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:21:19.201788] botao Processar: clique OK
+[2025-10-02T19:21:19.279786] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.html
+[2025-10-02T19:21:19.285786] botao Processar: clique OK
+[2025-10-02T19:21:19.362785] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.html
+[2025-10-02T19:21:19.368786] botao Processar: clique OK
+[2025-10-02T19:21:19.426418] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.html
+[2025-10-02T19:21:19.432417] botao Processar: clique OK
+[2025-10-02T19:21:19.511416] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.html
+[2025-10-02T19:21:19.517416] botao Processar: clique OK
+[2025-10-02T19:21:19.577416] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-162119-04-pos-processar.html
+[2025-10-02T19:21:23.524430] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-10-02T19:21:24.229580] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-10-02T19:21:25.333690] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-10-02T19:21:26.412450] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-10-02T19:21:27.544778] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-02T19:30:15.891238] Download do Drive 100%.
+[2025-10-02T19:30:15.892237] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:30:16.976006] Download do Drive 100%.
+[2025-10-02T19:30:16.977007] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:30:17.297006] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-02T19:30:17.509006] Chromium aberto.
+[2025-10-02T19:30:17.585005] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163017-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163017-01-pos-launch.html
+[2025-10-02T19:30:21.216566] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-02T19:30:21.420565] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163021-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163021-02-pos-goto.html
+[2025-10-02T19:30:37.724023] login via IDs: OK
+[2025-10-02T19:30:37.990024] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163037-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163037-03-pos-login.html
+[2025-10-02T19:30:42.608163] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:30:42.609164] botao Processar: clique OK
+[2025-10-02T19:30:42.679164] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.html
+[2025-10-02T19:30:42.683163] botao Processar: clique OK
+[2025-10-02T19:30:42.742163] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.html
+[2025-10-02T19:30:42.746162] botao Processar: clique OK
+[2025-10-02T19:30:42.811163] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.html
+[2025-10-02T19:30:42.815163] botao Processar: clique OK
+[2025-10-02T19:30:42.876163] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.html
+[2025-10-02T19:30:42.880162] botao Processar: clique OK
+[2025-10-02T19:30:42.942162] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163042-04-pos-processar.html
+[2025-10-02T19:30:46.766624] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-10-02T19:30:47.341316] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-10-02T19:30:48.400771] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-10-02T19:30:49.336013] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-10-02T19:30:49.977009] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-02T19:33:11.361168] Download do Drive 100%.
+[2025-10-02T19:33:11.364168] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:33:12.433992] Download do Drive 100%.
+[2025-10-02T19:33:12.436004] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:33:12.765988] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-02T19:33:12.974643] Chromium aberto.
+[2025-10-02T19:33:13.081641] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163312-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163312-01-pos-launch.html
+[2025-10-02T19:33:16.692004] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-02T19:33:16.899003] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163316-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163316-02-pos-goto.html
+[2025-10-02T19:33:47.946689] login via IDs: FALHOU
+[2025-10-02T19:33:47.952688] [snap] falhou: TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+[2025-10-02T19:35:14.367714] Download do Drive 100%.
+[2025-10-02T19:35:14.370719] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:35:15.272477] Download do Drive 100%.
+[2025-10-02T19:35:15.274477] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:35:15.610097] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-02T19:35:15.813097] Chromium aberto.
+[2025-10-02T19:35:15.903098] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163515-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163515-01-pos-launch.html
+[2025-10-02T19:35:19.504746] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-02T19:35:19.695357] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163519-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163519-02-pos-goto.html
+[2025-10-02T19:35:36.028842] login via IDs: OK
+[2025-10-02T19:35:36.285842] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163536-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163536-03-pos-login.html
+[2025-10-02T19:35:41.379597] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:35:41.380599] botao Processar: clique OK
+[2025-10-02T19:35:41.447597] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.html
+[2025-10-02T19:35:41.453600] botao Processar: clique OK
+[2025-10-02T19:35:41.528597] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.html
+[2025-10-02T19:35:41.534598] botao Processar: clique OK
+[2025-10-02T19:35:41.593597] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.html
+[2025-10-02T19:35:41.599598] botao Processar: clique OK
+[2025-10-02T19:35:41.678598] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.html
+[2025-10-02T19:35:41.684598] botao Processar: clique OK
+[2025-10-02T19:35:41.746597] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-163541-04-pos-processar.html
+[2025-10-02T19:35:45.518433] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-10-02T19:35:46.115308] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-10-02T19:35:46.763155] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-10-02T19:35:47.454061] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-10-02T19:35:48.788881] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-02T19:48:45.471231] Download do Drive 100%.
+[2025-10-02T19:48:45.473233] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:48:46.387158] Download do Drive 100%.
+[2025-10-02T19:48:46.388155] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:48:46.715810] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-02T19:48:46.933789] Chromium aberto.
+[2025-10-02T19:48:47.017790] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-164846-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-164846-01-pos-launch.html
+[2025-10-02T19:48:50.633352] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-02T19:48:50.839342] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-164850-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-164850-02-pos-goto.html
+[2025-10-02T19:49:07.177405] login via IDs: OK
+[2025-10-02T19:49:07.421405] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-164907-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-164907-03-pos-login.html
+[2025-10-02T19:49:12.510727] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:49:12.511728] botao Processar: clique OK
+[2025-10-02T19:49:12.576727] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.html
+[2025-10-02T19:49:12.583726] botao Processar: clique OK
+[2025-10-02T19:49:12.660726] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.html
+[2025-10-02T19:49:12.666727] botao Processar: clique OK
+[2025-10-02T19:49:12.728726] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.html
+[2025-10-02T19:49:12.734725] botao Processar: clique OK
+[2025-10-02T19:49:12.810357] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.html
+[2025-10-02T19:49:12.817356] botao Processar: clique OK
+[2025-10-02T19:49:12.878358] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-164912-04-pos-processar.html
+[2025-10-02T19:49:16.679630] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-10-02T19:49:17.513371] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-10-02T19:49:18.265281] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-10-02T19:49:19.297596] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-10-02T19:49:20.298470] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-02T19:53:30.837039] Download do Drive 100%.
+[2025-10-02T19:53:30.839042] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:53:31.910510] Download do Drive 100%.
+[2025-10-02T19:53:31.910510] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:53:32.232147] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-02T19:53:32.433147] Chromium aberto.
+[2025-10-02T19:53:32.513145] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165332-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165332-01-pos-launch.html
+[2025-10-02T19:53:36.115040] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-02T19:53:36.323042] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165336-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165336-02-pos-goto.html
+[2025-10-02T19:53:52.668610] login via IDs: OK
+[2025-10-02T19:53:52.949609] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165352-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165352-03-pos-login.html
+[2025-10-02T19:53:58.048039] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:53:58.050039] botao Processar: clique OK
+[2025-10-02T19:53:58.121040] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.html
+[2025-10-02T19:53:58.127038] botao Processar: clique OK
+[2025-10-02T19:53:58.206039] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.html
+[2025-10-02T19:53:58.212039] botao Processar: clique OK
+[2025-10-02T19:53:58.271041] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.html
+[2025-10-02T19:53:58.276039] botao Processar: clique OK
+[2025-10-02T19:53:58.354040] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.html
+[2025-10-02T19:53:58.359693] botao Processar: clique OK
+[2025-10-02T19:53:58.421694] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165358-04-pos-processar.html
+[2025-10-02T19:54:02.214411] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-10-02T19:54:03.001160] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-10-02T19:54:03.678172] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-10-02T19:54:04.388111] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-10-02T19:54:05.927221] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-02T19:56:14.578003] Download do Drive 100%.
+[2025-10-02T19:56:14.578997] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:56:15.482484] Download do Drive 100%.
+[2025-10-02T19:56:15.483488] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:56:15.829487] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-02T19:56:16.036487] Chromium aberto.
+[2025-10-02T19:56:16.114484] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165616-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165616-01-pos-launch.html
+[2025-10-02T19:56:19.748647] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-02T19:56:19.949648] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165619-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165619-02-pos-goto.html
+[2025-10-02T19:56:36.271471] login via IDs: OK
+[2025-10-02T19:56:36.535473] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165636-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165636-03-pos-login.html
+[2025-10-02T19:56:41.169778] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T19:56:41.170780] botao Processar: clique OK
+[2025-10-02T19:56:41.238777] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.html
+[2025-10-02T19:56:41.242776] botao Processar: clique OK
+[2025-10-02T19:56:41.321777] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.html
+[2025-10-02T19:56:41.326776] botao Processar: clique OK
+[2025-10-02T19:56:41.388778] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.html
+[2025-10-02T19:56:41.392777] botao Processar: clique OK
+[2025-10-02T19:56:41.472775] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.html
+[2025-10-02T19:56:41.476777] botao Processar: clique OK
+[2025-10-02T19:56:41.537776] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-165641-04-pos-processar.html
+[2025-10-02T19:56:45.413893] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-10-02T19:56:46.261862] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-10-02T19:56:47.058703] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-10-02T19:56:48.178464] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-10-02T19:56:49.207318] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-02T20:00:30.905249] Download do Drive 100%.
+[2025-10-02T20:00:30.906241] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T20:00:31.816880] Download do Drive 100%.
+[2025-10-02T20:00:31.817875] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T20:00:32.137873] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-02T20:00:32.341871] Chromium aberto.
+[2025-10-02T20:00:32.413873] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-170032-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-170032-01-pos-launch.html
+[2025-10-02T20:00:36.008546] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-02T20:00:36.221545] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-170036-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-170036-02-pos-goto.html
+[2025-10-02T20:00:52.501360] login via IDs: OK
+[2025-10-02T20:00:52.731928] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-170052-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-170052-03-pos-login.html
+[2025-10-02T20:00:57.394937] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T20:00:57.395937] botao Processar: clique OK
+[2025-10-02T20:00:57.454937] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.html
+[2025-10-02T20:00:57.458936] botao Processar: clique OK
+[2025-10-02T20:00:57.540936] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.html
+[2025-10-02T20:00:57.544936] botao Processar: clique OK
+[2025-10-02T20:00:57.605935] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.html
+[2025-10-02T20:00:57.609937] botao Processar: clique OK
+[2025-10-02T20:00:57.688937] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.html
+[2025-10-02T20:00:57.692937] botao Processar: clique OK
+[2025-10-02T20:00:57.755565] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-170057-04-pos-processar.html
+[2025-10-02T20:01:01.347467] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto RPE
+[2025-10-02T20:01:01.925466] E-mail enviado para gd_faturamento@sacavalcante.com.br com 5 linhas do projeto CONDCESRP1E2
+[2025-10-02T20:01:02.663466] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto LA RESERVE
+[2025-10-02T20:01:03.458865] E-mail enviado para gd_faturamento@sacavalcante.com.br com 4 linhas do projeto [SEM PROJETO]
+[2025-10-02T20:01:04.622489] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-02T20:45:07.061706] Download 100% concluído
+[2025-10-02T20:45:07.064709] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T20:45:08.487486] Download 100% concluído
+[2025-10-02T20:45:08.488487] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T20:45:08.818118] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-02T20:45:09.064119] Chromium aberto.
+[2025-10-02T20:45:09.144117] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-174509-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-174509-01-pos-launch.html
+[2025-10-02T20:45:12.758323] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-02T20:45:12.965323] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-174512-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-174512-02-pos-goto.html
+[2025-10-02T20:45:29.286658] login via IDs: OK
+[2025-10-02T20:45:29.608664] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-174529-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-174529-03-pos-login.html
+[2025-10-02T20:45:34.711921] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-02T20:45:34.712920] botao Processar: clique OK
+[2025-10-02T20:45:34.787921] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-174534-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-174534-04-pos-processar.html
+[2025-10-02T20:45:34.793920] botao Processar: clique OK
+[2025-10-02T20:45:34.872918] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-174534-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-174534-04-pos-processar.html
+[2025-10-02T20:45:34.878920] botao Processar: clique OK
+[2025-10-02T20:45:34.937920] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-174534-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-174534-04-pos-processar.html
+[2025-10-02T20:45:34.943920] botao Processar: clique OK
+[2025-10-02T20:45:35.023919] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-174534-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-174534-04-pos-processar.html
+[2025-10-02T20:45:35.029920] botao Processar: clique OK
+[2025-10-02T20:45:35.088920] [snap] C:\Users\User\Downloads\conc_incorporadora\20251002-174535-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251002-174535-04-pos-processar.html
+[2025-10-02T20:45:43.389867] E-mail enviado para gd_faturamento@sacavalcante.com.br com 1 linhas do projeto CESMO4
+[2025-10-02T20:45:44.103555] E-mail enviado para gd_faturamento@sacavalcante.com.br com 42 linhas do projeto [SEM PROJETO]
+[2025-10-02T20:45:45.712176] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-06T15:45:58.012407] Download 100% concluído
+[2025-10-06T15:45:58.013407] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-06T15:45:59.443850] Download 100% concluído
+[2025-10-06T15:45:59.444844] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-06T15:45:59.922842] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-06T15:46:00.488842] Chromium aberto.
+[2025-10-06T15:46:00.574840] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-124600-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-124600-01-pos-launch.html
+[2025-10-06T15:46:04.199807] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-06T15:46:04.405806] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-124604-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-124604-02-pos-goto.html
+[2025-10-06T15:46:20.693796] login via IDs: OK
+[2025-10-06T15:46:20.995795] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-124620-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-124620-03-pos-login.html
+[2025-10-06T15:46:25.612056] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-06T15:46:25.613056] botao Processar: clique OK
+[2025-10-06T15:46:25.684053] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.html
+[2025-10-06T15:46:25.687053] botao Processar: clique OK
+[2025-10-06T15:46:25.763053] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.html
+[2025-10-06T15:46:25.767053] botao Processar: clique OK
+[2025-10-06T15:46:25.830053] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.html
+[2025-10-06T15:46:25.833055] botao Processar: clique OK
+[2025-10-06T15:46:25.913053] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.html
+[2025-10-06T15:46:25.917054] botao Processar: clique OK
+[2025-10-06T15:46:25.979055] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-124625-04-pos-processar.html
+[2025-10-06T19:27:45.521279] Download 100% concluído
+[2025-10-06T19:27:45.522280] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-06T19:27:46.915214] Download 100% concluído
+[2025-10-06T19:27:46.917209] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-06T19:27:47.258367] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-06T19:27:47.491887] Chromium aberto.
+[2025-10-06T19:27:47.564884] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-162747-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-162747-01-pos-launch.html
+[2025-10-06T19:27:51.177265] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-06T19:27:51.383902] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-162751-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-162751-02-pos-goto.html
+[2025-10-06T19:28:07.682815] login via IDs: OK
+[2025-10-06T19:28:07.917813] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-162807-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-162807-03-pos-login.html
+[2025-10-06T19:28:12.463431] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-06T19:28:12.463431] botao Processar: clique OK
+[2025-10-06T19:28:12.522430] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.html
+[2025-10-06T19:28:12.526432] botao Processar: clique OK
+[2025-10-06T19:28:12.604430] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.html
+[2025-10-06T19:28:12.609430] botao Processar: clique OK
+[2025-10-06T19:28:12.672059] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.html
+[2025-10-06T19:28:12.676059] botao Processar: clique OK
+[2025-10-06T19:28:12.756059] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.html
+[2025-10-06T19:28:12.760059] botao Processar: clique OK
+[2025-10-06T19:28:12.823059] [snap] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251006-162812-04-pos-processar.html
+[2025-10-06T19:28:17.257786] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-09T17:16:35.272466] Download 100% concluído
+[2025-10-09T17:16:35.276459] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-09T17:16:36.502685] Download 100% concluído
+[2025-10-09T17:16:36.505687] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-09T17:16:40.739068] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-09T17:16:41.411067] Chromium aberto.
+[2025-10-09T17:16:41.512068] [snap] C:\Users\User\Downloads\conc_incorporadora\20251009-141641-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251009-141641-01-pos-launch.html
+[2025-10-09T17:16:45.193255] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-09T17:16:45.408256] [snap] C:\Users\User\Downloads\conc_incorporadora\20251009-141645-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251009-141645-02-pos-goto.html
+[2025-10-09T17:17:01.755779] login via IDs: OK
+[2025-10-09T17:17:02.074436] [snap] C:\Users\User\Downloads\conc_incorporadora\20251009-141701-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251009-141701-03-pos-login.html
+[2025-10-09T17:17:07.156123] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-09T17:17:07.157124] botao Processar: clique OK
+[2025-10-09T17:17:07.227123] [snap] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.html
+[2025-10-09T17:17:07.233123] botao Processar: clique OK
+[2025-10-09T17:17:07.293122] [snap] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.html
+[2025-10-09T17:17:07.298122] botao Processar: clique OK
+[2025-10-09T17:17:07.360122] [snap] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.html
+[2025-10-09T17:17:07.365760] botao Processar: clique OK
+[2025-10-09T17:17:07.425760] [snap] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.html
+[2025-10-09T17:17:07.431761] botao Processar: clique OK
+[2025-10-09T17:17:07.492760] [snap] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251009-141707-04-pos-processar.html
+[2025-10-09T17:17:14.839007] E-mail enviado para igor.braga@sacavalcante.com.br, igor.cardeiro@sacavalcante.com.br (com cópia) — 1 linhas do projeto CESMO4
+[2025-10-09T17:17:15.957889] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-13T14:53:34.625955] Download 100% concluído
+[2025-10-13T14:53:34.626957] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-13T14:53:35.753402] Download 100% concluído
+[2025-10-13T14:53:35.753402] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-13T14:53:41.067401] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-13T14:53:41.744402] Chromium aberto.
+[2025-10-13T14:53:41.848400] [snap] C:\Users\User\Downloads\conc_incorporadora\20251013-115341-01-pos-launch.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251013-115341-01-pos-launch.html
+[2025-10-13T14:53:45.507869] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-13T14:53:45.702888] [snap] C:\Users\User\Downloads\conc_incorporadora\20251013-115345-02-pos-goto.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251013-115345-02-pos-goto.html
+[2025-10-13T14:54:02.006577] login via IDs: OK
+[2025-10-13T14:54:02.313184] [snap] C:\Users\User\Downloads\conc_incorporadora\20251013-115402-03-pos-login.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251013-115402-03-pos-login.html
+[2025-10-13T14:54:07.380946] arquivo enviado: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-13T14:54:07.381947] botao Processar: clique OK
+[2025-10-13T14:54:07.444947] [snap] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.html
+[2025-10-13T14:54:07.450947] botao Processar: clique OK
+[2025-10-13T14:54:07.509947] [snap] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.html
+[2025-10-13T14:54:07.515946] botao Processar: clique OK
+[2025-10-13T14:54:07.576947] [snap] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.html
+[2025-10-13T14:54:07.581948] botao Processar: clique OK
+[2025-10-13T14:54:07.643946] [snap] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.html
+[2025-10-13T14:54:07.650947] botao Processar: clique OK
+[2025-10-13T14:54:07.709945] [snap] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.html
+[2025-10-13T14:54:16.120959] E-mail enviado com sucesso via Gmail API com tabela HTML.

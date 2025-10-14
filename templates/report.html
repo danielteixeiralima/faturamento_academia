@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatório - Acompanhamento</title>
+  <style>
+    :root{
+      --bg:#f7fafc; --card:#ffffff; --text:#2d3748; --muted:#718096;
+      --primary:#3182ce; --primary-hover:#2b6cb0; --border:#e2e8f0;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial}
+    header{
+      position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--border);
+      padding:14px 16px;display:flex;justify-content:space-between;align-items:center
+    }
+    .title{font-weight:700}
+    .muted{color:var(--muted)}
+    a.btn,button.btn{display:inline-block;background:var(--primary);color:#fff;border:0;border-radius:8px;padding:10px 14px;font-weight:600;text-decoration:none}
+    a.btn.ghost{background:transparent;color:var(--primary);border:1px solid var(--primary)}
+    a.btn:hover,button.btn:hover{background:var(--primary-hover)}
+    a.btn.ghost:hover{background:#ebf5ff}
+
+    .container{width:100%;padding:12px 16px}
+    .card{
+      background:var(--card);border:1px solid var(--border);border-radius:12px;
+      padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.05);
+      height:calc(100vh - 90px);display:flex;flex-direction:column
+    }
+
+    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+    .totals{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{background:#edf2f7;border:1px solid #e2e8f0;border-radius:999px;padding:6px 10px;font-size:.9rem}
+
+    .center{display:flex;align-items:center;justify-content:center}
+    .spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin-right:10px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .table-wrap{
+      margin-top:12px;border:1px solid var(--border);border-radius:10px;background:#fff;
+      overflow:auto;flex:1;min-height:240px
+    }
+    table.nice{width:100%;min-width:1200px;border-collapse:separate;border-spacing:0}
+    table.nice thead th{
+      position:sticky;top:0;z-index:1;background:#f8fafc;border-bottom:1px solid var(--border);
+      padding:10px 12px;text-align:left;font-size:13px;color:#4a5568;white-space:nowrap
+    }
+    table.nice tbody td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top}
+    table.nice tbody tr:nth-child(odd){background:#f1f5f9;}  /* cinza mais encorpado */
+    table.nice tbody tr:nth-child(even){background:#fafbfc;} /* leve contraste nos pares */
+    table.nice tbody tr:hover{background:#e2e8f0;}      /* hover mais evidente */   
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">Relatório de Importação</div>
+    <nav class="row" style="gap:8px">
+      <a class="btn ghost" href="{{ url_for('dashboard') }}">Voltar ao painel</a>
+      <a class="btn" href="{{ url_for('report') }}">Recarregar</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="card" id="card">
+      <!-- Estado: carregando -->
+      <div class="center" id="loading" style="gap:10px">
+        <div class="spinner"></div>
+        <div class="muted">Processando… aguarde. Esta página atualiza assim que o relatório ficar pronto.</div>
+      </div>
+
+      <!-- Estado: pronto -->
+      <div id="content" style="display:none">
+        <div class="row" style="margin-bottom:6px">
+          <div>
+            <strong>Relatório carregado</strong>
+            <span class="muted" id="updatedAt"></span>
+          </div>
+          <div class="totals" id="totals"></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="nice">
+            <thead><tr id="theadRow"></tr></thead>
+            <tbody id="tbodyRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function fetchReport(){
+      try{
+        const r = await fetch("{{ url_for('api_report') }}", { cache: "no-store" });
+        return await r.json();
+      }catch(e){
+        return { ready: false };
+      }
+    }
+
+    function renderTable(headers, rows){
+      const thead = document.getElementById('theadRow');
+      const tbody = document.getElementById('tbodyRows');
+      thead.innerHTML = (headers || []).map(h => `<th>${h}</th>`).join('');
+      tbody.innerHTML = (rows || []).map(row =>
+        `<tr>${headers.map(h => `<td>${(row[h] ?? '').toString()}</td>`).join('')}</tr>`
+      ).join('');
+    }
+
+    function renderMeta(updated_at, meta){
+      const upd = document.getElementById('updatedAt');
+      const totals = document.getElementById('totals');
+      upd.textContent = updated_at ? `— atualizado em ${updated_at}` : '';
+      const chips = [];
+      if(meta && meta.total_pago)     chips.push(`<span class="chip">TOTAL PAGO: <strong>${meta.total_pago}</strong></span>`);
+      if(meta && meta.total_baixado) chips.push(`<span class="chip">TOTAL BAIXADO: <strong>${meta.total_baixado}</strong></span>`);
+      totals.innerHTML = chips.join('');
+    }
+
+    async function poll(){
+      const loading = document.getElementById('loading');
+      const content = document.getElementById('content');
+
+      const data = await fetchReport();
+      if(!data || !data.ready){
+        loading.style.display = 'flex';
+        content.style.display = 'none';
+        setTimeout(poll, 1500);
+        return;
+      }
+
+      renderTable(data.headers || [], data.rows || []);
+      renderMeta(data.updated_at || '', data.meta || {});
+      loading.style.display = 'none';
+      content.style.display = 'block';
+    }
+
+    // inicia o polling
+    poll();
+  </script>
+</body>
+</html>

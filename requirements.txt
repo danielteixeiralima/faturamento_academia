@@ -1,0 +1,8 @@
+# filename: requirements.txt
+Flask>=3.0.0
+SQLAlchemy>=2.0.0
+psycopg2-binary>=2.9.0
+Werkzeug>=3.0.0
+PyAutoGUI>=0.9.54
+Pillow>=10.0.0
+python-dotenv>=1.0.0
