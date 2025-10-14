@@ -1638,3 +1638,6 @@ porque o host conectado não respondeu
 [2025-10-14T22:28:33.119] [rpa] Falha ao salvar screenshot: Error('Event loop is closed! Is Playwright already stopped?')
 [2025-10-14T22:28:33.119] [rpa] Exceção no fluxo: TargetClosedError('Page.wait_for_timeout: Target page, context or browser has been closed')
 [2025-10-14T22:28:33.119] [rpa] Relatório salvo em: C:\Users\User\Downloads\faturamento_academia\last_report.json
+[2025-10-14T22:35:45.530] [rpa] Iniciando (abrindo navegador automaticamente).
+[2025-10-14T22:35:45.530] [rpa] [stub] Usando ZIP local existente: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T22:35:52.294] [rpa] Relatório salvo em: C:\Users\User\Downloads\faturamento_academia\last_report.json
