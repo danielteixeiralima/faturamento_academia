@@ -136,3 +136,16 @@
 [2025-09-25T20:23:32.954093] Erro no fluxo RPA (PyAutoGUI + Playwright): Page.evaluate: Target page, context or browser has been closed
 [2025-10-02T19:34:10.495933] Erro no fluxo RPA (PyAutoGUI + Playwright): Não encontrei a aba do AZtronic aberta via PyAutoGUI (em nenhum context).
 [2025-10-06T15:46:28.934133] Erro no fluxo RPA (PyAutoGUI + Playwright): list index out of range
+[2025-10-14T20:40:59.274885] Erro no fluxo RPA (PyAutoGUI + Playwright): BrowserType.launch_persistent_context: Executable doesn't exist at C:\Users\User\AppData\Local\ms-playwright\chromium-1181\chrome-win\chrome.exe
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+[2025-10-14T20:50:48.616979] Erro no fluxo RPA (PyAutoGUI + Playwright): Page.bring_to_front: Target page, context or browser has been closed
+[2025-10-14T20:53:39.807816] Erro no fluxo RPA (PyAutoGUI + Playwright): Não encontrei a aba do AZtronic aberta via PyAutoGUI (em nenhum context).
+[2025-10-14T20:57:45.610678] Erro no fluxo RPA (PyAutoGUI + Playwright): Não encontrei a aba do AZtronic aberta via PyAutoGUI (em nenhum context).
+[2025-10-14T20:59:00.533840] Erro no fluxo RPA (PyAutoGUI + Playwright): Não encontrei a aba do AZtronic aberta via PyAutoGUI (em nenhum context).

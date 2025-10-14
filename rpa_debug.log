@@ -1548,3 +1548,66 @@ porque o host conectado não respondeu
 [2025-10-13T14:54:07.650947] botao Processar: clique OK
 [2025-10-13T14:54:07.709945] [snap] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.png ; [html] C:\Users\User\Downloads\conc_incorporadora\20251013-115407-04-pos-processar.html
 [2025-10-13T14:54:16.120959] E-mail enviado com sucesso via Gmail API com tabela HTML.
+[2025-10-14T20:40:57.234355] Download 100% concluído
+[2025-10-14T20:40:57.234355] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:40:58.288143] Download 100% concluído
+[2025-10-14T20:40:58.288143] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:40:59.258096] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-14T20:50:39.990554] Download 100% concluído
+[2025-10-14T20:50:39.993804] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:50:41.359544] Download 100% concluído
+[2025-10-14T20:50:41.376037] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:50:41.668636] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-14T20:50:42.158857] Chromium aberto.
+[2025-10-14T20:50:42.275190] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175042-01-pos-launch.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175042-01-pos-launch.html
+[2025-10-14T20:50:45.904185] goto OK: https://srv1.aztronic.com.br/collect_sc/
+[2025-10-14T20:50:46.136066] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175045-02-pos-goto.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175045-02-pos-goto.html
+[2025-10-14T20:52:31.937048] Download 100% concluído
+[2025-10-14T20:52:31.939065] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:52:33.751042] Download 100% concluído
+[2025-10-14T20:52:34.336501] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:52:35.049317] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-14T20:52:35.819305] Chromium aberto.
+[2025-10-14T20:52:35.939350] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175235-01-pos-launch.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175235-01-pos-launch.html
+[2025-10-14T20:52:41.418081] goto OK: https://evo5.w12app.com.br/#/acesso/bodytech/autenticacao
+[2025-10-14T20:52:42.244854] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175241-02-pos-goto.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175241-02-pos-goto.html
+[2025-10-14T20:53:16.617338] login via IDs: FALHOU
+[2025-10-14T20:53:16.802159] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175316-03-pos-login.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175316-03-pos-login.html
+[2025-10-14T20:56:38.590484] Download 100% concluído
+[2025-10-14T20:56:38.601754] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:56:40.011805] Download 100% concluído
+[2025-10-14T20:56:40.011805] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:56:40.311961] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-14T20:56:40.494010] Chromium aberto.
+[2025-10-14T20:56:40.620413] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175640-01-pos-launch.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175640-01-pos-launch.html
+[2025-10-14T20:56:45.311608] goto OK: https://evo5.w12app.com.br/#/acesso/bodytech/autenticacao
+[2025-10-14T20:56:47.093724] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175645-02-pos-goto.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175645-02-pos-goto.html
+[2025-10-14T20:57:22.196257] login via IDs: FALHOU
+[2025-10-14T20:57:22.483522] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175722-03-pos-login.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175722-03-pos-login.html
+[2025-10-14T20:57:52.766301] Download 100% concluído
+[2025-10-14T20:57:52.766301] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:57:53.819568] Download 100% concluído
+[2025-10-14T20:57:53.819568] Arquivo baixado do Drive para: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T20:57:54.104952] RPA iniciou. IS_WINDOWS=True HEADLESS=False USE_PYAUTO=False
+[2025-10-14T20:57:54.292840] Chromium aberto.
+[2025-10-14T20:57:54.363825] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175754-01-pos-launch.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175754-01-pos-launch.html
+[2025-10-14T20:57:59.208474] goto OK: https://evo5.w12app.com.br/#/acesso/bodytech/autenticacao
+[2025-10-14T20:58:00.987013] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175759-02-pos-goto.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175759-02-pos-goto.html
+[2025-10-14T20:58:36.860443] login via IDs: FALHOU
+[2025-10-14T20:58:37.051087] [snap] C:\Users\User\Downloads\faturamento_academia\20251014-175836-03-pos-login.png ; [html] C:\Users\User\Downloads\faturamento_academia\20251014-175836-03-pos-login.html
+[2025-10-14T21:48:47.892975] [rpa] Iniciando (modo acoplado, sem abrir navegador).
+[2025-10-14T21:48:47.892975] [stub] Usando ZIP local existente: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T21:48:48.191731] [rpa] Não foi possível conectar ao Chromium existente via CDP: Error('BrowserType.connect_over_cdp: connect ECONNREFUSED 127.0.0.1:9222\nCall log:\n  - <ws preparing> retrieving websocket url from http://127.0.0.1:9222\n')
+[2025-10-14T21:48:48.191731] [rpa] Abortando sem abrir navegador (conforme solicitado).
+[2025-10-14T21:59:58.549] [rpa] Iniciando (abrindo navegador automaticamente).
+[2025-10-14T21:59:58.549] [stub] Usando ZIP local existente: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T22:00:00.919] [rpa] Exceção no fluxo: Error('Locator.wait_for: Error: strict mode violation: locator("input#usuario, input[autocomplete=\\"username\\"], input[placeholder=\\"E-mail\\"]") resolved to 2 elements:\n    1) <input matinput="" type="text" required="" id="usuario" max="undefined" min="undefined" maxlength="500" aria-invalid="false" aria-required="true" _ngcontent-mkj-c721="" autocomplete="username" placeholder="Usuário / E-mail" class="mat-input-element mat-form-field-autofill-control ng-tns-c82-0 cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-invalid"/> aka get_by_role("textbox", name="Usuário / E-mail")\n    2) <input matinput="" type="text" max="undefined" min="undefined" maxlength="500" placeholder="E-mail" aria-invalid="false" id="emailRecuperacao" aria-required="false" _ngcontent-mkj-c721="" autocomplete="one-time-code" class="mat-input-element mat-form-field-autofill-control ng-tns-c82-2 cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid" pattern="^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-…/> aka get_by_role("textbox", name="E-mail", exact=True)\n\nCall log:\n  - waiting for locator("input#usuario, input[autocomplete=\\"username\\"], input[placeholder=\\"E-mail\\"]") to be visible\n')
+[2025-10-14T22:00:01.230] [rpa] Screenshot de erro salvo em: C:\Users\User\Downloads\faturamento_academia\screenshot_erro_1760479200.png
+[2025-10-14T22:00:24.202] [rpa] Iniciando (abrindo navegador automaticamente).
+[2025-10-14T22:00:24.202] [stub] Usando ZIP local existente: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T22:00:26.564] [rpa] Exceção no fluxo: Error('Locator.wait_for: Error: strict mode violation: locator("input#usuario, input[autocomplete=\\"username\\"], input[placeholder=\\"E-mail\\"]") resolved to 2 elements:\n    1) <input matinput="" type="text" required="" id="usuario" max="undefined" min="undefined" maxlength="500" aria-invalid="false" aria-required="true" _ngcontent-ojx-c721="" autocomplete="username" placeholder="Usuário / E-mail" class="mat-input-element mat-form-field-autofill-control ng-tns-c82-0 cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-invalid"/> aka get_by_role("textbox", name="Usuário / E-mail")\n    2) <input matinput="" type="text" max="undefined" min="undefined" maxlength="500" placeholder="E-mail" aria-invalid="false" id="emailRecuperacao" aria-required="false" _ngcontent-ojx-c721="" autocomplete="one-time-code" class="mat-input-element mat-form-field-autofill-control ng-tns-c82-2 cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid" pattern="^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-…/> aka get_by_role("textbox", name="E-mail", exact=True)\n\nCall log:\n  - waiting for locator("input#usuario, input[autocomplete=\\"username\\"], input[placeholder=\\"E-mail\\"]") to be visible\n')
+[2025-10-14T22:00:26.851] [rpa] Screenshot de erro salvo em: C:\Users\User\Downloads\faturamento_academia\screenshot_erro_1760479226.png
+[2025-10-14T22:03:42.207] [rpa] Iniciando (abrindo navegador automaticamente).
+[2025-10-14T22:03:42.211] [stub] Usando ZIP local existente: C:\AUTOMACAO\conciliacao\arquivos\arquivos.zip
+[2025-10-14T22:03:44.449] [rpa] Exceção no fluxo: Error('Locator.wait_for: Error: strict mode violation: locator("input#usuario, input[autocomplete=\\"username\\"], input[placeholder=\\"E-mail\\"]") resolved to 2 elements:\n    1) <input matinput="" type="text" required="" id="usuario" max="undefined" min="undefined" maxlength="500" aria-invalid="false" aria-required="true" _ngcontent-lub-c721="" autocomplete="username" placeholder="Usuário / E-mail" class="mat-input-element mat-form-field-autofill-control ng-tns-c82-0 cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-invalid"/> aka get_by_role("textbox", name="Usuário / E-mail")\n    2) <input matinput="" type="text" max="undefined" min="undefined" maxlength="500" placeholder="E-mail" aria-invalid="false" id="emailRecuperacao" aria-required="false" _ngcontent-lub-c721="" autocomplete="one-time-code" class="mat-input-element mat-form-field-autofill-control ng-tns-c82-2 cdk-text-field-autofill-monitored ng-untouched ng-pristine ng-valid" pattern="^(([^<>()[\\]\\\\.,;:\\s@"]+(\\.[^<>()[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-…/> aka get_by_role("textbox", name="E-mail", exact=True)\n\nCall log:\n  - waiting for locator("input#usuario, input[autocomplete=\\"username\\"], input[placeholder=\\"E-mail\\"]") to be visible\n')
+[2025-10-14T22:03:44.759] [rpa] Screenshot de erro salvo em: C:\Users\User\Downloads\faturamento_academia\screenshot_erro_1760479424.png

@@ -1,5 +1,5 @@
 # filename: app.py
-# Aplicação Flask principal com .env (comentários usam alguns dígitos árabe-índicos).
+# Aplicação Flask principal com ..env (comentários usam alguns dígitos árabe-índicos).
 import os
 import zipfile
 import threading
@@ -33,8 +33,8 @@ else:
     UPLOAD_DIR = os.getenv("CNAB_LOCAL_DIR", "/home/felipe/Downloads/arquivos")
 
 
-# Carrega variáveis de ambiente do .env (executa ١ vez no start).
-# Carrega variáveis do .env
+# Carrega variáveis de ambiente do ..env (executa ١ vez no start).
+# Carrega variáveis do ..env
 
 
 BASE_DIR, UPLOAD_DIR_IGNORED, EXTRACT_DIR = get_paths()  # mantém compatibilidade
@@ -272,5 +272,5 @@ def uploaded_file(filename):
 if __name__ == '__main__':
     host = os.getenv('HOST', '0.0.0.0')
     port = int(os.getenv('PORT', '5000'))
-    # força o reloader automático independentemente do .env
+    # força o reloader automático independentemente do ..env
     app.run(host=host, port=port, debug=True, use_reloader=True)

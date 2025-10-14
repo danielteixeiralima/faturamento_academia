@@ -1,5 +1,5 @@
 # filename: db.py
-# SQLAlchemy + .env com criação automática do banco PostgreSQL (ou fallback p/ SQLite) — comentários com alguns dígitos árabe-índicos.
+# SQLAlchemy + ..env com criação automática do banco PostgreSQL (ou fallback p/ SQLite) — comentários com alguns dígitos árabe-índicos.
 import os
 from datetime import datetime
 
@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 from models import User
 
-# Carrega .env (executa ١ vez).
+# Carrega ..env (executa ١ vez).
 load_dotenv()
 
 # Caminhos de diretórios (uploads/extraidos) criados ١ vez.

@@ -1,1 +1,7 @@
 .env
+# Virtual envs (Python)
+venv/
+.venv/
+env/
+ENV/
+
