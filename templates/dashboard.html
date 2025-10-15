@@ -16,9 +16,7 @@
       --ok: #22c55e;
       --err: #ef4444;
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
@@ -29,7 +27,6 @@
       justify-content: center;
       height: 100vh;
     }
-
     .logout {
       color: var(--muted);
       text-decoration: none;
@@ -39,9 +36,7 @@
       right: 26px;
       transition: color 0.2s ease;
     }
-
     .logout:hover { color: var(--primary); }
-
     .card {
       width: 100%;
       max-width: 520px;
@@ -53,7 +48,6 @@
       text-align: center;
       animation: fadeIn 0.6s ease;
     }
-
     button {
       appearance: none;
       border: 0;
@@ -67,16 +61,12 @@
       margin-top: 10px;
       letter-spacing: 0.3px;
     }
-
     button:hover { background: var(--primary-hover); transform: scale(1.05); }
     button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
     .hint { font-size: 0.9rem; color: var(--muted); margin-top: 8px; }
     .msg { margin-top: 12px; font-weight: 600; }
     .msg.ok { color: var(--ok); }
     .msg.err { color: var(--err); }
-
-    /* overlay */
     .overlay {
       position: fixed;
       inset: 0;
@@ -88,7 +78,6 @@
       backdrop-filter: blur(4px);
     }
     .overlay.hidden { display: none; }
-
     .box {
       background: var(--card);
       border: 1px solid var(--border);
@@ -101,7 +90,6 @@
       font-weight: 600;
       color: var(--text);
     }
-
     .spinner {
       width: 28px;
       height: 28px;
@@ -110,7 +98,6 @@
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-
     @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   </style>
@@ -124,7 +111,6 @@
     <div id="arquivo-atual" class="hint" style="margin-top:6px;"></div>
   </div>
 
-  <!-- overlay -->
   <div id="overlay" class="overlay hidden">
     <div class="box">
       <div class="spinner"></div>
@@ -138,13 +124,13 @@
     const uploadMsg = document.getElementById("upload-msg");
     const arquivoAtual = document.getElementById("arquivo-atual");
 
-    // Atualiza status do arquivo atual
     async function checarArquivo(){
       try{
         const r = await fetch("/api/arquivo-atual?t=" + Date.now());
         const j = await r.json();
         if(j.ok){
           const data = new Date(j.mtime * 1000).toLocaleString();
+          arquivoAtual.textContent = "arquivos.zip localizado (atualizado em " + data + ").";
         }else{
           arquivoAtual.textContent = "Nenhum arquivo encontrado até o momento.";
         }
@@ -152,10 +138,8 @@
         arquivoAtual.textContent = "Erro ao verificar arquivo.";
       }
     }
-
     checarArquivo();
 
-    // Iniciar processo completo
     btnStart.addEventListener("click", async ()=> {
       overlay.classList.remove("hidden");
       btnStart.disabled = true;
@@ -163,7 +147,6 @@
       uploadMsg.className = "msg";
 
       try{
-        // 1) Baixa o zip do Drive
         const r1 = await fetch("{{ url_for('upload_zip_automatico') }}", { method:"POST" });
         const j1 = await r1.json();
         if(!j1.ok) throw new Error(j1.error || "Falha ao baixar ZIP do Drive");
@@ -172,12 +155,10 @@
         uploadMsg.className = "msg ok";
         checarArquivo();
 
-        // 2) Inicia o processo
         const res = await fetch("{{ url_for('start_async') }}", { method:"POST" });
         const data = await res.json();
         if(!data.ok) throw new Error(data.error || "Falha ao iniciar processo");
 
-        // 3) Poll até aparecer o relatório
         const startedAt = data.started_at || Math.floor(Date.now()/1000);
         async function poll(){
           try{

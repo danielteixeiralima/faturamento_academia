@@ -1,479 +1,576 @@
-# filename: rpa.py
+# rpa.py
 import os
 import re
-import time
+import asyncio
 from datetime import datetime, timedelta
+from pathlib import Path
 
 from dotenv import load_dotenv
-from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
+from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeout
 
-# -----------------------------------------------------------
-# .env
-# -----------------------------------------------------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-load_dotenv(os.path.join(BASE_DIR, ".env"))
+# =========================
+# Configurações
+# =========================
+TENANT = "bodytech"
+BASE_URL_LOGIN = f"https://evo5.w12app.com.br/#/acesso/{TENANT}/login"
+APP_HOME_URL = "https://evo5.w12app.com.br/#/app/bodytech/-2/inicio/geral"
 
-W12_URL = os.getenv("W12_URL", "https://evo5.w12app.com.br/#/acesso/bodytech/autenticacao")
-W12_USER = os.getenv("W12_USER")
-W12_PASS = os.getenv("W12_PASS")
-HEADLESS = os.getenv("HEADLESS", "0").strip() in ("1", "true", "True")
-WINDOWS = (os.name == "nt")
+SCREENSHOT_DIR = Path.home() / "Downloads" / "faturamento_academia"
+SCREENSHOT_DIR.mkdir(parents=True, exist_ok=True)
 
-# -----------------------------------------------------------
-# Compat: stub para o app usar a “verificação de zip local”
-# -----------------------------------------------------------
-def _ensure_local_zip_from_drive(log_dir: str, filename: str = "arquivos.zip"):
-    if WINDOWS:
-        root_dir = os.getenv("CNAB_LOCAL_DIR_WINDOWS", r"C:\AUTOMACAO\conciliacao\arquivos")
-    else:
-        root_dir = os.getenv("CNAB_LOCAL_DIR", "/home/felipe/Downloads/arquivos")
-    path = os.path.join(root_dir, filename)
-    if os.path.isfile(path):
-        _log(f"[stub] Usando ZIP local existente: {path}")
-        return path
-    _log(f"[stub] NÃO ENCONTREI {path}")
-    return None
+DEFAULT_TIMEOUT = 6000
+SHORT_TIMEOUT = 3000
+VERY_SHORT_TIMEOUT = 1500
+FAST_TIMEOUT = 1200
 
+UNIDADE_ALVO_REGEX = re.compile(r"^\s*BT TIJUC\s*-\s*Shopping Tijuca\s*-\s*11\s*$", re.IGNORECASE)
 
-# -----------------------------------------------------------
+# =========================
 # Utilidades
-# -----------------------------------------------------------
-def _log(msg: str):
-    ts = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
-    print(f"[{ts}] [rpa] {msg}", flush=True)
+# =========================
+def log(msg: str) -> None:
+    print(f"[rpa] {msg}", flush=True)
 
+def fmt_date_br(d: datetime) -> str:
+    return d.strftime("%d/%m/%Y")
 
-def _save_report_json(base_dir: str, payload: dict):
+def previous_business_day(ref: datetime | None = None) -> datetime:
+    if ref is None:
+        ref = datetime.now()
+    d = ref.date() - timedelta(days=1)
+    while d.weekday() >= 5:
+        d -= timedelta(days=1)
+    return datetime(d.year, d.month, d.day)
+
+async def wait_loading_quiet(page, fast: bool = False) -> None:
     try:
-        path = os.path.join(base_dir, "last_report.json")
-        payload = payload or {}
-        payload.setdefault("ready", True)
-        payload.setdefault("headers", [])
-        payload.setdefault("rows", [])
-        payload.setdefault("meta", {})
-        payload.setdefault("updated_at", datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
-        import json
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(payload, f, ensure_ascii=False)
+        await page.wait_for_load_state("networkidle", timeout=(1500 if fast else DEFAULT_TIMEOUT))
+    except PlaywrightTimeout:
+        pass
+    for sel in [
+        "evo-loading",
+        ".mat-progress-bar",
+        ".cdk-overlay-backdrop",
+        ".cdk-global-overlay-wrapper .mat-progress-spinner",
+    ]:
+        try:
+            await page.wait_for_selector(sel, state="detached", timeout=(FAST_TIMEOUT if fast else SHORT_TIMEOUT))
+        except PlaywrightTimeout:
+            try:
+                await page.wait_for_selector(sel, state="hidden", timeout=VERY_SHORT_TIMEOUT)
+            except PlaywrightTimeout:
+                pass
+
+async def safe_click(loc, desc: str, force: bool = False, timeout: int = SHORT_TIMEOUT) -> bool:
+    try:
+        await loc.wait_for(state="visible", timeout=timeout)
+        await loc.click(force=force, timeout=timeout)
+        log(f"{desc}: clique executado")
+        return True
+    except PlaywrightTimeout:
+        log(f"{desc}: timeout ao clicar")
+        return False
     except Exception as e:
-        _log(f"Falha ao salvar last_report.json: {e!r}")
+        log(f"{desc}: erro ao clicar: {e}")
+        return False
 
+async def click_with_retries(loc, desc: str, attempts: int = 3, force_last: bool = True, timeout: int = SHORT_TIMEOUT) -> bool:
+    for i in range(1, attempts + 1):
+        ok = await safe_click(loc, f"{desc} (tentativa {i}/{attempts})", force=False, timeout=timeout)
+        if ok:
+            return True
+    if force_last:
+        try:
+            await loc.wait_for(state="visible", timeout=timeout)
+            await loc.click(force=True, timeout=timeout)
+            log(f"{desc}: clique com force=True executado")
+            return True
+        except Exception as e:
+            log(f"{desc}: clique com force=True falhou: {e}")
+    return False
 
-def _screenshot(page, prefix="screenshot_erro"):
+def ensure_env() -> tuple[str, str]:
+    load_dotenv(override=True)
+    user = os.getenv("W12_USER", "").strip().lower()
+    pwd = os.getenv("W12_PASS", "").strip().lower()
+    if not user or not pwd:
+        raise RuntimeError("Credenciais não configuradas no .env (W12_USER e W12_PASS).")
+    return user, pwd
+
+def _corrigir_url_tenant(url: str) -> str:
+    if "/acesso//" in url:
+        return url.replace("/acesso//", f"/acesso/{TENANT}/")
+    return re.sub(r"/acesso/[^/]+/", f"/acesso/{TENANT}/", url)
+
+async def garantir_tenant_bodytech(page, max_correcoes: int = 5) -> None:
+    for i in range(max_correcoes):
+        url = page.url
+        if f"/acesso/{TENANT}/" in url:
+            return
+        corr = _corrigir_url_tenant(url)
+        if corr != url:
+            log(f"Ajustando tenant na URL (tentativa {i+1}/{max_correcoes}): {url} -> {corr}")
+            await page.goto(corr, wait_until="domcontentloaded")
+            await asyncio.sleep(0.2)
+        else:
+            return
+
+async def _forcar_url_via_barra(page, url: str) -> None:
     try:
-        fname = f"{prefix}_{int(time.time())}.png"
-        path = os.path.join(BASE_DIR, fname)
-        page.screenshot(path=path, full_page=True)
-        _log(f"Screenshot de erro salvo em: {path}")
+        await page.keyboard.press("Control+L")
+        await asyncio.sleep(0.05)
+        await page.keyboard.type(url, delay=4)
+        await page.keyboard.press("Enter")
+        log("URL ajustada via barra do navegador")
     except Exception as e:
-        _log(f"Falha ao salvar screenshot: {e!r}")
+        log(f"Fallback da barra de URL falhou: {e}")
 
-
-def _click_resiliente(locator, desc="elemento", timeout_normal=3000):
-    """
-    1) click normal
-    2) se interceptado: click(force=True)
-    3) fallback: DOM click via evaluate
-    """
+async def tenant_watchdog(page, stop_event: asyncio.Event) -> None:
     try:
-        locator.scroll_into_view_if_needed(timeout=timeout_normal)
+        while not stop_event.is_set():
+            url = page.url
+            if "/app/bodytech/" in url:
+                stop_event.set()
+                break
+            if "/acesso/evo5/" in url or "/acesso//" in url:
+                corr = _corrigir_url_tenant(url)
+                log(f"Watchdog corrigindo URL: {url} -> {corr}")
+                try:
+                    await page.goto(corr, wait_until="domcontentloaded")
+                except Exception:
+                    pass
+            await asyncio.sleep(0.15)
     except Exception:
         pass
 
-    try:
-        locator.wait_for(state="visible", timeout=timeout_normal)
-    except Exception:
+async def find_first_visible(page, selectors: list[str], timeout_each: int = 3000):
+    for css in selectors:
+        loc = page.locator(css).first
         try:
-            locator.wait_for(state="attached", timeout=timeout_normal)
-        except Exception as e:
-            _log(f"{desc}: não ficou visível/anexado a tempo: {e!r}")
-            raise
+            await loc.wait_for(state="visible", timeout=timeout_each)
+            return loc
+        except Exception:
+            continue
+    return None
+
+async def wait_for_login_fields(page, max_wait_ms: int = 12000):
+    email_selectors = [
+        "input#usuario",
+        "input[name='usuario']",
+        "input[name='email']",
+        "input[formcontrolname='usuario']",
+        "input[formcontrolname='email']",
+        "input[type='email']",
+        "input[placeholder*='E-mail' i]",
+        "input[placeholder*='Email' i]",
+    ]
+    pass_selectors = [
+        "input#senha",
+        "input[name='senha']",
+        "input[formcontrolname='senha']",
+        "input[type='password']",
+        "input[placeholder*='Senha' i]",
+    ]
+
+    end_time = datetime.now().timestamp() + (max_wait_ms / 1000.0)
+    email_loc = None
+    pass_loc = None
+    while datetime.now().timestamp() < end_time:
+        await garantir_tenant_bodytech(page, max_correcoes=1)
+
+        if "/acesso/bodytech/" not in page.url:
+            await _forcar_url_via_barra(page, BASE_URL_LOGIN)
+
+        if email_loc is None:
+            email_loc = await find_first_visible(page, email_selectors, timeout_each=800)
+        if pass_loc is None:
+            pass_loc = await find_first_visible(page, pass_selectors, timeout_each=800)
+
+        if email_loc and pass_loc:
+            return email_loc, pass_loc
+
+        await asyncio.sleep(0.2)
+
+    raise PlaywrightTimeout("Campos de login não ficaram visíveis a tempo.")
+
+# =========================
+# Etapas do fluxo
+# =========================
+async def do_login(page, user: str, pwd: str) -> None:
+    log("Abrindo página de login")
+    await page.goto(BASE_URL_LOGIN, wait_until="domcontentloaded", timeout=20000)
+
+    stop_wd = asyncio.Event()
+    wd_task = asyncio.create_task(tenant_watchdog(page, stop_wd))
 
     try:
-        locator.click(timeout=timeout_normal)
-        return
-    except Exception as e1:
-        msg = str(e1)
-        _log(f"Falha ao clicar {desc} (normal): {e1!r}")
+        email_input, pass_input = await wait_for_login_fields(page, max_wait_ms=15000)
+        log("Página de login/autenticação detectada — campos visíveis")
 
-        if "intercepts pointer events" in msg or "not receivable at point" in msg or "element receives pointer-events" in msg:
+        entrar_btn = page.get_by_role("button", name=re.compile(r"^\s*Entrar\s*$", re.IGNORECASE)).first
+        try:
+            await entrar_btn.wait_for(state="visible", timeout=3000)
+        except PlaywrightTimeout:
+            entrar_btn = page.locator("button", has_text=re.compile(r"^\s*Entrar\s*$", re.IGNORECASE)).first
+
+        await email_input.fill("")
+        await email_input.fill(user)
+        await pass_input.fill("")
+        await pass_input.fill(pwd)
+
+        log(f"[DEBUG] Usuário no campo: '{await email_input.input_value()}'")
+        log(f"[DEBUG] Senha no campo: '{await pass_input.input_value()}'")
+
+        if not await click_with_retries(entrar_btn, "Entrar", attempts=2, timeout=DEFAULT_TIMEOUT):
+            raise RuntimeError("Falha ao clicar em Entrar")
+
+        await asyncio.sleep(0.4)
+
+        try:
+            if "/autenticacao" in page.url:
+                prosseguir_btn = page.get_by_role("button", name=re.compile(r"^\s*Prosseguir\s*$", re.IGNORECASE)).first
+                await safe_click(prosseguir_btn, "Prosseguir", force=False, timeout=FAST_TIMEOUT)
+        except Exception:
+            pass
+
+        await page.goto(APP_HOME_URL, wait_until="domcontentloaded")
+        await wait_loading_quiet(page, fast=True)
+        log(f"Pós-login. URL atual: {page.url}")
+    finally:
+        stop_wd.set()
+        try:
+            await wd_task
+        except Exception:
+            pass
+
+async def selecionar_unidade_obrigatorio(page) -> None:
+    log("Abrindo seletor de unidade")
+    await asyncio.sleep(0.6)
+
+    opened = False
+    mat_arrow = page.locator("div.mat-select-arrow-wrapper").first
+    try:
+        await mat_arrow.wait_for(state="visible", timeout=2500)
+        await mat_arrow.click()
+        opened = True
+        log("mat-select de unidade aberto (tentativa 1)")
+    except Exception:
+        opened = False
+
+    if not opened:
+        user_drop = page.locator("i.material-icons.icone-seta-novo-user-data").filter(has_text="arrow_drop_down").first
+        try:
+            await user_drop.wait_for(state="visible", timeout=2500)
+            await user_drop.click()
+            await asyncio.sleep(0.3)
+            await mat_arrow.wait_for(state="visible", timeout=2500)
+            await mat_arrow.click()
+            opened = True
+            log("mat-select de unidade aberto via dropdown do usuário (tentativa 2)")
+        except Exception:
+            opened = False
+
+    if not opened:
+        combobox = page.get_by_role("combobox").nth(0)
+        try:
+            await combobox.wait_for(state="visible", timeout=2500)
+            await combobox.click(force=True)
+            opened = True
+            log("mat-select de unidade aberto forçando combobox (tentativa 3)")
+        except Exception:
+            opened = False
+
+    if not opened:
+        raise RuntimeError("Não foi possível abrir o seletor de unidade")
+
+    overlay = page.locator("div.cdk-overlay-pane").filter(
+        has_not=page.locator(".cdk-overlay-pane[aria-hidden='true']")
+    ).last
+
+    search_input = overlay.locator("input.pesquisar-dropdrown[placeholder='Pesquisar']").first
+    if not await search_input.is_visible():
+        search_input = overlay.locator("input[placeholder='Pesquisar']").first
+
+    await search_input.wait_for(state="visible", timeout=4000)
+    await search_input.fill("shopping tijuca")
+
+    item = overlay.get_by_text(UNIDADE_ALVO_REGEX).first
+    if not await click_with_retries(item, "Unidade BT TIJUC - Shopping Tijuca - 11", attempts=3, timeout=5000):
+        await search_input.fill("")
+        await search_input.fill("tijuca")
+        item = overlay.get_by_text(UNIDADE_ALVO_REGEX).first
+        if not await click_with_retries(item, "Unidade BT TIJUC - Shopping Tijuca - 11", attempts=3, timeout=5000):
+            raise RuntimeError("Não foi possível selecionar a unidade")
+
+    await wait_loading_quiet(page, fast=True)
+    log("Unidade selecionada com sucesso")
+
+async def abrir_menu_financeiro_e_ir_para_nfs(page) -> None:
+    log("Abrindo menu Financeiro e acessando Notas Fiscais de Serviço")
+
+    financeiro_span = page.locator("span.nav-text", has_text=re.compile(r"^\s*Financeiro\s*$", re.IGNORECASE)).first
+    await financeiro_span.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+
+    li_fin = financeiro_span.locator("xpath=ancestor::li[1]")
+    chevron = li_fin.locator("i.material-icons").filter(has_text=re.compile(r"keyboard_arrow_(down|right)")).first
+
+    try:
+        await chevron.wait_for(state="visible", timeout=FAST_TIMEOUT)
+        await chevron.click()
+    except Exception:
+        await financeiro_span.click()
+
+    await asyncio.sleep(0.25)
+
+    nfs = page.get_by_text(re.compile(r"^\s*Notas Fiscais de Serviço\s*$", re.IGNORECASE)).first
+    try:
+        await nfs.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    except PlaywrightTimeout:
+        await chevron.click(force=True)
+        await nfs.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+
+    if not await click_with_retries(nfs, "Notas Fiscais de Serviço", attempts=2, timeout=DEFAULT_TIMEOUT):
+        await nfs.click(force=True, timeout=DEFAULT_TIMEOUT)
+        log("Notas Fiscais de Serviço: clique forçado executado")
+
+    await wait_loading_quiet(page, fast=True)
+
+async def aplicar_data_ontem(page) -> None:
+    log("Aplicando filtro de data: Ontem")
+    btn_data = page.locator("button[data-cy='EFD-DatePickerBTN']").first
+    await btn_data.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await btn_data.click()
+
+    ontem = page.get_by_text(re.compile(r"^\s*Ontem\s*$", re.IGNORECASE)).first
+    await ontem.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await ontem.click()
+
+    aplicar = page.locator("button[data-cy='EFD-ApplyButton']").first
+    await aplicar.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await aplicar.click()
+
+    await wait_loading_quiet(page, fast=True)
+
+async def exibir_por_data_lancamento(page) -> None:
+    log("Configurando 'Exibir por' → 'Data de Lançamento'")
+
+    abrir = page.locator("button[data-cy='abrirFiltro']").first
+    await abrir.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+
+    patt = re.compile(r"^\s*Data\s*(de\s*)?lan[çc]amento\s*$", re.IGNORECASE)
+
+    async def open_overlay_or_retry() -> object:
+        for _ in range(2):
             try:
-                locator.click(force=True, timeout=timeout_normal)
-                _log(f"{desc}: clique com force=True OK.")
+                await abrir.click()
+            except Exception:
+                await abrir.click(force=True)
+            overlay = page.locator("div.cdk-overlay-pane").filter(
+                has_not=page.locator(".cdk-overlay-pane[aria-hidden='true']")
+            ).last
+            try:
+                await overlay.wait_for(state="visible", timeout=1500)
+                return overlay
+            except PlaywrightTimeout:
+                await asyncio.sleep(0.2)
+                continue
+        return None
+
+    overlay = await open_overlay_or_retry()
+    if overlay is None:
+        # força sequência: ESC + reabre
+        await page.keyboard.press("Escape")
+        await asyncio.sleep(0.2)
+        overlay = await open_overlay_or_retry()
+        if overlay is None:
+            # último recurso: tenta clicar aplicar global (se já estiver correto)
+            try:
+                aplicar_global = page.locator("button[data-cy='AplicarFiltro']").first
+                await aplicar_global.click(timeout=FAST_TIMEOUT)
+                await wait_loading_quiet(page, fast=True)
+                log("AplicarFiltro clicado sem overlay (fallback)")
                 return
-            except Exception as e2:
-                _log(f"{desc}: force=True também falhou: {e2!r}")
+            except Exception:
+                raise RuntimeError("Não foi possível abrir o overlay de 'Exibir por'.")
 
-        try:
-            handle = locator.element_handle(timeout=1000)
-            if handle:
-                handle.scroll_into_view_if_needed(timeout=1000)
-                locator.page.evaluate("(el) => el.click()", handle)
-                _log(f"{desc}: clique via evaluate(el.click()) OK.")
-                return
-        except Exception as e3:
-            _log(f"{desc}: fallback evaluate falhou: {e3!r}")
-
-        raise e1
-
-
-def _click_with_retry(page, locator, attempts=3, desc="elemento"):
-    last = None
-    for i in range(1, attempts + 1):
-        try:
-            if i > 1:
-                page.keyboard.press("Escape")
-                time.sleep(0.12)
-            _click_resiliente(locator, desc=desc)
-            return True
-        except Exception as e:
-            last = e
-            _log(f"Falha ao clicar {desc} (tentativa {i}/{attempts}): {e!r}")
-            time.sleep(0.2)
-    if last:
-        raise last
-    return False
-
-
-def _wait_label_data(page, expected_text: str, timeout_ms: int = 6000):
+    # tenta achar como radio pelo role
     try:
-        page.wait_for_function(
-            """(expected) => {
-                const el = document.querySelector('span[data-cy="EFD-dataItem"]');
-                if (!el) return false;
-                return (el.textContent || '').trim().toLowerCase() === expected.toLowerCase();
-            }""",
-            arg=expected_text,
-            timeout=timeout_ms
-        )
-        return True
-    except Exception:
-        return False
-
-
-def _wait_post_login_ready(page, timeout_ms=15000):
-    deadline = time.time() + timeout_ms / 1000.0
-    while time.time() < deadline:
-        try:
-            url = page.url or ""
-            if "#/acesso" not in url:
-                return True
-            if page.locator('i.material-icons.icone-seta-novo-user-data').first.count() > 0:
-                return True
-            if page.locator('span.nav-text', has_text="Financeiro").first.count() > 0:
-                return True
-            if page.locator('span.nav-text', has_text="Gerencial").first.count() > 0:
-                return True
-        except Exception:
-            pass
-        time.sleep(0.25)
-    return False
-
-
-def _abrir_financeiro_e_item(page, item_texto: str):
-    """
-    Expande especificamente o 'Financeiro' (pelo caret/anchor DENTRO do próprio item Financeiro)
-    e clica no submenu 'item_texto' dentro desse mesmo <li>.
-    """
-    li_fin = page.locator('li:has(> a:has(span.nav-text:has-text("Financeiro")))').first
-    li_fin.wait_for(state="visible", timeout=8000)
-
-    caret = li_fin.locator(
-        'i.material-icons',
-        has_text=re.compile(r"(keyboard_arrow_(down|right)|expand_more|chevron_(right|down))", re.I)
-    ).first
-
-    anchor = li_fin.locator('> a:has(span.nav-text)').first
-    submenu_item = li_fin.locator('li a:has(span.nav-text:has-text("' + item_texto + '"))').first
-
-    for _ in range(5):
-        if submenu_item.count() > 0 and submenu_item.is_visible():
-            break
-        try:
-            li_fin.scroll_into_view_if_needed(timeout=1000)
-        except Exception:
-            pass
-
-        if caret.count() > 0 and caret.is_visible():
-            _click_resiliente(caret, desc="caret 'Financeiro'")
+        radio = overlay.get_by_role("radio", name=patt).first
+        if await radio.count() > 0:
+            try:
+                await radio.click(timeout=FAST_TIMEOUT)
+            except Exception:
+                await radio.click(force=True, timeout=FAST_TIMEOUT)
         else:
-            _click_resiliente(anchor, desc="anchor 'Financeiro'")
-        time.sleep(0.25)
-
-    if submenu_item.count() == 0:
-        submenu_item = page.locator('li a:has(span.nav-text:has-text("' + item_texto + '"))').first
-
-    _click_with_retry(page, submenu_item, attempts=5, desc=f"menu '{item_texto}' (dentro de Financeiro)")
-    time.sleep(0.25)
-    return True
-
-
-def _last_overlay(page):
-    """Retorna o último overlay visível do Angular Material."""
-    overlay = page.locator("div.cdk-overlay-pane").filter(has_not=page.locator(".cdk-overlay-pane[aria-hidden='true']")).last
-    return overlay
-
-
-def _open_overlay_and_get(page, opener_locator, desc="overlay", tries=3):
-    """
-    Clica no botão que abre o overlay e retorna o overlay visível.
-    Reabre se não aparecer.
-    """
-    last_exc = None
-    for i in range(1, tries + 1):
+            raise PlaywrightTimeout("Radio não encontrado")
+    except Exception:
+        # fallback por texto
         try:
-            _click_with_retry(page, opener_locator, desc=f"{desc} (abrir)")
-            ov = _last_overlay(page)
-            ov.wait_for(state="visible", timeout=2000)
-            time.sleep(0.12)  # animação leve
-            return ov
-        except Exception as e:
-            last_exc = e
-            _log(f"Falha ao abrir {desc} (tentativa {i}/{tries}): {e!r}")
-            time.sleep(0.2)
-    if last_exc:
-        raise last_exc
-    raise PWTimeout(f"Não foi possível abrir {desc}")
-
-
-# -----------------------------------------------------------
-# Entrypoint chamado pelo app (/start_async)
-# -----------------------------------------------------------
-def run_rpa_enter_google_folder(base_dir: str, target_dir: str, log_dir: str):
-    if not (W12_USER and W12_PASS):
-        _log("Credenciais não configuradas no .env (W12_USER / W12_PASS). Abortando.")
-        _save_report_json(base_dir, {"rows": [], "meta": {"status": "no-credentials"}})
-        return
-
-    _save_report_json(base_dir, {"rows": [], "meta": {"status": "starting"}})
-    _log("Iniciando (abrindo navegador automaticamente).")
-
-    page = None
-    try:
-        with sync_playwright() as p:
-            args = [
-                "--start-maximized",
-                "--disable-gpu",
-                "--no-sandbox",
-                "--disable-dev-shm-usage",
-            ]
-            browser = p.chromium.launch(headless=HEADLESS, args=args)
-            context = browser.new_context(viewport=None)
-            page = context.new_page()
-            page.set_default_timeout(8000)
-
-            # -------------------------
-            # Login
-            # -------------------------
-            _log("Abrindo página de login...")
-            page.goto(W12_URL, wait_until="domcontentloaded")
-
-            _log("Preenchendo usuário...")
-            user_input = page.locator('input#usuario')
-            user_input.wait_for(state="visible")
-            user_input.fill(W12_USER)
-
-            _log("Preenchendo senha...")
-            pass_input = page.locator('input#senha')
-            pass_input.wait_for(state="visible")
-            pass_input.fill(W12_PASS)
-
-            _log("Clicando em Entrar...")
-            btn_entrar = page.get_by_role("button", name=re.compile(r"^\s*Entrar\s*$", re.I)).first
-            if btn_entrar.count() == 0:
-                btn_entrar = page.locator('span.mat-button-wrapper', has_text=re.compile(r"^\s*Entrar\s*$", re.I)).first
-            _click_with_retry(page, btn_entrar, desc="Entrar")
-
-            if not _wait_post_login_ready(page, timeout_ms=15000):
-                _log("Pós-login demorou; aguardando mais 5s…")
-                if not _wait_post_login_ready(page, timeout_ms=5000):
-                    raise PWTimeout("Falha ao detectar área autenticada após o login.")
-            _log(f"Pós-login OK. URL atual: {page.url}")
-
-            # -------------------------
-            # Seleciona unidade "BT TIJUC - Shopping Tijuca - 11"
-            # -------------------------
-            _log("Abrindo seletor de unidade...")
-            seta_usuario = page.locator('i.material-icons.icone-seta-novo-user-data').first
-            if seta_usuario.count():
-                _click_with_retry(page, seta_usuario, desc="seta do usuário (unidade)")
-
-            _log("Abrindo lista de unidades (mat-select)...")
-            mat_arrow = page.locator("div.mat-select-arrow-wrapper").first
-            _click_with_retry(page, mat_arrow, desc="seta do mat-select da unidade")
-
-            _log("Pesquisando 'shopping tijuca'...")
-            search_un = page.locator('input.pesquisar-dropdrown').first
-            search_un.wait_for(state="visible")
-            search_un.fill("shopping tijuca")
-            time.sleep(0.3)
-
-            _log("Selecionando 'BT TIJUC - Shopping Tijuca - 11'...")
-            alvo = page.get_by_text(re.compile(r"BT\s+TIJUC\s+-\s+Shopping\s+Tijuca\s+-\s+11", re.I)).first
-            _click_with_retry(page, alvo, desc="unidade BT TIJUC - Shopping Tijuca - 11")
-
-            # -------------------------
-            # Menu: Financeiro -> Notas Fiscais de Serviço
-            # -------------------------
-            _log("Abrindo menu 'Financeiro' e clicando em 'Notas Fiscais de Serviço'…")
-            _abrir_financeiro_e_item(page, "Notas Fiscais de Serviço")
-
-            # Aguarda a tela carregar o botão de Data
-            page.locator('button[data-cy="EFD-DatePickerBTN"]').first.wait_for(state="visible", timeout=15000)
-
-            # -------------------------
-            # Data: Ontem + Aplicar
-            # -------------------------
-            _log("Abrindo seletor de data…")
-            btn_data = page.locator('button[data-cy="EFD-DatePickerBTN"]').first
-            _click_with_retry(page, btn_data, desc="botão Data:")
-
-            _log("Selecionando 'Ontem'…")
-            ontem_item = page.get_by_text(re.compile(r"^\s*Ontem\s*$", re.I)).first
-            _click_with_retry(page, ontem_item, desc="item Ontem")
-
-            _log("Aplicando filtro de data…")
-            aplicar_data = page.locator('button[data-cy="EFD-ApplyButton"]').first
-            _click_with_retry(page, aplicar_data, desc="APLICAR (data)")
-
-            if _wait_label_data(page, "Ontem", timeout_ms=5000):
-                _log("Rótulo de Data confirmou 'Ontem'.")
-            else:
-                _log("Aviso: rótulo 'Data:' não confirmou 'Ontem' no tempo esperado.")
-
-            # -------------------------
-            # Exibir por + APLICAR
-            # -------------------------
-            _log("Abrindo 'Exibir por:'…")
-            page.keyboard.press("Escape")
-            btn_exibir = page.locator('button[data-cy="abrirFiltro"]').first
-
-            overlay = _open_overlay_and_get(page, btn_exibir, desc="Exibir por overlay")
-
-            data_item = overlay.get_by_text(re.compile(r"^\s*Data lançamento\s*$", re.I)).first
-            picked_icon = overlay.locator(
-                'div.mat-list-item-content:has-text("Data lançamento") mat-icon.picked, '
-                'div.mat-list-item-content:has-text("Data lançamento") .mat-icon.picked'
-            )
-            ja_marcado = picked_icon.count() > 0
-            if ja_marcado:
-                _log("‘Data lançamento’ já está marcado — indo direto no APLICAR.")
-            else:
-                _log("Selecionando 'Data lançamento'…")
-                _click_with_retry(page, data_item, desc="Data lançamento")
-                try:
-                    overlay.wait_for(state="visible", timeout=1200)
-                except Exception:
-                    _log("Overlay fechou após selecionar — reabrindo para clicar APLICAR…")
-                    overlay = _open_overlay_and_get(page, btn_exibir, desc="Exibir por overlay (reabrir)")
-
-            _log("Aplicando 'Exibir por:'…")
-            aplicar_exibir = overlay.locator('button[data-cy="AplicarFiltro"]').first
-            if not aplicar_exibir.count():
-                aplicar_exibir = page.get_by_role("button", name=re.compile(r"^\s*APLICAR\s*$", re.I)).first
-            _click_with_retry(page, aplicar_exibir, desc="APLICAR (Exibir por)")
-
+            opt = overlay.get_by_text(patt).first
+            await opt.wait_for(state="visible", timeout=FAST_TIMEOUT)
             try:
-                overlay.wait_for(state="hidden", timeout=1500)
+                await opt.click(timeout=FAST_TIMEOUT)
+            except Exception:
+                await opt.click(force=True, timeout=FAST_TIMEOUT)
+        except Exception:
+            # pode já estar selecionado; seguimos para Aplicar
+            pass
+
+    # clicar Aplicar (prioriza dentro do overlay; se não, global)
+    try:
+        aplicar = overlay.locator("button[data-cy='AplicarFiltro']").first
+        await aplicar.wait_for(state="visible", timeout=FAST_TIMEOUT)
+        await aplicar.click(timeout=FAST_TIMEOUT)
+    except Exception:
+        aplicar2 = page.locator("button[data-cy='AplicarFiltro']").first
+        await aplicar2.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+        await aplicar2.click(timeout=FAST_TIMEOUT)
+
+    await asyncio.sleep(0.3)
+    await wait_loading_quiet(page, fast=True)
+    log("'Exibir por' aplicado com Data de Lançamento")
+
+async def aplicar_filtro_tributacao(page) -> None:
+    log("Abrindo + FILTROS")
+    btn_mais_filtros = page.get_by_role("button", name=re.compile(r"\+\s*FILTROS", re.IGNORECASE)).first
+    await btn_mais_filtros.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    try:
+        await btn_mais_filtros.click()
+    except Exception:
+        await btn_mais_filtros.click(force=True)
+
+    log("Abrindo Tributação")
+    btn_tributacao = page.locator("button.simula-mat-menu", has_text=re.compile(r"^\s*Tributação\s*$", re.IGNORECASE)).first
+    await btn_tributacao.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await btn_tributacao.click()
+
+    pane = page.locator("div.cdk-overlay-pane").filter(
+        has_not=page.locator(".cdk-overlay-pane[aria-hidden='true']")
+    ).last
+
+    todos = pane.get_by_text(re.compile(r"^\s*Todos\s*$", re.IGNORECASE)).first
+    await todos.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await todos.click()
+
+    nao_usar = pane.get_by_text(re.compile(r"^\s*Não usar\s*-\s*12\.34\.56\s*$", re.IGNORECASE)).first
+    await nao_usar.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await nao_usar.click()
+
+    aplicar = page.locator("button[data-cy='AplicarFiltro'], button#btn").first
+    await aplicar.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await aplicar.click()
+
+    await asyncio.sleep(0.4)
+    await wait_loading_quiet(page, fast=True)
+
+async def selecionar_todos_e_enviar(page) -> None:
+    log("Selecionando todos os registros")
+    sel_todos = page.locator("mat-checkbox[data-cy='SelecionarTodosCheck']").first
+    await sel_todos.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await sel_todos.click()
+
+    log("Clicando ENVIAR")
+    enviar = page.get_by_role("button", name=re.compile(r"^\s*ENVIAR\s*$", re.IGNORECASE)).first
+    await enviar.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await enviar.click()
+
+    await asyncio.sleep(0.4)
+    await wait_loading_quiet(page, fast=True)
+
+async def digitar_data_util_anterior_no_input(page) -> None:
+    alvo = previous_business_day()
+    data_txt = fmt_date_br(alvo)
+    log(f"Preenchendo campo de data com dia útil anterior: {data_txt}")
+
+    campo = page.locator("input#evoDatepicker[placeholder='Selecione a data']").first
+    await campo.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await campo.click()
+    await page.keyboard.press("Control+A")
+    await page.keyboard.press("Backspace")
+    await campo.type(data_txt, delay=24)
+    await asyncio.sleep(5)
+
+# =========================
+# Runner chamado pelo app.py
+# =========================
+async def _run() -> None:
+    user, pwd = ensure_env()
+    log("Iniciando fluxo com navegador visível")
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=False, args=["--start-maximized"])
+        context = await browser.new_context(viewport={"width": 1366, "height": 768})
+
+        # Init-script: fixa tenant/bodytech e corrige hash/rotas no client
+        await context.add_init_script("""
+(() => {
+  try {
+    localStorage.setItem('tenant', 'bodytech');
+    localStorage.setItem('dominio', 'bodytech');
+    sessionStorage.setItem('tenant', 'bodytech');
+    sessionStorage.setItem('dominio', 'bodytech');
+    const forceTenant = () => {
+      try {
+        const h = location.hash || '';
+        if (h.includes('/acesso/evo5/')) {
+          location.hash = h.replace('/acesso/evo5/', '/acesso/bodytech/');
+        } else if (h.includes('/acesso//')) {
+          location.hash = h.replace('/acesso//', '/acesso/bodytech/');
+        }
+      } catch (_e) {}
+    };
+    forceTenant();
+    const _ps = history.pushState;
+    const _rs = history.replaceState;
+    history.pushState = function() { const r = _ps.apply(this, arguments); setTimeout(forceTenant, 0); return r; };
+    history.replaceState = function() { const r = _rs.apply(this, arguments); setTimeout(forceTenant, 0); return r; };
+    window.addEventListener('hashchange', forceTenant, true);
+  } catch (_err) {}
+})();
+        """)
+
+        page = await context.new_page()
+
+        try:
+            await do_login(page, user, pwd)
+            await selecionar_unidade_obrigatorio(page)
+            await abrir_menu_financeiro_e_ir_para_nfs(page)
+            await aplicar_data_ontem(page)
+            await exibir_por_data_lancamento(page)
+            await aplicar_filtro_tributacao(page)
+            await selecionar_todos_e_enviar(page)
+            await digitar_data_util_anterior_no_input(page)
+
+            log("Pausa final de 5 segundos para inspeção")
+            await asyncio.sleep(5)
+
+        except Exception as e:
+            ts = int(datetime.now().timestamp())
+            img = SCREENSHOT_DIR / f"screenshot_erro_{ts}.png"
+            try:
+                await page.screenshot(path=str(img), full_page=True)
+                log(f"Erro no fluxo. Screenshot salvo em: {img}")
+            except Exception as se:
+                log(f"Erro no fluxo e falha ao salvar screenshot: {se}")
+            raise
+        finally:
+            try:
+                await context.close()
             except Exception:
                 pass
-            time.sleep(0.6)
-
-            # -------------------------
-            # + FILTROS -> Tributação -> Todos + “Não usar - 12.34.56” -> Aplicar
-            # -------------------------
-            _log("Abrindo '+ FILTROS'…")
-            btn_mais_filtros = page.get_by_role("button", name=re.compile(r"^\s*\+\s*FILTROS\s*$", re.I)).first
-            _click_with_retry(page, btn_mais_filtros, desc="+ FILTROS")
-
-            _log("Abrindo 'Tributação'…")
-            btn_tribut = page.locator('button.simula-mat-menu', has_text=re.compile(r"^\s*Tributação\s*$", re.I)).first
-            if not btn_tribut.count():
-                btn_tribut = page.get_by_text(re.compile(r"^\s*Tributação\s*$", re.I)).first
-            _click_with_retry(page, btn_tribut, desc="Tributação")
-
-            _log("Marcando 'Todos' …")
-            todos_item = page.get_by_text(re.compile(r"^\s*Todos\s*$", re.I)).first
-            _click_with_retry(page, todos_item, desc="Todos")
-
-            _log("Selecionando 'Não usar - 12.34.56' …")
-            nao_usar_item = page.get_by_text(re.compile(r"^\s*Não usar\s*-\s*12\.34\.56\s*$", re.I)).first
-            _click_with_retry(page, nao_usar_item, desc="Não usar - 12.34.56")
-
-            _log("Aplicando filtro 'Tributação'…")
-            overlay2 = _last_overlay(page)
-            aplicar_filtro = overlay2.locator('button[data-cy="AplicarFiltro"]').first if overlay2.count() else page.locator('button[data-cy="AplicarFiltro"]').first
-            if not aplicar_filtro.count():
-                aplicar_filtro = page.get_by_role("button", name=re.compile(r"^\s*APLICAR\s*$", re.I)).first
-            _click_with_retry(page, aplicar_filtro, desc="APLICAR (Tributação)")
-
-            # Refresh curto e clicar SelecionarTodos
-            _log("Aguardando refresh após APLICAR (Tributação) e exibindo checkbox 'SelecionarTodos'…")
             try:
-                page.wait_for_function(
-                    """() => !!document.querySelector('[data-cy="SelecionarTodosCheck"]')""",
-                    timeout=10000
-                )
+                await browser.close()
             except Exception:
-                _log("Aviso: checkbox 'SelecionarTodosCheck' demorou. Tentando localizar direto…")
+                pass
 
-            time.sleep(0.4)
-            selecionar_todos = page.locator('[data-cy="SelecionarTodosCheck"]').first
-            if selecionar_todos.count():
-                _click_with_retry(page, selecionar_todos, desc="SelecionarTodos (checkbox)")
-            else:
-                _log("Checkbox 'SelecionarTodosCheck' não encontrado; fallback: marcar primeira linha.")
-                primeiro_check = page.locator('[data-cy="SelecionarUmCheck"]').first
-                _click_with_retry(page, primeiro_check, desc="checkbox primeira linha (fallback)")
+def run_rpa_enter_google_folder(extract_dir: str, target_folder: str, base_dir: str) -> None:
+    asyncio.run(_run())
 
-            # -------------------------
-            # ENVIAR
-            # -------------------------
-            _log("Clicando 'ENVIAR'…")
-            btn_enviar = page.get_by_role("button", name=re.compile(r"^\s*ENVIAR\s*$", re.I)).first
-            btn_enviar.wait_for(state="visible", timeout=8000)
-            _click_with_retry(page, btn_enviar, desc="ENVIAR")
-
-            # -------------------------
-            # Calendário: selecionar ontem
-            # -------------------------
-            _log("Abrindo calendário (ícone ao lado do campo)…")
-            cal_icon = page.get_by_role("button", name=re.compile(r"Open calendar", re.I)).first
-            _click_with_retry(page, cal_icon, desc="ícone calendário")
-
-            ontem = datetime.now() - timedelta(days=1)
-            dia = str(ontem.day)
-
-            _log(f"Selecionando dia '{dia}' no calendário…")
-            dia_cell = page.locator(f'//td[normalize-space()="{dia}"]').first
-            if not dia_cell.count():
-                dia_cell = page.get_by_role("gridcell", name=re.compile(rf"^\s*{re.escape(dia)}\s*$")).first
-            _click_with_retry(page, dia_cell, desc=f"dia {dia}")
-
-            # >>> Pausa final para inspeção antes de fechar o navegador <<<
-            _log("Pausando 5s para conferência visual antes de fechar o navegador…")
-            time.sleep(5)
-
-            _log("Fluxo finalizado até a seleção da data de ontem no calendário.")
-            _save_report_json(base_dir, {
-                "rows": [],
-                "meta": {"status": "ok", "finished_at": datetime.now().isoformat()}
-            })
-
-    except PWTimeout as te:
-        _log(f"Timeout em alguma etapa: {te}")
-        try:
-            if page:
-                _screenshot(page)
-        except Exception:
-            pass
-        _save_report_json(base_dir, {"rows": [], "meta": {"status": "timeout", "error": str(te)}})
-
-    except Exception as e:
-        _log(f"Exceção no fluxo: {e!r}")
-        try:
-            if page:
-                _screenshot(page)
-        except Exception:
-            pass
-        _save_report_json(base_dir, {"rows": [], "meta": {"status": "error", "error": str(e)}})
+def _ensure_local_zip_from_drive(dest_dir: str) -> str:
+    system_tmp = Path(dest_dir) if dest_dir else Path("/tmp")
+    system_tmp.mkdir(parents=True, exist_ok=True)
+    win_default = Path(os.getenv("CNAB_LOCAL_DIR_WINDOWS", r"C:\AUTOMACAO\conciliacao\arquivos")) / "arquivos.zip"
+    lin_default = Path(os.getenv("CNAB_LOCAL_DIR", "/home/felipe/Downloads/arquivos")) / "arquivos.zip"
+    candidate = win_default if win_default.exists() else lin_default
+    log(f"[stub] Usando ZIP local existente: {candidate if candidate.exists() else system_tmp}")
+    return str(candidate if candidate.exists() else system_tmp / "arquivos.zip")
