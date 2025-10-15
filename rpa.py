@@ -1,597 +1,479 @@
 # filename: rpa.py
-# RPA para o portal W12 (Bodytech)
-# Fluxo: login → escolher unidade → Financeiro > Notas Fiscais de Serviço
-#        → Data: Ontem → APLICAR → (aguarda refresh curto)
-#        → Exibir por: Data lançamento → APLICAR → (aguarda refresh curto)
-#        → + FILTROS > Tributação > (Todos + "Não usar - 12.34.56") → APLICAR → (aguarda refresh curto)
-#        → selecionar 1 linha → ENVIAR → abrir calendário (selecionar ontem).
-#
-# Compatível com app.py:
-#   from rpa import run_rpa_enter_google_folder, _ensure_local_zip_from_drive, _ensure_local_zip_from_drive
-
 import os
 import re
 import time
 from datetime import datetime, timedelta
 
-from playwright.sync_api import (
-    sync_playwright,
-    TimeoutError as PWTimeout,
-    Error as PWError,
-)
+from dotenv import load_dotenv
+from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 
-AZ_URL = "https://evo5.w12app.com.br/#/acesso/bodytech/autenticacao"
+# -----------------------------------------------------------
+# .env
+# -----------------------------------------------------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-# Credenciais (pode sobrescrever via .env)
-LOGIN_EMAIL = os.getenv("W12_EMAIL", "inova.ia@sacavalcante.com.br")
-LOGIN_PASS = os.getenv("W12_PASS", "omega536")
+W12_URL = os.getenv("W12_URL", "https://evo5.w12app.com.br/#/acesso/bodytech/autenticacao")
+W12_USER = os.getenv("W12_USER")
+W12_PASS = os.getenv("W12_PASS")
+HEADLESS = os.getenv("HEADLESS", "0").strip() in ("1", "true", "True")
+WINDOWS = (os.name == "nt")
 
-# Execução
-HEADLESS = (os.getenv("HEADLESS", "0") == "1")
-KEEP_OPEN = (os.getenv("KEEP_BROWSER_OPEN", "0") == "1")
-
-
-# =====================================================================
-# Utilitários básicos
-# =====================================================================
-def _get_upload_dir() -> str:
-    if os.name == "nt":
-        return os.getenv("CNAB_LOCAL_DIR_WINDOWS", r"C:\AUTOMACAO\conciliacao\arquivos")
-    return os.getenv("CNAB_LOCAL_DIR", "/home/felipe/Downloads/arquivos")
-
-
-def _dbg(log_dir: str, msg: str) -> None:
-    ts = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
-    line = f"[{ts}] [rpa] {msg}"
-    print(line, flush=True)
-    try:
-        os.makedirs(log_dir, exist_ok=True)
-        with open(os.path.join(log_dir, "rpa_debug.log"), "a", encoding="utf-8") as f:
-            f.write(line + "\n")
-    except Exception:
-        pass
-
-
-def _save_report_json(base_dir: str, payload: dict) -> None:
-    try:
-        os.makedirs(base_dir, exist_ok=True)
-        path = os.path.join(base_dir, "last_report.json")
-        payload = dict(payload or {})
-        payload.setdefault("ready", True)
-        payload.setdefault("updated_at", datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
-        payload.setdefault("headers", list(payload.get("rows", [{}])[0].keys()) if payload.get("rows") else [])
-        payload.setdefault("meta", {})
-        import json
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(payload, f, ensure_ascii=False)
-        _dbg(base_dir, f"Relatório salvo em: {path}")
-    except Exception as e:
-        _dbg(base_dir, f"Falha ao salvar last_report.json: {e!r}")
-
-
-def _screenshot(page, log_dir: str, prefix: str = "screenshot_erro") -> str:
-    try:
-        ts = int(time.time())
-        dest = os.path.join(log_dir, f"{prefix}_{ts}.png")
-        if page:
-            page.screenshot(path=dest, full_page=True)
-            _dbg(log_dir, f"Screenshot salvo em: {dest}")
-        return dest
-    except Exception as e:
-        _dbg(log_dir, f"Falha ao salvar screenshot: {e!r}")
-        return ""
-
-
-# STUB para compat com app.py (não baixa nada do Drive).
-def _ensure_local_zip_from_drive(log_dir: str, filename: str = "arquivos.zip") -> str | None:
-    upload_dir = _get_upload_dir()
-    os.makedirs(upload_dir, exist_ok=True)
-    candidate = os.path.join(upload_dir, filename)
-    if os.path.isfile(candidate):
-        _dbg(log_dir, f"[stub] Usando ZIP local existente: {candidate}")
-        return candidate
-    _dbg(log_dir, f"[stub] {filename} não encontrado em {upload_dir}")
+# -----------------------------------------------------------
+# Compat: stub para o app usar a “verificação de zip local”
+# -----------------------------------------------------------
+def _ensure_local_zip_from_drive(log_dir: str, filename: str = "arquivos.zip"):
+    if WINDOWS:
+        root_dir = os.getenv("CNAB_LOCAL_DIR_WINDOWS", r"C:\AUTOMACAO\conciliacao\arquivos")
+    else:
+        root_dir = os.getenv("CNAB_LOCAL_DIR", "/home/felipe/Downloads/arquivos")
+    path = os.path.join(root_dir, filename)
+    if os.path.isfile(path):
+        _log(f"[stub] Usando ZIP local existente: {path}")
+        return path
+    _log(f"[stub] NÃO ENCONTREI {path}")
     return None
 
 
-# =====================================================================
-# Helpers Playwright
-# =====================================================================
-def _safe_click(page, locator, log_dir: str, what: str = "", attempts: int = 4, timeout: int = 6000) -> None:
-    """
-    Evita 'subtree intercepts pointer events':
-      1) click normal
-      2) ESC para fechar overlays + novo click
-      3) click(force=True)
-      4) JS el.click()
-    """
-    last_err = None
-    for i in range(attempts):
-        try:
-            locator.wait_for(state="visible", timeout=timeout)
-        except Exception as e:
-            last_err = e
-            _dbg(log_dir, f"[safe_click] {what} não visível (tentativa {i+1}/{attempts}): {e!r}")
-            page.wait_for_timeout(150)
-            continue
-
-        try:
-            locator.scroll_into_view_if_needed(timeout=1200)
-        except Exception:
-            pass
-
-        try:
-            locator.click(timeout=timeout)
-            return
-        except Exception as e1:
-            last_err = e1
-            _dbg(log_dir, f"[safe_click] Click normal falhou '{what}': {e1!r}")
-
-        try:
-            page.keyboard.press("Escape")
-            page.wait_for_timeout(100)
-        except Exception:
-            pass
-
-        try:
-            locator.click(timeout=timeout)
-            return
-        except Exception as e2:
-            last_err = e2
-            _dbg(log_dir, f"[safe_click] Click após ESC falhou '{what}': {e2!r}")
-
-        try:
-            locator.click(timeout=timeout, force=True)
-            return
-        except Exception as e3:
-            last_err = e3
-            _dbg(log_dir, f"[safe_click] Click force=True falhou '{what}': {e3!r}")
-
-        try:
-            handle = locator.element_handle(timeout=800)
-            if handle:
-                page.evaluate("(el) => el.click()", handle)
-                return
-        except Exception as e4:
-            last_err = e4
-            _dbg(log_dir, f"[safe_click] JS click falhou '{what}': {e4!r}")
-
-        page.wait_for_timeout(120)
-
-    raise PWError(f"Não foi possível clicar em '{what}': {last_err!r}")
+# -----------------------------------------------------------
+# Utilidades
+# -----------------------------------------------------------
+def _log(msg: str):
+    ts = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
+    print(f"[{ts}] [rpa] {msg}", flush=True)
 
 
-def _esperar_pagina_atualizar(page, log_dir: str, timeout_ms: int = 6500) -> None:
-    """
-    Aguarda a página/SPA estabilizar após uma ação que recarrega dados, mas sem travar muito tempo:
-      - tenta networkidle curto
-      - espera sumir overlays/spinners
-      - garante que o botão 'Exibir por:' volte a ficar visível
-    """
-    t0 = time.time()
-
-    # 1) networkidle curto
+def _save_report_json(base_dir: str, payload: dict):
     try:
-        page.wait_for_load_state("networkidle", timeout=min(4000, timeout_ms))
-    except Exception:
-        pass
-
-    # 2) overlays/spinners sumirem (cada um com tolerância curta)
-    for sel in [
-        ".cdk-overlay-backdrop.cdk-overlay-backdrop-showing",
-        ".mat-progress-spinner",
-        ".mat-progress-bar",
-        "mat-progress-bar",
-    ]:
-        left = max(500, int(timeout_ms - (time.time() - t0) * 1000))
-        if left <= 0:
-            break
-        try:
-            loc = page.locator(sel)
-            if loc.count() > 0:
-                loc.first.wait_for(state="hidden", timeout=min(2500, left))
-        except Exception:
-            page.wait_for_timeout(100)
-
-    # 3) confirma um elemento da tela voltou
-    left = max(400, int(timeout_ms - (time.time() - t0) * 1000))
-    if left > 0:
-        try:
-            page.locator("button[data-cy='abrirFiltro']").first.wait_for(state="visible", timeout=left)
-        except Exception:
-            pass
-
-    page.wait_for_timeout(300)  # folga bem curta
-
-
-# =====================================================================
-# Passos do fluxo
-# =====================================================================
-def _wait_and_fill_login(page, log_dir: str) -> None:
-    # Campo de e-mail — focar no #usuario com placeholder 'E-mail'
-    email_input = None
-    try:
-        loc = page.locator("input#usuario[placeholder='E-mail']")
-        loc.wait_for(state="visible", timeout=7000)
-        email_input = loc.first
-    except Exception:
-        # fallbacks tolerantes
-        for css in ("input#usuario[autocomplete='username']", "input#usuario", "input[placeholder='Usuário / E-mail']"):
-            loc = page.locator(css)
-            try:
-                loc.wait_for(state="visible", timeout=2500)
-                email_input = loc.first
-                break
-            except PWTimeout:
-                continue
-        if email_input is None:
-            email_input = page.get_by_role("textbox", name=re.compile(r"E-mail|Usuário\s*/\s*E-mail", re.I))
-
-    email_input.click()
-    email_input.fill(LOGIN_EMAIL)
-
-    # Campo de senha
-    pwd_input = None
-    for css in ("input#senha[type='password']", "input#senha", "input[autocomplete='current-password']", "input[placeholder='Senha']"):
-        loc = page.locator(css)
-        try:
-            loc.wait_for(state="visible", timeout=3000)
-            pwd_input = loc.first
-            break
-        except PWTimeout:
-            continue
-    if pwd_input is None:
-        pwd_input = page.get_by_role("textbox", name=re.compile(r"Senha", re.I))
-
-    pwd_input.click()
-    pwd_input.fill(LOGIN_PASS)
-
-    # Entrar
-    try:
-        btn = page.get_by_role("button", name=re.compile(r"^\s*entrar\s*$", re.I))
-        _safe_click(page, btn, log_dir, what="Botão Entrar", attempts=3)
-    except Exception:
-        fallback = page.locator("button:has(span.mat-button-wrapper:has-text('Entrar'))").first
-        _safe_click(page, fallback, log_dir, what="Botão Entrar (fallback)", attempts=3)
-
-
-def _selecionar_unidade(page, log_dir: str, unidade_texto: str) -> None:
-    # abre o menu do usuário (seta para baixo)
-    try:
-        user_dd = page.locator("i.material-icons.icone-seta-novo-user-data.no-margin-left", has_text="arrow_drop_down").first
-        _safe_click(page, user_dd, log_dir, what="Dropdown do usuário", attempts=3)
-    except Exception:
-        alt_user = page.locator("i.material-icons", has_text="arrow_drop_down").first
-        _safe_click(page, alt_user, log_dir, what="Dropdown do usuário (alt)", attempts=3)
-
-    # abre o select de unidade
-    try:
-        seta = page.locator("div.mat-select-arrow-wrapper").first
-        _safe_click(page, seta, log_dir, what="Abrir seletor de unidade", attempts=3)
-    except Exception:
-        seta2 = page.locator(".mat-select-arrow").first
-        _safe_click(page, seta2, log_dir, what="Abrir seletor de unidade (alt)", attempts=3)
-
-    # pesquisa
-    try:
-        search_input = page.locator("input.pesquisar-dropdrown[placeholder='Pesquisar']").first
-        search_input.wait_for(state="visible", timeout=5000)
-        search_input.click()
-        search_input.fill(unidade_texto)
-    except Exception:
-        si = page.locator("input[placeholder='Pesquisar']").first
-        si.wait_for(state="visible", timeout=5000)
-        si.click()
-        si.fill(unidade_texto)
-
-    # seleciona a unidade
-    opc = page.get_by_text(unidade_texto, exact=True)
-    _safe_click(page, opc, log_dir, what=f"Selecionar unidade '{unidade_texto}'", attempts=3)
-
-    page.wait_for_timeout(400)  # aguarda sidebar atualizar
-
-
-def _abrir_financeiro_e_nfs(page, log_dir: str) -> None:
-    # Localiza 'Financeiro'
-    try:
-        page.locator("span.nav-text", has_text=re.compile(r"^\s*Financeiro\s*$", re.I)).first.wait_for(
-            state="visible", timeout=9000
-        )
+        path = os.path.join(base_dir, "last_report.json")
+        payload = payload or {}
+        payload.setdefault("ready", True)
+        payload.setdefault("headers", [])
+        payload.setdefault("rows", [])
+        payload.setdefault("meta", {})
+        payload.setdefault("updated_at", datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
+        import json
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False)
     except Exception as e:
-        _dbg(log_dir, f"'Financeiro' não visível ainda: {e!r}")
-        page.wait_for_timeout(400)
+        _log(f"Falha ao salvar last_report.json: {e!r}")
 
-    # Clica no ícone expandir do mesmo container do 'Financeiro'
-    icon_xpath = (
-        "xpath=//span[contains(@class,'nav-text') and normalize-space()='Financeiro']"
-        "/ancestor::*[self::li or self::div][1]"
-        "//i[contains(@class,'material-icons') and (normalize-space()='keyboard_arrow_down' or normalize-space()='keyboard_arrow_right')]"
-    )
-    icon = page.locator(icon_xpath).first
+
+def _screenshot(page, prefix="screenshot_erro"):
     try:
-        _safe_click(page, icon, log_dir, what="Abrir dropdown de 'Financeiro'", attempts=3)
-    except Exception:
-        fin = page.locator("span.nav-text", has_text=re.compile(r"^\s*Financeiro\s*$", re.I)).first
-        _safe_click(page, fin, log_dir, what="Financeiro (fallback)", attempts=3)
+        fname = f"{prefix}_{int(time.time())}.png"
+        path = os.path.join(BASE_DIR, fname)
+        page.screenshot(path=path, full_page=True)
+        _log(f"Screenshot de erro salvo em: {path}")
+    except Exception as e:
+        _log(f"Falha ao salvar screenshot: {e!r}")
 
-    # Clica no subitem NFS
-    nfs = page.locator("span.nav-text[data-cy='Notas Fiscais de Serviço']").first
+
+def _click_resiliente(locator, desc="elemento", timeout_normal=3000):
+    """
+    1) click normal
+    2) se interceptado: click(force=True)
+    3) fallback: DOM click via evaluate
+    """
     try:
-        nfs.wait_for(state="visible", timeout=7000)
-    except Exception:
-        nfs = page.get_by_text("Notas Fiscais de Serviço", exact=True)
-
-    _safe_click(page, nfs, log_dir, what="Notas Fiscais de Serviço", attempts=4)
-
-
-def _abrir_datepicker(page, log_dir: str) -> None:
-    try:
-        btn_data = page.locator("button[data-cy='EFD-DatePickerBTN']").first
-        _safe_click(page, btn_data, log_dir, what="Abrir DatePicker", attempts=3)
-    except Exception:
-        btn_today = page.locator("button:has(i.material-icons:has-text('today'))").first
-        _safe_click(page, btn_today, log_dir, what="Abrir DatePicker (fallback)", attempts=3)
-
-
-def _selecionar_ontem_na_lista(page, log_dir: str) -> None:
-    """
-    Dentro do menu de datas (aquele que mostra Hoje / Ontem / etc), clicar em 'Ontem'.
-    """
-    ontem = page.get_by_text(re.compile(r"^\s*Ontem\s*$", re.I))
-    _safe_click(page, ontem, log_dir, what="Data: Ontem (lista)", attempts=4)
-
-
-def _aplicar_data_range(page, log_dir: str) -> None:
-    """
-    Clica no botão 'APLICAR' do seletor de datas principal (data-cy='EFD-ApplyButton').
-    """
-    aplicar = page.locator("button[data-cy='EFD-ApplyButton']").first
-    if aplicar.count() == 0:
-        aplicar = page.locator("button:has-text('APLICAR')").first
-    _safe_click(page, aplicar, log_dir, what="Aplicar data (EFD-ApplyButton)", attempts=3)
-
-
-def _set_exibir_por_data_lancamento_and_apply(page, log_dir: str) -> None:
-    """
-    Clicar 'Exibir por:' → clicar no item Data lançamento (o mesmo bloco que exibe o 'done')
-    → clicar APLICAR (data-cy='AplicarFiltro').
-    """
-    # Abrir "Exibir por:"
-    btn = page.locator("button[data-cy='abrirFiltro']").first
-    _safe_click(page, btn, log_dir, what="Abrir 'Exibir por:'", attempts=3)
-
-    # Item "Data lançamento" exatamente no bloco da lista
-    item_container = page.locator(
-        "div.mat-list-item-content",
-    ).filter(has=page.locator("div.mat-list-text", has_text=re.compile(r"^\s*Data lançamento\s*$", re.I))).first
-    _safe_click(page, item_container, log_dir, what="Exibir por: Data lançamento (item da lista)", attempts=3)
-
-    # APLICAR
-    aplicar = page.locator("button[data-cy='AplicarFiltro']").first
-    if aplicar.count() == 0:
-        aplicar = page.locator("button:has-text('APLICAR')").first
-    _safe_click(page, aplicar, log_dir, what="Aplicar 'Exibir por:'", attempts=3)
-
-
-def _abrir_filtros_e_aplicar_tributacao(page, log_dir: str) -> None:
-    """
-    + FILTROS → Tributação → marcar 'Todos' e 'Não usar - 12.34.56' → APLICAR
-    """
-    # + FILTROS
-    plus = page.locator("button.mat-button:has-text('+ FILTROS'), button:has-text('+ FILTROS')").first
-    _safe_click(page, plus, log_dir, what="+ FILTROS", attempts=3)
-
-    # Tributação
-    trib = page.locator("button.simula-mat-menu", has_text=re.compile(r"^\s*Tributação\s*$", re.I)).first
-    _safe_click(page, trib, log_dir, what="Filtro: Tributação", attempts=3)
-
-    # Itens dentro do multiselect: 'Todos' e 'Não usar - 12.34.56'
-    todos = page.get_by_text(re.compile(r"^\s*Todos\s*$", re.I))
-    _safe_click(page, todos, log_dir, what="Tributação: Todos", attempts=3)
-
-    nao_usar = page.get_by_text(re.compile(r"^\s*Não usar\s*-\s*12\.34\.56\s*$", re.I))
-    _safe_click(page, nao_usar, log_dir, what="Tributação: Não usar - 12.34.56", attempts=3)
-
-    # APLICAR do multiselect de Tributação
-    aplicar = page.locator("button[data-cy='AplicarFiltro']").first
-    if aplicar.count() == 0:
-        aplicar = page.locator("button#btn:has-text('APLICAR'), button:has-text('APLICAR')").first
-    _safe_click(page, aplicar, log_dir, what="Aplicar filtro Tributação", attempts=3)
-
-
-def _selecionar_primeira_linha(page, log_dir: str) -> None:
-    """
-    Seleciona um registro: checkbox com data-cy='SelecionarUmCheck'
-    """
-    chk_label = page.locator("mat-checkbox[data-cy='SelecionarUmCheck'] label").first
-    if chk_label.count() == 0:
-        chk_label = page.locator("mat-checkbox label.mat-checkbox-layout").first
-    _safe_click(page, chk_label, log_dir, what="Selecionar 1 linha", attempts=3)
-
-
-def _clicar_enviar(page, log_dir: str) -> None:
-    enviar = page.locator("button[type='submit']", has_text=re.compile(r"^\s*ENVIAR\s*$", re.I)).first
-    if enviar.count() == 0:
-        enviar = page.locator("button:has-text('ENVIAR')").first
-    _safe_click(page, enviar, log_dir, what="ENVIAR", attempts=3)
-
-
-def _abrir_icon_calendar(page, log_dir: str) -> None:
-    """
-    Abre o datepicker (ícone do calendário) depois do ENVIAR.
-    """
-    cal = page.locator("button.mat-icon-button[aria-label='Open calendar']").first
-    if cal.count() == 0:
-        cal = page.locator("button.mat-icon-button", has=page.locator("svg.mat-datepicker-toggle-default-icon")).first
-    _safe_click(page, cal, log_dir, what="Abrir ícone do calendário", attempts=3)
-
-
-def _selecionar_ontem_no_datepicker(page, log_dir: str) -> None:
-    """
-    No calendário do Angular Material aberto, selecionar 'ontem'.
-    Estratégia principal:
-      - Encontrar a célula 'Hoje' (classe .mat-calendar-body-today) e clicar a célula anterior.
-    Fallback:
-      - Calcular dia de ontem e clicar o número do dia (evitando células 'disabled').
-    """
-    # aguarda calendário
-    matcal = page.locator(".mat-calendar, mat-calendar")
-    matcal.wait_for(state="visible", timeout=7000)
-
-    # 1) Tenta partir do "Hoje"
-    try:
-        handle = page.locator(".mat-calendar-body-today").first.element_handle(timeout=1800)
-        if handle:
-            page.evaluate(
-                """
-                (todayContent) => {
-                  const td = todayContent.closest('td.mat-calendar-body-cell');
-                  if (!td) return false;
-                  let target = td.previousElementSibling;
-                  if (!target) {
-                    const tr = td.parentElement;
-                    if (!tr) return false;
-                    const prevTr = tr.previousElementSibling;
-                    if (!prevTr) return false;
-                    const tds = Array.from(prevTr.querySelectorAll('td.mat-calendar-body-cell'));
-                    if (!tds.length) return false;
-                    target = tds[tds.length - 1];
-                  }
-                  if (target.classList.contains('mat-calendar-body-disabled')) {
-                    return false;
-                  }
-                  const btn = target.querySelector('.mat-calendar-body-cell-content');
-                  if (btn) { btn.click(); return true; }
-                  return false;
-                }
-                """,
-                handle,
-            )
-            page.wait_for_timeout(250)
-            return
+        locator.scroll_into_view_if_needed(timeout=timeout_normal)
     except Exception:
         pass
 
-    # 2) Fallback: clicar pelo número do dia (não 'disabled')
-    ontem = datetime.now() - timedelta(days=1)
-    day = str(ontem.day)
+    try:
+        locator.wait_for(state="visible", timeout=timeout_normal)
+    except Exception:
+        try:
+            locator.wait_for(state="attached", timeout=timeout_normal)
+        except Exception as e:
+            _log(f"{desc}: não ficou visível/anexado a tempo: {e!r}")
+            raise
 
-    candidates = page.locator(
-        f"td.mat-calendar-body-cell:not(.mat-calendar-body-disabled) "
-        f".mat-calendar-body-cell-content:text-is('{day}')"
-    )
-    if candidates.count() > 0:
-        _safe_click(page, candidates.nth(0), log_dir, what=f"Selecionar dia {day} (ontem)", attempts=3)
-        page.wait_for_timeout(250)
+    try:
+        locator.click(timeout=timeout_normal)
+        return
+    except Exception as e1:
+        msg = str(e1)
+        _log(f"Falha ao clicar {desc} (normal): {e1!r}")
+
+        if "intercepts pointer events" in msg or "not receivable at point" in msg or "element receives pointer-events" in msg:
+            try:
+                locator.click(force=True, timeout=timeout_normal)
+                _log(f"{desc}: clique com force=True OK.")
+                return
+            except Exception as e2:
+                _log(f"{desc}: force=True também falhou: {e2!r}")
+
+        try:
+            handle = locator.element_handle(timeout=1000)
+            if handle:
+                handle.scroll_into_view_if_needed(timeout=1000)
+                locator.page.evaluate("(el) => el.click()", handle)
+                _log(f"{desc}: clique via evaluate(el.click()) OK.")
+                return
+        except Exception as e3:
+            _log(f"{desc}: fallback evaluate falhou: {e3!r}")
+
+        raise e1
+
+
+def _click_with_retry(page, locator, attempts=3, desc="elemento"):
+    last = None
+    for i in range(1, attempts + 1):
+        try:
+            if i > 1:
+                page.keyboard.press("Escape")
+                time.sleep(0.12)
+            _click_resiliente(locator, desc=desc)
+            return True
+        except Exception as e:
+            last = e
+            _log(f"Falha ao clicar {desc} (tentativa {i}/{attempts}): {e!r}")
+            time.sleep(0.2)
+    if last:
+        raise last
+    return False
+
+
+def _wait_label_data(page, expected_text: str, timeout_ms: int = 6000):
+    try:
+        page.wait_for_function(
+            """(expected) => {
+                const el = document.querySelector('span[data-cy="EFD-dataItem"]');
+                if (!el) return false;
+                return (el.textContent || '').trim().toLowerCase() === expected.toLowerCase();
+            }""",
+            arg=expected_text,
+            timeout=timeout_ms
+        )
+        return True
+    except Exception:
+        return False
+
+
+def _wait_post_login_ready(page, timeout_ms=15000):
+    deadline = time.time() + timeout_ms / 1000.0
+    while time.time() < deadline:
+        try:
+            url = page.url or ""
+            if "#/acesso" not in url:
+                return True
+            if page.locator('i.material-icons.icone-seta-novo-user-data').first.count() > 0:
+                return True
+            if page.locator('span.nav-text', has_text="Financeiro").first.count() > 0:
+                return True
+            if page.locator('span.nav-text', has_text="Gerencial").first.count() > 0:
+                return True
+        except Exception:
+            pass
+        time.sleep(0.25)
+    return False
+
+
+def _abrir_financeiro_e_item(page, item_texto: str):
+    """
+    Expande especificamente o 'Financeiro' (pelo caret/anchor DENTRO do próprio item Financeiro)
+    e clica no submenu 'item_texto' dentro desse mesmo <li>.
+    """
+    li_fin = page.locator('li:has(> a:has(span.nav-text:has-text("Financeiro")))').first
+    li_fin.wait_for(state="visible", timeout=8000)
+
+    caret = li_fin.locator(
+        'i.material-icons',
+        has_text=re.compile(r"(keyboard_arrow_(down|right)|expand_more|chevron_(right|down))", re.I)
+    ).first
+
+    anchor = li_fin.locator('> a:has(span.nav-text)').first
+    submenu_item = li_fin.locator('li a:has(span.nav-text:has-text("' + item_texto + '"))').first
+
+    for _ in range(5):
+        if submenu_item.count() > 0 and submenu_item.is_visible():
+            break
+        try:
+            li_fin.scroll_into_view_if_needed(timeout=1000)
+        except Exception:
+            pass
+
+        if caret.count() > 0 and caret.is_visible():
+            _click_resiliente(caret, desc="caret 'Financeiro'")
+        else:
+            _click_resiliente(anchor, desc="anchor 'Financeiro'")
+        time.sleep(0.25)
+
+    if submenu_item.count() == 0:
+        submenu_item = page.locator('li a:has(span.nav-text:has-text("' + item_texto + '"))').first
+
+    _click_with_retry(page, submenu_item, attempts=5, desc=f"menu '{item_texto}' (dentro de Financeiro)")
+    time.sleep(0.25)
+    return True
+
+
+def _last_overlay(page):
+    """Retorna o último overlay visível do Angular Material."""
+    overlay = page.locator("div.cdk-overlay-pane").filter(has_not=page.locator(".cdk-overlay-pane[aria-hidden='true']")).last
+    return overlay
+
+
+def _open_overlay_and_get(page, opener_locator, desc="overlay", tries=3):
+    """
+    Clica no botão que abre o overlay e retorna o overlay visível.
+    Reabre se não aparecer.
+    """
+    last_exc = None
+    for i in range(1, tries + 1):
+        try:
+            _click_with_retry(page, opener_locator, desc=f"{desc} (abrir)")
+            ov = _last_overlay(page)
+            ov.wait_for(state="visible", timeout=2000)
+            time.sleep(0.12)  # animação leve
+            return ov
+        except Exception as e:
+            last_exc = e
+            _log(f"Falha ao abrir {desc} (tentativa {i}/{tries}): {e!r}")
+            time.sleep(0.2)
+    if last_exc:
+        raise last_exc
+    raise PWTimeout(f"Não foi possível abrir {desc}")
+
+
+# -----------------------------------------------------------
+# Entrypoint chamado pelo app (/start_async)
+# -----------------------------------------------------------
+def run_rpa_enter_google_folder(base_dir: str, target_dir: str, log_dir: str):
+    if not (W12_USER and W12_PASS):
+        _log("Credenciais não configuradas no .env (W12_USER / W12_PASS). Abortando.")
+        _save_report_json(base_dir, {"rows": [], "meta": {"status": "no-credentials"}})
         return
 
-    # 3) Último recurso: fecha com ESC (nada selecionado)
-    try:
-        page.keyboard.press("Escape")
-    except Exception:
-        pass
-
-
-# =====================================================================
-# Função principal chamada pelo app.py
-# =====================================================================
-def run_rpa_enter_google_folder(base_dir: str, target_dir: str, log_dir: str) -> None:
-    _dbg(log_dir, "Iniciando (abrindo navegador automaticamente).")
-    _ensure_local_zip_from_drive(log_dir, filename="arquivos.zip")  # compat com app.py
+    _save_report_json(base_dir, {"rows": [], "meta": {"status": "starting"}})
+    _log("Iniciando (abrindo navegador automaticamente).")
 
     page = None
     try:
         with sync_playwright() as p:
-            browser = p.chromium.launch(
-                headless=HEADLESS,
-                args=[
-                    "--disable-gpu",
-                    "--no-sandbox",
-                    "--disable-dev-shm-usage",
-                    "--start-maximized",
-                    "--force-device-scale-factor=1",
-                    "--high-dpi-support=1",
-                    "--window-size=1920,1080",
-                ],
-            )
+            args = [
+                "--start-maximized",
+                "--disable-gpu",
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+            ]
+            browser = p.chromium.launch(headless=HEADLESS, args=args)
             context = browser.new_context(viewport=None)
             page = context.new_page()
-            page.set_default_timeout(12000)
+            page.set_default_timeout(8000)
 
-            page.goto(AZ_URL, wait_until="domcontentloaded", timeout=30000)
-
+            # -------------------------
             # Login
-            _wait_and_fill_login(page, log_dir)
-            page.wait_for_load_state("domcontentloaded")
-            page.wait_for_timeout(400)
+            # -------------------------
+            _log("Abrindo página de login...")
+            page.goto(W12_URL, wait_until="domcontentloaded")
 
-            # Unidade
-            _selecionar_unidade(page, log_dir, "BT TIJUC - Shopping Tijuca - 11")
+            _log("Preenchendo usuário...")
+            user_input = page.locator('input#usuario')
+            user_input.wait_for(state="visible")
+            user_input.fill(W12_USER)
 
-            # Menu
-            _abrir_financeiro_e_nfs(page, log_dir)
+            _log("Preenchendo senha...")
+            pass_input = page.locator('input#senha')
+            pass_input.wait_for(state="visible")
+            pass_input.fill(W12_PASS)
 
-            # DatePicker > Ontem > APLICAR → AGUARDAR REFRESH CURTO
-            _abrir_datepicker(page, log_dir)
-            _selecionar_ontem_na_lista(page, log_dir)
-            _aplicar_data_range(page, log_dir)
-            _esperar_pagina_atualizar(page, log_dir, timeout_ms=6500)
+            _log("Clicando em Entrar...")
+            btn_entrar = page.get_by_role("button", name=re.compile(r"^\s*Entrar\s*$", re.I)).first
+            if btn_entrar.count() == 0:
+                btn_entrar = page.locator('span.mat-button-wrapper', has_text=re.compile(r"^\s*Entrar\s*$", re.I)).first
+            _click_with_retry(page, btn_entrar, desc="Entrar")
 
-            # Exibir por: Data lançamento > APLICAR → AGUARDAR REFRESH CURTO
-            _set_exibir_por_data_lancamento_and_apply(page, log_dir)
-            _esperar_pagina_atualizar(page, log_dir, timeout_ms=6500)
+            if not _wait_post_login_ready(page, timeout_ms=15000):
+                _log("Pós-login demorou; aguardando mais 5s…")
+                if not _wait_post_login_ready(page, timeout_ms=5000):
+                    raise PWTimeout("Falha ao detectar área autenticada após o login.")
+            _log(f"Pós-login OK. URL atual: {page.url}")
 
-            # + FILTROS > Tributação > Todos + Não usar - 12.34.56 > APLICAR → AGUARDAR REFRESH CURTO
-            _abrir_filtros_e_aplicar_tributacao(page, log_dir)
-            _esperar_pagina_atualizar(page, log_dir, timeout_ms=6500)
+            # -------------------------
+            # Seleciona unidade "BT TIJUC - Shopping Tijuca - 11"
+            # -------------------------
+            _log("Abrindo seletor de unidade...")
+            seta_usuario = page.locator('i.material-icons.icone-seta-novo-user-data').first
+            if seta_usuario.count():
+                _click_with_retry(page, seta_usuario, desc="seta do usuário (unidade)")
 
-            # Seleciona 1 linha
-            _selecionar_primeira_linha(page, log_dir)
+            _log("Abrindo lista de unidades (mat-select)...")
+            mat_arrow = page.locator("div.mat-select-arrow-wrapper").first
+            _click_with_retry(page, mat_arrow, desc="seta do mat-select da unidade")
 
-            # ENVIAR
-            _clicar_enviar(page, log_dir)
+            _log("Pesquisando 'shopping tijuca'...")
+            search_un = page.locator('input.pesquisar-dropdrown').first
+            search_un.wait_for(state="visible")
+            search_un.fill("shopping tijuca")
+            time.sleep(0.3)
 
-            # Abrir calendário e selecionar ontem (segunda etapa)
-            _abrir_icon_calendar(page, log_dir)
-            _selecionar_ontem_no_datepicker(page, log_dir)
+            _log("Selecionando 'BT TIJUC - Shopping Tijuca - 11'...")
+            alvo = page.get_by_text(re.compile(r"BT\s+TIJUC\s+-\s+Shopping\s+Tijuca\s+-\s+11", re.I)).first
+            _click_with_retry(page, alvo, desc="unidade BT TIJUC - Shopping Tijuca - 11")
 
-            # Report
-            _save_report_json(
-                log_dir,
-                {
-                    "ready": True,
-                    "headers": ["etapa", "status", "detalhe"],
-                    "rows": [
-                        {"etapa": "login", "status": "ok", "detalhe": LOGIN_EMAIL},
-                        {"etapa": "unidade", "status": "ok", "detalhe": "BT TIJUC - Shopping Tijuca - 11"},
-                        {"etapa": "menu", "status": "ok", "detalhe": "Financeiro > NFS"},
-                        {"etapa": "data", "status": "ok", "detalhe": "Ontem + Aplicar (espera curta)"},
-                        {"etapa": "exibir por", "status": "ok", "detalhe": "Data lançamento + Aplicar (espera curta)"},
-                        {"etapa": "filtro", "status": "ok", "detalhe": "Tributação: Todos + Não usar - 12.34.56 + Aplicar (espera curta)"},
-                        {"etapa": "seleção", "status": "ok", "detalhe": "1 linha marcada"},
-                        {"etapa": "enviar", "status": "ok", "detalhe": "Clique realizado"},
-                        {"etapa": "datepicker envio", "status": "ok", "detalhe": "Ontem selecionado"},
-                    ],
-                    "meta": {},
-                },
+            # -------------------------
+            # Menu: Financeiro -> Notas Fiscais de Serviço
+            # -------------------------
+            _log("Abrindo menu 'Financeiro' e clicando em 'Notas Fiscais de Serviço'…")
+            _abrir_financeiro_e_item(page, "Notas Fiscais de Serviço")
+
+            # Aguarda a tela carregar o botão de Data
+            page.locator('button[data-cy="EFD-DatePickerBTN"]').first.wait_for(state="visible", timeout=15000)
+
+            # -------------------------
+            # Data: Ontem + Aplicar
+            # -------------------------
+            _log("Abrindo seletor de data…")
+            btn_data = page.locator('button[data-cy="EFD-DatePickerBTN"]').first
+            _click_with_retry(page, btn_data, desc="botão Data:")
+
+            _log("Selecionando 'Ontem'…")
+            ontem_item = page.get_by_text(re.compile(r"^\s*Ontem\s*$", re.I)).first
+            _click_with_retry(page, ontem_item, desc="item Ontem")
+
+            _log("Aplicando filtro de data…")
+            aplicar_data = page.locator('button[data-cy="EFD-ApplyButton"]').first
+            _click_with_retry(page, aplicar_data, desc="APLICAR (data)")
+
+            if _wait_label_data(page, "Ontem", timeout_ms=5000):
+                _log("Rótulo de Data confirmou 'Ontem'.")
+            else:
+                _log("Aviso: rótulo 'Data:' não confirmou 'Ontem' no tempo esperado.")
+
+            # -------------------------
+            # Exibir por + APLICAR
+            # -------------------------
+            _log("Abrindo 'Exibir por:'…")
+            page.keyboard.press("Escape")
+            btn_exibir = page.locator('button[data-cy="abrirFiltro"]').first
+
+            overlay = _open_overlay_and_get(page, btn_exibir, desc="Exibir por overlay")
+
+            data_item = overlay.get_by_text(re.compile(r"^\s*Data lançamento\s*$", re.I)).first
+            picked_icon = overlay.locator(
+                'div.mat-list-item-content:has-text("Data lançamento") mat-icon.picked, '
+                'div.mat-list-item-content:has-text("Data lançamento") .mat-icon.picked'
             )
+            ja_marcado = picked_icon.count() > 0
+            if ja_marcado:
+                _log("‘Data lançamento’ já está marcado — indo direto no APLICAR.")
+            else:
+                _log("Selecionando 'Data lançamento'…")
+                _click_with_retry(page, data_item, desc="Data lançamento")
+                try:
+                    overlay.wait_for(state="visible", timeout=1200)
+                except Exception:
+                    _log("Overlay fechou após selecionar — reabrindo para clicar APLICAR…")
+                    overlay = _open_overlay_and_get(page, btn_exibir, desc="Exibir por overlay (reabrir)")
 
-            if KEEP_OPEN:
-                _dbg(log_dir, "KEEP_BROWSER_OPEN=1 — mantendo navegador aberto por 45s para inspeção.")
-                page.wait_for_timeout(45000)
+            _log("Aplicando 'Exibir por:'…")
+            aplicar_exibir = overlay.locator('button[data-cy="AplicarFiltro"]').first
+            if not aplicar_exibir.count():
+                aplicar_exibir = page.get_by_role("button", name=re.compile(r"^\s*APLICAR\s*$", re.I)).first
+            _click_with_retry(page, aplicar_exibir, desc="APLICAR (Exibir por)")
 
-            context.close()
-            browser.close()
+            try:
+                overlay.wait_for(state="hidden", timeout=1500)
+            except Exception:
+                pass
+            time.sleep(0.6)
+
+            # -------------------------
+            # + FILTROS -> Tributação -> Todos + “Não usar - 12.34.56” -> Aplicar
+            # -------------------------
+            _log("Abrindo '+ FILTROS'…")
+            btn_mais_filtros = page.get_by_role("button", name=re.compile(r"^\s*\+\s*FILTROS\s*$", re.I)).first
+            _click_with_retry(page, btn_mais_filtros, desc="+ FILTROS")
+
+            _log("Abrindo 'Tributação'…")
+            btn_tribut = page.locator('button.simula-mat-menu', has_text=re.compile(r"^\s*Tributação\s*$", re.I)).first
+            if not btn_tribut.count():
+                btn_tribut = page.get_by_text(re.compile(r"^\s*Tributação\s*$", re.I)).first
+            _click_with_retry(page, btn_tribut, desc="Tributação")
+
+            _log("Marcando 'Todos' …")
+            todos_item = page.get_by_text(re.compile(r"^\s*Todos\s*$", re.I)).first
+            _click_with_retry(page, todos_item, desc="Todos")
+
+            _log("Selecionando 'Não usar - 12.34.56' …")
+            nao_usar_item = page.get_by_text(re.compile(r"^\s*Não usar\s*-\s*12\.34\.56\s*$", re.I)).first
+            _click_with_retry(page, nao_usar_item, desc="Não usar - 12.34.56")
+
+            _log("Aplicando filtro 'Tributação'…")
+            overlay2 = _last_overlay(page)
+            aplicar_filtro = overlay2.locator('button[data-cy="AplicarFiltro"]').first if overlay2.count() else page.locator('button[data-cy="AplicarFiltro"]').first
+            if not aplicar_filtro.count():
+                aplicar_filtro = page.get_by_role("button", name=re.compile(r"^\s*APLICAR\s*$", re.I)).first
+            _click_with_retry(page, aplicar_filtro, desc="APLICAR (Tributação)")
+
+            # Refresh curto e clicar SelecionarTodos
+            _log("Aguardando refresh após APLICAR (Tributação) e exibindo checkbox 'SelecionarTodos'…")
+            try:
+                page.wait_for_function(
+                    """() => !!document.querySelector('[data-cy="SelecionarTodosCheck"]')""",
+                    timeout=10000
+                )
+            except Exception:
+                _log("Aviso: checkbox 'SelecionarTodosCheck' demorou. Tentando localizar direto…")
+
+            time.sleep(0.4)
+            selecionar_todos = page.locator('[data-cy="SelecionarTodosCheck"]').first
+            if selecionar_todos.count():
+                _click_with_retry(page, selecionar_todos, desc="SelecionarTodos (checkbox)")
+            else:
+                _log("Checkbox 'SelecionarTodosCheck' não encontrado; fallback: marcar primeira linha.")
+                primeiro_check = page.locator('[data-cy="SelecionarUmCheck"]').first
+                _click_with_retry(page, primeiro_check, desc="checkbox primeira linha (fallback)")
+
+            # -------------------------
+            # ENVIAR
+            # -------------------------
+            _log("Clicando 'ENVIAR'…")
+            btn_enviar = page.get_by_role("button", name=re.compile(r"^\s*ENVIAR\s*$", re.I)).first
+            btn_enviar.wait_for(state="visible", timeout=8000)
+            _click_with_retry(page, btn_enviar, desc="ENVIAR")
+
+            # -------------------------
+            # Calendário: selecionar ontem
+            # -------------------------
+            _log("Abrindo calendário (ícone ao lado do campo)…")
+            cal_icon = page.get_by_role("button", name=re.compile(r"Open calendar", re.I)).first
+            _click_with_retry(page, cal_icon, desc="ícone calendário")
+
+            ontem = datetime.now() - timedelta(days=1)
+            dia = str(ontem.day)
+
+            _log(f"Selecionando dia '{dia}' no calendário…")
+            dia_cell = page.locator(f'//td[normalize-space()="{dia}"]').first
+            if not dia_cell.count():
+                dia_cell = page.get_by_role("gridcell", name=re.compile(rf"^\s*{re.escape(dia)}\s*$")).first
+            _click_with_retry(page, dia_cell, desc=f"dia {dia}")
+
+            # >>> Pausa final para inspeção antes de fechar o navegador <<<
+            _log("Pausando 5s para conferência visual antes de fechar o navegador…")
+            time.sleep(5)
+
+            _log("Fluxo finalizado até a seleção da data de ontem no calendário.")
+            _save_report_json(base_dir, {
+                "rows": [],
+                "meta": {"status": "ok", "finished_at": datetime.now().isoformat()}
+            })
+
+    except PWTimeout as te:
+        _log(f"Timeout em alguma etapa: {te}")
+        try:
+            if page:
+                _screenshot(page)
+        except Exception:
+            pass
+        _save_report_json(base_dir, {"rows": [], "meta": {"status": "timeout", "error": str(te)}})
 
     except Exception as e:
-        _screenshot(page, log_dir, "screenshot_erro")
-        _dbg(log_dir, f"Exceção no fluxo: {e!r}")
-        _save_report_json(
-            log_dir,
-            {
-                "ready": True,
-                "headers": ["erro", "timestamp"],
-                "rows": [{"erro": str(e), "timestamp": datetime.now().strftime("%d/%m/%Y %H:%M:%S")}],
-                "meta": {},
-            },
-        )
+        _log(f"Exceção no fluxo: {e!r}")
+        try:
+            if page:
+                _screenshot(page)
+        except Exception:
+            pass
+        _save_report_json(base_dir, {"rows": [], "meta": {"status": "error", "error": str(e)}})
