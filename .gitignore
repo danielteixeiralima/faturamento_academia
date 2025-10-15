@@ -1,7 +1,60 @@
+# Arquivos de ambiente
 .env
+
 # Virtual envs (Python)
 venv/
 .venv/
 env/
 ENV/
 
+# Compilados Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build e distribuição
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs e caches
+*.log
+*.tmp
+*.bak
+*.swp
+*.DS_Store
+
+# Arquivos de banco de dados temporários
+*.db
+*.sqlite3
+
+# Pasta de relatórios ou extrações temporárias
+extraidos/
+
+# Configurações do editor / IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Arquivos de testes / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+.cache/
+
+# Arquivos temporários de sistema
+Thumbs.db
+desktop.ini
+
+# Arquivos de relatórios
+last_report.json
+
+# Arquivos temporários do Flask / Django / FastAPI
+instance/
+*.pid
+
+# Arquivos do Jupyter
+.ipynb_checkpoints/

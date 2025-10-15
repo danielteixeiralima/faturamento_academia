@@ -4,23 +4,120 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login</title>
+  <title>Entrar no Sistema</title>
   <style>
-    :root { --bg:#f7fafc; --card:#ffffff; --text:#2d3748; --muted:#718096; --primary:#3182ce; --primary-hover:#2b6cb0; --border:#e2e8f0; }
-    body { margin:0; display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; }
-    .card { background:var(--card); border:1px solid var(--border); padding:24px; border-radius:12px; width:360px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .title { font-weight:700; margin-bottom:12px; }
-    label { display:block; font-size:0.9rem; color:var(--muted); margin-bottom:4px; }
-    input { width:100%; padding:12px; border:1px solid var(--border); border-radius:8px; margin-bottom:12px; }
-    button { width:100%; padding:12px; border:0; background:var(--primary); color:#fff; border-radius:8px; font-weight:600; cursor:pointer; }
-    button:hover { background:var(--primary-hover); }
-    .hint { font-size:0.875rem; color:var(--muted); margin-top:8px; }
-    .flash { background:#edf2f7; border:1px solid #e2e8f0; padding:10px 12px; border-radius:8px; margin-top:12px; }
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --border: #334155;
+      --shadow: rgba(0,0,0,0.5);
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 28px;
+      border-radius: 16px;
+      width: 380px;
+      box-shadow: 0 8px 32px var(--shadow);
+      backdrop-filter: blur(8px);
+      animation: fadeIn 0.6s ease;
+    }
+
+    .title {
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-align: center;
+      font-size: 1.4rem;
+      color: var(--primary);
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 14px;
+      background: #0f172a;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.4);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: 0;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+      transform: scale(1.02);
+    }
+
+    .hint {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .hint strong {
+      color: var(--text);
+    }
+
+    .flash {
+      background: #1e293b;
+      border: 1px solid #475569;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      text-align: center;
+      color: #f87171;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="title">Acessar</div>
+    <div class="title">Bem-vindo(a)</div>
     <form action="{{ url_for('login') }}" method="post">
       <label for="username">Usuário</label>
       <input id="username" name="username" type="text" required>
