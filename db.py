@@ -1,21 +1,32 @@
 # filename: db.py
-# SQLAlchemy + ..env com criação automática do banco PostgreSQL (ou fallback p/ SQLite) — comentários com alguns dígitos árabe-índicos.
 import os
-from datetime import datetime
-
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError, ProgrammingError
-from sqlalchemy.engine.url import make_url
+from sqlalchemy.engine.url import make_url, URL
 from sqlalchemy.orm import sessionmaker, scoped_session
 from werkzeug.security import generate_password_hash
 from dotenv import load_dotenv
 
 from models import User
 
-# Carrega ..env (executa ١ vez).
-load_dotenv()
+# .env sempre em UTF-8
+load_dotenv(encoding="utf-8")
 
-# Caminhos de diretórios (uploads/extraidos) criados ١ vez.
+# Blindagem: evita arquivos/variáveis externas do libpq com encoding estranho
+def _sanitize_pg_env():
+    # Mantém apenas PGCLIENTENCODING; remove o resto (PGUSER, PGPASSWORD, PGSERVICE, etc.)
+    for k in list(os.environ.keys()):
+        if k.startswith("PG") and k not in {"PGCLIENTENCODING"}:
+            del os.environ[k]
+    os.environ["PGCLIENTENCODING"] = "utf8"
+    # Desabilita pgpass e pg_service
+    os.environ["PGPASSFILE"] = "NUL" if os.name == "nt" else "/dev/null"
+    os.environ["PGSERVICEFILE"] = "NUL" if os.name == "nt" else "/dev/null"
+    # Evita procurar pg_service.conf em diretórios do sistema
+    os.environ["PGSYSCONFDIR"] = os.getcwd()
+
+_sanitize_pg_env()
+
 def get_paths():
     base_dir = os.path.abspath(os.path.dirname(__file__))
     upload_dir = os.path.join(base_dir, 'uploads')
@@ -30,45 +41,90 @@ def _sqlite_url():
 def _make_engine(url: str, **kwargs):
     return create_engine(url, pool_pre_ping=True, future=True, **kwargs)
 
+def _pg_connect_args_from_url(target_url: str):
+    url = make_url(target_url)
+    return {
+        "user": url.username or "postgres",
+        "password": url.password or "postgres",
+        "host": url.host or "localhost",
+        "port": int(url.port or 5432),
+        "dbname": url.database or "postgres",
+        "client_encoding": "utf8",
+        "options": "-c client_encoding=UTF8",
+    }
+
+def _make_pg_engine_psycopg2(target_url: str):
+    connect_args = _pg_connect_args_from_url(target_url)
+    eng = create_engine(
+        "postgresql+psycopg2://",
+        connect_args=connect_args,
+        pool_pre_ping=True,
+        future=True,
+    )
+    return eng
+
+def _make_pg_engine_pg8000(target_url: str, database_override: str | None = None):
+    url = make_url(target_url)
+    db_url = URL.create(
+        "postgresql+pg8000",
+        username=url.username or "postgres",
+        password=url.password or "postgres",
+        host=url.host or "localhost",
+        port=int(url.port or 5432),
+        database=(database_override or url.database or "postgres"),
+    )
+    eng = create_engine(db_url, pool_pre_ping=True, future=True)
+    return eng
+
 def _ensure_postgres_database(target_url: str):
     """
-    Se o banco alvo não existir, cria automaticamente conectando no DB padrão 'postgres'.
+    Tenta conectar no banco alvo.
+    Se não existir (3D000), conecta no DB 'postgres' e cria o alvo.
+    Se houver erro de encoding com psycopg2, faz fallback para pg8000.
     """
-    url = make_url(target_url)
-    dbname = url.database
+    last_op_err = None
+    had_unicode_err = False
 
-    # Tenta conectar no banco alvo — se falhar por DB inexistente (3D000), cria.
+    # 1) Tenta com psycopg2 (evitando DSN)
     try:
-        eng = _make_engine(target_url)
+        eng = _make_pg_engine_psycopg2(target_url)
         with eng.connect() as conn:
             conn.execute(text("SELECT 1"))
         return eng
+    except UnicodeDecodeError:
+        # Falha típica do libpq no Windows com arquivos/variáveis ANSI
+        had_unicode_err = True
     except OperationalError as e:
-        pgcode = getattr(getattr(e, "orig", None), "pgcode", None)
-        # 3D000 = invalid_catalog_name → banco não existe.
+        # Pode ser 3D000 (db inexistente) ou outro; tratamos abaixo
+        last_op_err = e
+    except ProgrammingError:
+        # Repropaga erros de programação (ex.: sintaxe/perm)
+        raise
+
+    # 2) Se falhou por db inexistente com psycopg2, tenta criar usando pg8000
+    if isinstance(last_op_err, OperationalError):
+        pgcode = getattr(getattr(last_op_err, "orig", None), "pgcode", None)
         if pgcode == "3D000":
-            admin_url = url.set(database="postgres")
-            admin_engine = _make_engine(admin_url, isolation_level="AUTOCOMMIT")
+            url = make_url(target_url)
+            dbname = url.database
+            admin_engine = _make_pg_engine_pg8000(target_url, database_override="postgres")
             with admin_engine.connect() as conn:
-                # Cria o DB (assume nome simples sem caracteres especiais).
+                conn.execution_options(isolation_level="AUTOCOMMIT")
                 conn.execute(text(f'CREATE DATABASE "{dbname}"'))
             admin_engine.dispose()
-            # Conecta novamente ao banco recém-criado.
-            eng = _make_engine(target_url)
-            with eng.connect() as conn:
-                conn.execute(text("SELECT 1"))
-            return eng
-        # Se for outra falha (ex.: conexão recusada), propaga para tratar fallback.
-        raise
-    except ProgrammingError:
-        # Quaisquer outros erros de programação indicam problemas de sintaxe/perm.
-        raise
+            last_op_err = None  # reset após criar o DB
+
+    # 3) Tenta conectar ao banco alvo com pg8000 (contorna libpq/psycopg2)
+    #    (também cobre o caso had_unicode_err=True)
+    eng = _make_pg_engine_pg8000(target_url)
+    with eng.connect() as conn:
+        conn.execute(text("SELECT 1"))
+    return eng
+
 
 DATABASE_URL = (os.getenv('DATABASE_URL') or '').strip()
 
-# Seleciona engine de acordo com as variáveis de ambiente e disponibilidade.
 if not DATABASE_URL:
-    # Fallback amigável para desenvolvimento local sem PostgreSQL.
     DATABASE_URL = _sqlite_url()
     engine = _make_engine(DATABASE_URL)
 else:
@@ -79,16 +135,14 @@ else:
             engine = _make_engine(DATABASE_URL)
             with engine.connect() as conn:
                 conn.execute(text("SELECT 1"))
-    except OperationalError:
-        # Se não conseguir conectar (ex.: servidor PG desligado), cai para SQLite.
+    except (OperationalError, UnicodeDecodeError):
+        # Fallback para SQLite se Postgres indisponível ou ainda houver problema de encoding
         DATABASE_URL = _sqlite_url()
         engine = _make_engine(DATABASE_URL)
 
-# Session
 SessionLocal = scoped_session(sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True))
 
 def init_db_and_seed_admin():
-    # Importa Base dos models para criar tabelas (evita import circular).
     from models import Base as ModelsBase  # noqa
     ModelsBase.metadata.create_all(engine)
     with SessionLocal() as db:

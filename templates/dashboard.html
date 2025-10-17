@@ -108,7 +108,6 @@
   <div class="card">
     <button id="btn-start">Iniciar Processo</button>
     <div id="upload-msg" class="msg" aria-live="polite"></div>
-    <div id="arquivo-atual" class="hint" style="margin-top:6px;"></div>
   </div>
 
   <div id="overlay" class="overlay hidden">
@@ -122,44 +121,23 @@
     const btnStart  = document.getElementById("btn-start");
     const overlay   = document.getElementById("overlay");
     const uploadMsg = document.getElementById("upload-msg");
-    const arquivoAtual = document.getElementById("arquivo-atual");
-
-    async function checarArquivo(){
-      try{
-        const r = await fetch("/api/arquivo-atual?t=" + Date.now());
-        const j = await r.json();
-        if(j.ok){
-          const data = new Date(j.mtime * 1000).toLocaleString();
-          arquivoAtual.textContent = "arquivos.zip localizado (atualizado em " + data + ").";
-        }else{
-          arquivoAtual.textContent = "Nenhum arquivo encontrado até o momento.";
-        }
-      }catch(e){
-        arquivoAtual.textContent = "Erro ao verificar arquivo.";
-      }
-    }
-    checarArquivo();
 
     btnStart.addEventListener("click", async ()=> {
       overlay.classList.remove("hidden");
       btnStart.disabled = true;
-      uploadMsg.textContent = "Baixando arquivo do Drive...";
+      uploadMsg.textContent = "Iniciando processo...";
       uploadMsg.className = "msg";
 
       try{
-        const r1 = await fetch("{{ url_for('upload_zip_automatico') }}", { method:"POST" });
-        const j1 = await r1.json();
-        if(!j1.ok) throw new Error(j1.error || "Falha ao baixar ZIP do Drive");
-
-        uploadMsg.textContent = "Arquivo baixado. Iniciando processo...";
-        uploadMsg.className = "msg ok";
-        checarArquivo();
-
         const res = await fetch("{{ url_for('start_async') }}", { method:"POST" });
         const data = await res.json();
         if(!data.ok) throw new Error(data.error || "Falha ao iniciar processo");
 
+        uploadMsg.textContent = "Processo iniciado. Aguardando relatório...";
+        uploadMsg.className = "msg ok";
+
         const startedAt = data.started_at || Math.floor(Date.now()/1000);
+
         async function poll(){
           try{
             const r = await fetch("{{ url_for('api_report') }}?t=" + Date.now(), { cache:'no-store' });
@@ -179,6 +157,7 @@
         uploadMsg.textContent = e.message || "Erro inesperado.";
         uploadMsg.className = "msg err";
       }
+
     });
   </script>
 </body>

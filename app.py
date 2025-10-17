@@ -270,14 +270,8 @@ def report():
 @app.post("/start_async")
 @login_required
 def start_async():
-    zip_path = os.path.join(UPLOAD_DIR, "arquivos.zip")
-    if not os.path.isfile(zip_path):
-        return jsonify({"ok": False, "error": "arquivos.zip não foi enviado ainda."}), 400
-
-    extract_dir = session.get("last_extract_dir")
-    if not extract_dir or not os.path.isdir(extract_dir):
-        extract_dir = os.path.join(EXTRACT_DIR, "temporario")
-        os.makedirs(extract_dir, exist_ok=True)
+    extract_dir = os.path.join(EXTRACT_DIR, "temporario")
+    os.makedirs(extract_dir, exist_ok=True)
 
     target_folder = os.path.join(extract_dir, "google.com")
     os.makedirs(target_folder, exist_ok=True)
