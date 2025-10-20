@@ -4,7 +4,7 @@ import re
 import asyncio
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Pattern
+from typing import Pattern, List, Tuple
 
 from dotenv import load_dotenv
 from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeout
@@ -25,15 +25,11 @@ VERY_SHORT_TIMEOUT = 1500
 FAST_TIMEOUT = 1200
 
 # ===== Unidades (regex) =====
-UNIDADE_ALVO_REGEX = re.compile(r"^\s*BT TIJUC\s*-\s*Shopping Tijuca\s*-\s*11\s*$", re.IGNORECASE)  # Tijuca
+UNIDADE_ALVO_REGEX = re.compile(r"^\s*BT TIJUC\s*-\s*Shopping Tijuca\s*-\s*11\s*$", re.IGNORECASE)
 PRAIA_DA_COSTA_REGEX = re.compile(r"^\s*BT\s*VELHA\s*-\s*Shop\.\s*Praia da Costa\s*-\s*27\s*$", re.IGNORECASE)
 SHOPPING_DA_ILHA_REGEX = re.compile(r"^\s*BT\s*SLUIS\s*-\s*Shopping da Ilha\s*-\s*80\s*$", re.IGNORECASE)
 SHOPPING_VITORIA_REGEX = re.compile(r"^\s*BT\s*VITOR\s*-\s*Shopping Vit[oó]ria\s*-\s*89\s*$", re.IGNORECASE)
-# Aceita "Shop. Rio Poty" OU "Shopping Rio Poty", com/sem ponto
-SHOPPING_RIO_POTY_REGEX = re.compile(
-    r"^\s*BT\s*TERES\s*-\s*Shop(?:ping)?\.?\s*Rio\s*Poty\s*-\s*102\s*$",
-    re.IGNORECASE
-)
+SHOPPING_RIO_POTY_REGEX = re.compile(r"^\s*BT\s*TERES\s*-\s*Shop(?:ping)?\.?\s*Rio\s*Poty\s*-\s*102\s*$", re.IGNORECASE)
 
 # Padrão genérico para “Não usar - {código}”
 NAO_USAR_ANY = re.compile(r"^\s*Não\s*usar\s*(?:-\s*\d+(?:\.\d+)*)?\s*$", re.IGNORECASE)
@@ -61,9 +57,7 @@ async def wait_loading_quiet(page, fast: bool = False) -> None:
     except PlaywrightTimeout:
         pass
     for sel in [
-        "evo-loading",
-        ".mat-progress-bar",
-        ".cdk-overlay-backdrop",
+        "evo-loading", ".mat-progress-bar", ".cdk-overlay-backdrop",
         ".cdk-global-overlay-wrapper .mat-progress-spinner",
     ]:
         try:
@@ -105,7 +99,7 @@ async def click_with_retries(loc, desc: str, attempts: int = 3, force_last: bool
 def ensure_env() -> tuple[str, str]:
     load_dotenv(override=True)
     user = os.getenv("W12_USER", "").strip()
-    pwd = os.getenv("W12_PASS", "").strip()
+    pwd  = os.getenv("W12_PASS", "").strip()
     if not user or not pwd:
         raise RuntimeError("Credenciais não configuradas no .env (W12_USER e W12_PASS).")
     return user, pwd
@@ -253,11 +247,7 @@ async def abrir_menu_usuario(page):
     await pane.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
     return pane
 
-async def selecionar_unidade_por_nome(page, search_terms: list[str], target_regex: Pattern) -> None:
-    """
-    Abre o menu do usuário, abre o seletor de unidade, digita termos, tenta clicar
-    no texto que bate com o regex; se não achar, usa ArrowDown+Enter.
-    """
+async def selecionar_unidade_por_nome(page, search_terms: List[str], target_regex: Pattern) -> None:
     pane = await abrir_menu_usuario(page)
     log("Localizando seletor 'Selecionar unidade' dentro do menu do usuário")
     select_trigger = pane.locator("mat-select, .mat-select-trigger, div.mat-select-arrow-wrapper").first
@@ -277,7 +267,6 @@ async def selecionar_unidade_por_nome(page, search_terms: list[str], target_rege
         await search_input.fill("")
         await search_input.type(term, delay=8)
 
-        # Tenta clicar no item que casa com o regex (timeout maior)
         item = overlay.get_by_text(target_regex).first
         try:
             await item.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
@@ -288,32 +277,23 @@ async def selecionar_unidade_por_nome(page, search_terms: list[str], target_rege
         except Exception:
             pass
 
-        # Fallback: pega o primeiro item da lista via teclado
+        # fallback: primeiro item com teclado
         try:
             await search_input.press("ArrowDown")
             await asyncio.sleep(0.1)
             await search_input.press("Enter")
             await wait_loading_quiet(page, fast=True)
-            log(f"Selecionado via ArrowDown+Enter após termo '{term}'")
             return
         except Exception:
             pass
 
-    # Último fallback: tenta clicar outra vez pelo regex sem digitar
+    # último fallback direto
     item = overlay.get_by_text(target_regex).first
     if await click_with_retries(item, "Unidade alvo (fallback final)", attempts=3, timeout=DEFAULT_TIMEOUT):
         await wait_loading_quiet(page, fast=True)
-        log("Unidade selecionada com sucesso (fallback final)")
         return
 
     raise RuntimeError("Não foi possível selecionar a unidade alvo dentro do menu do usuário")
-
-async def selecionar_unidade_obrigatorio(page) -> None:
-    await selecionar_unidade_por_nome(
-        page,
-        search_terms=["shopping tijuca", "tijuca", "BT TIJUC"],
-        target_regex=UNIDADE_ALVO_REGEX,
-    )
 
 async def abrir_menu_financeiro_e_ir_para_nfs(page) -> None:
     log("Abrindo menu Financeiro e acessando Notas Fiscais de Serviço")
@@ -337,7 +317,6 @@ async def abrir_menu_financeiro_e_ir_para_nfs(page) -> None:
 
     if not await click_with_retries(nfs, "Notas Fiscais de Serviço", attempts=2, timeout=DEFAULT_TIMEOUT):
         await nfs.click(force=True, timeout=DEFAULT_TIMEOUT)
-        log("Notas Fiscais de Serviço: clique forçado executado")
 
     await wait_loading_quiet(page, fast=True)
 
@@ -388,7 +367,6 @@ async def exibir_por_data_lancamento(page) -> None:
                 aplicar_global = page.locator("button[data-cy='AplicarFiltro']").first
                 await aplicar_global.click(timeout=FAST_TIMEOUT)
                 await wait_loading_quiet(page, fast=True)
-                log("AplicarFiltro clicado sem overlay (fallback)")
                 return
             except Exception:
                 raise RuntimeError("Não foi possível abrir o overlay de 'Exibir por'.")
@@ -424,16 +402,9 @@ async def exibir_por_data_lancamento(page) -> None:
 
     await asyncio.sleep(0.3)
     await wait_loading_quiet(page, fast=True)
-    log("'Exibir por' aplicado com Data de Lançamento")
 
 # === Tributação — marcar TODOS e DESMARCAR QUALQUER “Não usar - …” ===
 async def aplicar_filtro_tributacao(page) -> None:
-    """
-    +FILTROS → Tributação:
-      1) marca 'Todos'
-      2) desmarca TODOS os itens que combinem com 'Não usar - {qualquer código}' (ou só 'Não usar')
-      3) Aplicar
-    """
     log("Abrindo + FILTROS")
     btn_mais_filtros = page.get_by_role("button", name=re.compile(r"\+\s*FILTROS", re.IGNORECASE)).first
     await btn_mais_filtros.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
@@ -457,9 +428,8 @@ async def aplicar_filtro_tributacao(page) -> None:
         todos = pane.get_by_text(re.compile(r"^\s*Todos\s*$", re.IGNORECASE)).first
         await todos.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
         await todos.click()
-        log("Tributação: 'Todos' marcado")
     except Exception:
-        log("Tributação: não localizei 'Todos' — seguindo mesmo assim")
+        pass
 
     # 2) desmarcar TODOS os "Não usar - ..."
     vistos = set()
@@ -502,6 +472,21 @@ async def aplicar_filtro_tributacao(page) -> None:
 
     await asyncio.sleep(0.4)
     await wait_loading_quiet(page, fast=True)
+
+# === Validação universal: existe "Selecionar todos"? ===
+async def has_select_all_checkbox(page) -> bool:
+    await asyncio.sleep(2.0)  # janela para a tabela renderizar
+    sel = page.locator(
+        "mat-checkbox[data-cy='SelecionarTodosCheck'], "
+        "mat-header-row mat-checkbox, "
+        "mat-table mat-header-row mat-checkbox, "
+        "mat-checkbox .mat-checkbox-inner-container"
+    ).first
+    try:
+        await sel.wait_for(state="visible", timeout=1500)
+        return True
+    except PlaywrightTimeout:
+        return False
 
 async def selecionar_todos_e_enviar(page) -> None:
     log("Selecionando todos os registros")
@@ -551,6 +536,29 @@ async def cancelar_modal_enviar_nf(page) -> None:
     await wait_loading_quiet(page, fast=True)
     log("Modal 'Enviar NF' cancelado com sucesso")
 
+# === Pipeline por unidade (com validação de checkbox) ===
+async def processar_unidade(
+    page,
+    nome_log: str,
+    search_terms: List[str],
+    regex: Pattern
+) -> None:
+    log(f"---- Iniciando unidade: {nome_log} ----")
+    await selecionar_unidade_por_nome(page, search_terms, regex)
+    await abrir_menu_financeiro_e_ir_para_nfs(page)
+    await aplicar_data_ontem(page)
+    await exibir_por_data_lancamento(page)
+    await aplicar_filtro_tributacao(page)
+
+    if await has_select_all_checkbox(page):
+        log("Checkbox 'Selecionar todos' presente — seguindo fluxo normal")
+        await selecionar_todos_e_enviar(page)
+        await digitar_data_util_anterior_no_input(page)
+        await cancelar_modal_enviar_nf(page)
+        log(f"Unidade {nome_log}: fluxo concluído")
+    else:
+        log(f"Unidade {nome_log}: sem checkbox 'Selecionar todos' (sem registros). Pulando para a próxima.")
+
 # =========================
 # Runner
 # =========================
@@ -592,120 +600,44 @@ async def _run() -> None:
         page = await context.new_page()
 
         try:
-            # ===== TIJUCA =====
+            # Login + primeira unidade obrigatória (Tijuca)
             await do_login(page, user, pwd)
-            await selecionar_unidade_obrigatorio(page)
-            await abrir_menu_financeiro_e_ir_para_nfs(page)
-            await aplicar_data_ontem(page)
-            await exibir_por_data_lancamento(page)
-            await aplicar_filtro_tributacao(page)
-            await selecionar_todos_e_enviar(page)
-            await digitar_data_util_anterior_no_input(page)
-            await cancelar_modal_enviar_nf(page)
+            await processar_unidade(
+                page,
+                "BT TIJUC - Shopping Tijuca - 11",
+                ["shopping tijuca", "tijuca", "BT TIJUC"],
+                UNIDADE_ALVO_REGEX,
+            )
 
-            # ===== PRAIA DA COSTA =====
-            try:
-                log("Trocando unidade para Shop. Praia da Costa - 27 (via menu do usuário)")
-                await selecionar_unidade_por_nome(
-                    page,
-                    search_terms=["Shop. Praia da Costa", "praia da costa", "BT VELHA"],
-                    target_regex=PRAIA_DA_COSTA_REGEX,
-                )
-                await abrir_menu_financeiro_e_ir_para_nfs(page)
-                await aplicar_data_ontem(page)
-                await exibir_por_data_lancamento(page)
-                await aplicar_filtro_tributacao(page)
-                await selecionar_todos_e_enviar(page)
-                await digitar_data_util_anterior_no_input(page)
-                await cancelar_modal_enviar_nf(page)
-                log("Fluxo concluído para Shop. Praia da Costa - 27")
-            except Exception:
-                ts2 = int(datetime.now().timestamp())
-                img2 = SCREENSHOT_DIR / f"screenshot_erro_praia_da_costa_{ts2}.png"
-                try:
-                    await page.screenshot(path=str(img2), full_page=True)
-                    log(f"Erro no fluxo (Praia da Costa). Screenshot: {img2}")
-                except Exception as se2:
-                    log(f"Falha ao salvar screenshot (Praia da Costa): {se2}")
-                raise
+            # Demais unidades
+            unidades: List[Tuple[str, List[str], Pattern]] = [
+                ("BT VELHA - Shop. Praia da Costa - 27",
+                 ["Shop. Praia da Costa", "praia da costa", "BT VELHA"],
+                 PRAIA_DA_COSTA_REGEX),
+                ("BT SLUIS - Shopping da Ilha - 80",
+                 ["Shopping da Ilha", "da ilha", "BT SLUIS"],
+                 SHOPPING_DA_ILHA_REGEX),
+                ("BT VITOR - Shopping Vitória - 89",
+                 ["Shopping Vitória", "vitoria", "Vitória", "BT VITOR"],
+                 SHOPPING_VITORIA_REGEX),
+                ("BT TERES - Shopping Rio Poty - 102",
+                 ["Shopping Rio Poty", "Shop. Rio Poty", "rio poty", "BT TERES"],
+                 SHOPPING_RIO_POTY_REGEX),
+            ]
 
-            # ===== SHOPPING DA ILHA =====
-            try:
-                log("Trocando unidade para Shopping da Ilha - 80 (via menu do usuário)")
-                await selecionar_unidade_por_nome(
-                    page,
-                    search_terms=["Shopping da Ilha", "da ilha", "BT SLUIS"],
-                    target_regex=SHOPPING_DA_ILHA_REGEX,
-                )
-                await abrir_menu_financeiro_e_ir_para_nfs(page)
-                await aplicar_data_ontem(page)
-                await exibir_por_data_lancamento(page)
-                await aplicar_filtro_tributacao(page)
-                await selecionar_todos_e_enviar(page)
-                await digitar_data_util_anterior_no_input(page)
-                await cancelar_modal_enviar_nf(page)
-                log("Fluxo concluído para Shopping da Ilha - 80")
-            except Exception:
-                ts3 = int(datetime.now().timestamp())
-                img3 = SCREENSHOT_DIR / f"screenshot_erro_shopping_da_ilha_{ts3}.png"
+            for nome, termos, rx in unidades:
                 try:
-                    await page.screenshot(path=str(img3), full_page=True)
-                    log(f"Erro no fluxo (Shopping da Ilha). Screenshot: {img3}")
-                except Exception as se3:
-                    log(f"Falha ao salvar screenshot (Shopping da Ilha): {se3}")
-                raise
-
-            # ===== SHOPPING VITÓRIA =====
-            try:
-                log("Trocando unidade para Shopping Vitória - 89 (via menu do usuário)")
-                await selecionar_unidade_por_nome(
-                    page,
-                    search_terms=["Shopping Vitória", "vitoria", "Vitória", "BT VITOR"],
-                    target_regex=SHOPPING_VITORIA_REGEX,
-                )
-                await abrir_menu_financeiro_e_ir_para_nfs(page)
-                await aplicar_data_ontem(page)
-                await exibir_por_data_lancamento(page)
-                await aplicar_filtro_tributacao(page)
-                await selecionar_todos_e_enviar(page)
-                await digitar_data_util_anterior_no_input(page)
-                await cancelar_modal_enviar_nf(page)
-                log("Fluxo concluído para Shopping Vitória - 89")
-            except Exception:
-                ts4 = int(datetime.now().timestamp())
-                img4 = SCREENSHOT_DIR / f"screenshot_erro_shopping_vitoria_{ts4}.png"
-                try:
-                    await page.screenshot(path=str(img4), full_page=True)
-                    log(f"Erro no fluxo (Shopping Vitória). Screenshot: {img4}")
-                except Exception as se4:
-                    log(f"Falha ao salvar screenshot (Shopping Vitória): {se4}")
-                raise
-
-            # ===== SHOPPING RIO POTY =====
-            try:
-                log("Trocando unidade para Shopping Rio Poty - 102 (via menu do usuário)")
-                await selecionar_unidade_por_nome(
-                    page,
-                    search_terms=["Shopping Rio Poty", "Shop. Rio Poty", "rio poty", "BT TERES"],
-                    target_regex=SHOPPING_RIO_POTY_REGEX,
-                )
-                await abrir_menu_financeiro_e_ir_para_nfs(page)
-                await aplicar_data_ontem(page)
-                await exibir_por_data_lancamento(page)
-                await aplicar_filtro_tributacao(page)
-                await selecionar_todos_e_enviar(page)
-                await digitar_data_util_anterior_no_input(page)
-                await cancelar_modal_enviar_nf(page)
-                log("Fluxo concluído para Shopping Rio Poty - 102")
-            except Exception:
-                ts5 = int(datetime.now().timestamp())
-                img5 = SCREENSHOT_DIR / f"screenshot_erro_shopping_rio_poty_{ts5}.png"
-                try:
-                    await page.screenshot(path=str(img5), full_page=True)
-                    log(f"Erro no fluxo (Shopping Rio Poty). Screenshot: {img5}")
-                except Exception as se5:
-                    log(f"Falha ao salvar screenshot (Shopping Rio Poty): {se5}")
-                raise
+                    await processar_unidade(page, nome, termos, rx)
+                except Exception as e:
+                    ts = int(datetime.now().timestamp())
+                    img = SCREENSHOT_DIR / f"screenshot_erro_{re.sub(r'\\W+', '_', nome)}_{ts}.png"
+                    try:
+                        await page.screenshot(path=str(img), full_page=True)
+                        log(f"Erro no fluxo ({nome}). Screenshot: {img}")
+                    except Exception as se:
+                        log(f"Falha ao salvar screenshot ({nome}): {se}")
+                    # segue para a próxima unidade mesmo em caso de erro
+                    continue
 
             log("Pausa final de 5 segundos para inspeção")
             await asyncio.sleep(5)
