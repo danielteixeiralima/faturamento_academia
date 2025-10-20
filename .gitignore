@@ -58,3 +58,4 @@ instance/
 
 # Arquivos do Jupyter
 .ipynb_checkpoints/
+*.png
