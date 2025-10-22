@@ -4,32 +4,110 @@ import re
 import asyncio
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Pattern, List, Tuple
+from typing import Pattern, List, Tuple, Optional
+import unicodedata
 
 from dotenv import load_dotenv
 from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeout
 
 # =========================
-# Configurações
+# Carrega .env e parâmetros
 # =========================
-TENANT = "bodytech"
-BASE_URL_LOGIN = f"https://evo5.w12app.com.br/#/acesso/{TENANT}/login"
-APP_HOME_URL = "https://evo5.w12app.com.br/#/app/bodytech/-2/inicio/geral"
+load_dotenv(override=True)
 
+HEADLESS = os.getenv("HEADLESS", "1").strip() != "0"
+DEBUG_LOGIN = os.getenv("W12_DEBUG_LOGIN", "0").strip() == "1"
+
+def ensure_env() -> tuple[str, str]:
+    user = os.getenv("W12_USER", "").strip()
+    pwd  = os.getenv("W12_PASS", "").strip()
+    if not user or not pwd:
+        raise RuntimeError("Credenciais não configuradas no .env (W12_USER e W12_PASS).")
+    return user, pwd
+
+# ====== URLs (ordem: bodytech → formula) ======
+def _env_urls_in_order() -> List[str]:
+    """
+    Prioriza EVO_URL_FIRST / EVO_URL_SECOND.
+    Se ausentes, tenta EVO_URL_BT / EVO_URL_FORMULA.
+    Se mesmo assim não houver, varre variáveis EVO_URL*,
+    detecta tenants e ordena bodytech → formula.
+    Se só houver 1 URL, usa só ela.
+    """
+    # 1) pares explícitos
+    u1 = os.getenv("EVO_URL_FIRST", "").strip()
+    u2 = os.getenv("EVO_URL_SECOND", "").strip()
+    if u1 and u2:
+        return [u1, u2]
+
+    # 2) nomes alternativos
+    ubt = os.getenv("EVO_URL_BT", "").strip()
+    ufo = os.getenv("EVO_URL_FORMULA", "").strip()
+    if ubt and ufo:
+        return [ubt, ufo]
+
+    # 3) coletar todas EVO_URL* do ambiente
+    cand: List[str] = []
+    for k, v in os.environ.items():
+        if k.startswith("EVO_URL"):
+            vv = v.strip()
+            if vv and vv not in cand:
+                cand.append(vv)
+
+    if len(cand) == 1:
+        return cand
+
+    def _tenant(url: str) -> Optional[str]:
+        m = re.search(r"/#/acesso/([^/]+)/", url)
+        return m.group(1) if m else None
+
+    bt  = [u for u in cand if _tenant(u) == "bodytech"]
+    frm = [u for u in cand if _tenant(u) == "formula"]
+
+    ordered: List[str] = []
+    ordered.extend(bt[:1])
+    ordered.extend(frm[:1])
+
+    if ordered:
+        return ordered
+
+    # 4) fallback: EVO_URL genérica
+    u = os.getenv("EVO_URL", "").strip()
+    return [u] if u else []
+
+def _extract_tenant_from_url(url: str) -> str:
+    m = re.search(r"/#/acesso/([^/]+)/", url)
+    return (m.group(1) if m else "formula").strip()
+
+# =========================
+# Constantes e diretórios
+# =========================
 SCREENSHOT_DIR = Path.home() / "Downloads" / "faturamento_academia"
 SCREENSHOT_DIR.mkdir(parents=True, exist_ok=True)
 
 DEFAULT_TIMEOUT = 6000
-SHORT_TIMEOUT = 3000
+SHORT_TIMEOUT   = 3000
 VERY_SHORT_TIMEOUT = 1500
-FAST_TIMEOUT = 1200
+FAST_TIMEOUT    = 1200
 
-# ===== Unidades (regex) =====
+# =========================
+# Unidades (regex)
+# =========================
+# Sequência "clássica" (tenant bodytech)
 UNIDADE_ALVO_REGEX = re.compile(r"^\s*BT TIJUC\s*-\s*Shopping Tijuca\s*-\s*11\s*$", re.IGNORECASE)
 PRAIA_DA_COSTA_REGEX = re.compile(r"^\s*BT\s*VELHA\s*-\s*Shop\.\s*Praia da Costa\s*-\s*27\s*$", re.IGNORECASE)
 SHOPPING_DA_ILHA_REGEX = re.compile(r"^\s*BT\s*SLUIS\s*-\s*Shopping da Ilha\s*-\s*80\s*$", re.IGNORECASE)
 SHOPPING_VITORIA_REGEX = re.compile(r"^\s*BT\s*VITOR\s*-\s*Shopping Vit[oó]ria\s*-\s*89\s*$", re.IGNORECASE)
 SHOPPING_RIO_POTY_REGEX = re.compile(r"^\s*BT\s*TERES\s*-\s*Shop(?:ping)?\.?\s*Rio\s*Poty\s*-\s*102\s*$", re.IGNORECASE)
+
+# Pós-Rio Poty (tenant formula)
+SHOPPING_MESTRE_ALVARO_EXATO = re.compile(
+    r"^\s*FR\s*MALVA\s*-\s*Shopping\s*Mestre\s*[ÁA]lvaro\s*-\s*71\s*$",
+    re.IGNORECASE
+)
+
+# Moxuara — mais tolerante (pega "moxuara" / "moxuará" / "moxuaro" por segurança)
+SHOPPING_MOXUARA_REGEX = re.compile(r"\bmoxuar[aoá]\b", re.IGNORECASE)
 
 # Padrão genérico para “Não usar - {código}”
 NAO_USAR_ANY = re.compile(r"^\s*Não\s*usar\s*(?:-\s*\d+(?:\.\d+)*)?\s*$", re.IGNORECASE)
@@ -50,6 +128,13 @@ def previous_business_day(ref: datetime | None = None) -> datetime:
     while d.weekday() >= 5:
         d -= timedelta(days=1)
     return datetime(d.year, d.month, d.day)
+
+def _strip_accents_lower(s: str) -> str:
+    return ''.join(c for c in unicodedata.normalize('NFKD', s) if not unicodedata.combining(c)).lower()
+
+def _matches_any(term: str, needles: List[str]) -> bool:
+    t = _strip_accents_lower(term)
+    return any(n in t for n in needles)
 
 async def wait_loading_quiet(page, fast: bool = False) -> None:
     try:
@@ -96,31 +181,16 @@ async def click_with_retries(loc, desc: str, attempts: int = 3, force_last: bool
             log(f"{desc}: clique com force=True falhou: {e}")
     return False
 
-def ensure_env() -> tuple[str, str]:
-    load_dotenv(override=True)
-    user = os.getenv("W12_USER", "").strip()
-    pwd  = os.getenv("W12_PASS", "").strip()
-    if not user or not pwd:
-        raise RuntimeError("Credenciais não configuradas no .env (W12_USER e W12_PASS).")
-    return user, pwd
-
-def _corrigir_url_tenant(url: str) -> str:
+def _corrigir_url_tenant(url: str, tenant: str) -> str:
     if "/acesso//" in url:
-        return url.replace("/acesso//", f"/acesso/{TENANT}/")
-    return re.sub(r"/acesso/[^/]+/", f"/acesso/{TENANT}/", url)
+        return url.replace("/acesso//", f"/acesso/{tenant}/")
+    return re.sub(r"/acesso/[^/]+/", f"/acesso/{tenant}/", url)
 
-async def garantir_tenant_bodytech(page, max_correcoes: int = 5) -> None:
-    for i in range(max_correcoes):
-        url = page.url
-        if f"/acesso/{TENANT}/" in url:
-            return
-        corr = _corrigir_url_tenant(url)
-        if corr != url:
-            log(f"Ajustando tenant na URL (tentativa {i+1}/{max_correcoes}): {url} -> {corr}")
-            await page.goto(corr, wait_until="domcontentloaded")
-            await asyncio.sleep(0.2)
-        else:
-            return
+async def garantir_tenant(page, tenant: str) -> None:
+    corr = _corrigir_url_tenant(page.url, tenant)
+    if corr != page.url:
+        await page.goto(corr, wait_until="domcontentloaded")
+        await asyncio.sleep(0.1)
 
 async def _forcar_url_via_barra(page, url: str) -> None:
     try:
@@ -132,21 +202,37 @@ async def _forcar_url_via_barra(page, url: str) -> None:
     except Exception as e:
         log(f"Fallback da barra de URL falhou: {e}")
 
-async def tenant_watchdog(page, stop_event: asyncio.Event) -> None:
+async def tenant_watchdog(page, stop_event: asyncio.Event, tenant: str) -> None:
     try:
+        last_seen = ""
+        corrections = 0
         while not stop_event.is_set():
             url = page.url
-            if "/app/bodytech/" in url:
+            if url == last_seen:
+                await asyncio.sleep(0.15)
+                continue
+            last_seen = url
+
+            if f"/app/{tenant}/" in url:
                 stop_event.set()
                 break
-            if "/acesso/evo5/" in url or "/acesso//" in url:
-                corr = _corrigir_url_tenant(url)
-                log(f"Watchdog corrigindo URL: {url} -> {corr}")
-                try:
-                    await page.goto(corr, wait_until="domcontentloaded")
-                except Exception:
-                    pass
-            await asyncio.sleep(0.15)
+
+            if "/acesso/" in url and f"/acesso/{tenant}/" not in url:
+                corr = _corrigir_url_tenant(url, tenant)
+                if corr != url:
+                    log(f"Watchdog corrigindo URL: {url} -> {corr}")
+                    corrections += 1
+                    try:
+                        await page.goto(corr, wait_until="domcontentloaded")
+                    except Exception:
+                        pass
+                    if corrections >= 6:
+                        await asyncio.sleep(1.0)
+                        corrections = 0
+                else:
+                    await asyncio.sleep(0.15)
+            else:
+                await asyncio.sleep(0.15)
     except Exception:
         pass
 
@@ -160,7 +246,7 @@ async def find_first_visible(page, selectors: list[str], timeout_each: int = 300
             continue
     return None
 
-async def wait_for_login_fields(page, max_wait_ms: int = 12000):
+async def wait_for_login_fields(page, tenant: str, base_login_url: str, max_wait_ms: int = 12000):
     email_selectors = [
         "input#usuario","input[name='usuario']","input[name='email']",
         "input[formcontrolname='usuario']","input[formcontrolname='email']",
@@ -175,9 +261,9 @@ async def wait_for_login_fields(page, max_wait_ms: int = 12000):
     email_loc = None
     pass_loc = None
     while datetime.now().timestamp() < end_time:
-        await garantir_tenant_bodytech(page, max_correcoes=1)
-        if "/acesso/bodytech/" not in page.url:
-            await _forcar_url_via_barra(page, BASE_URL_LOGIN)
+        await garantir_tenant(page, tenant)
+        if f"/acesso/{tenant}/" not in page.url:
+            await _forcar_url_via_barra(page, base_login_url)
         if email_loc is None:
             email_loc = await find_first_visible(page, email_selectors, timeout_each=800)
         if pass_loc is None:
@@ -191,15 +277,15 @@ async def wait_for_login_fields(page, max_wait_ms: int = 12000):
 # =========================
 # Etapas do fluxo
 # =========================
-async def do_login(page, user: str, pwd: str) -> None:
-    log("Abrindo página de login")
-    await page.goto(BASE_URL_LOGIN, wait_until="domcontentloaded", timeout=20000)
+async def do_login(page, tenant: str, base_login_url: str, user: str, pwd: str) -> None:
+    log(f"Abrindo página de login (tenant={tenant})")
+    await page.goto(base_login_url, wait_until="domcontentloaded", timeout=20000)
 
     stop_wd = asyncio.Event()
-    wd_task = asyncio.create_task(tenant_watchdog(page, stop_wd))
+    wd_task = asyncio.create_task(tenant_watchdog(page, stop_wd, tenant))
 
     try:
-        email_input, pass_input = await wait_for_login_fields(page, max_wait_ms=15000)
+        email_input, pass_input = await wait_for_login_fields(page, tenant, base_login_url, max_wait_ms=15000)
         log("Página de login/autenticação detectada — campos visíveis")
 
         entrar_btn = page.get_by_role("button", name=re.compile(r"^\s*Entrar\s*$", re.IGNORECASE)).first
@@ -208,16 +294,19 @@ async def do_login(page, user: str, pwd: str) -> None:
         except PlaywrightTimeout:
             entrar_btn = page.locator("button", has_text=re.compile(r"^\s*Entrar\s*$", re.IGNORECASE)).first
 
+        if DEBUG_LOGIN:
+            log(f"Preenchendo usuário: {user}")
         await email_input.fill("")
         await email_input.fill(user)
         await pass_input.fill("")
-        await pass_input.fill(pwd)
+        await pass_input.fill(pwd if not os.getenv("W12_LOG_PASSWORD_PLAINTEXT") else os.getenv("W12_PASS",""))
 
         if not await click_with_retries(entrar_btn, "Entrar", attempts=2, timeout=DEFAULT_TIMEOUT):
             raise RuntimeError("Falha ao clicar em Entrar")
 
         await asyncio.sleep(0.4)
 
+        # /autenticacao → Prosseguir (se aparecer)
         try:
             if "/autenticacao" in page.url:
                 prosseguir_btn = page.get_by_role("button", name=re.compile(r"^\s*Prosseguir\s*$", re.IGNORECASE)).first
@@ -225,7 +314,8 @@ async def do_login(page, user: str, pwd: str) -> None:
         except Exception:
             pass
 
-        await page.goto(APP_HOME_URL, wait_until="domcontentloaded")
+        app_home_url = f"https://evo5.w12app.com.br/#/app/{tenant}/-2/inicio/geral"
+        await page.goto(app_home_url, wait_until="domcontentloaded")
         await wait_loading_quiet(page, fast=True)
         log(f"Pós-login. URL atual: {page.url}")
     finally:
@@ -238,56 +328,119 @@ async def do_login(page, user: str, pwd: str) -> None:
 # --- menu do usuário (canto superior direito) ---
 async def abrir_menu_usuario(page):
     log("Abrindo menu do usuário (canto superior direito)")
-    trigger = page.locator("i.material-icons.icone-seta-novo-user-data").first
+    trigger = page.locator("i.material-icons.icone-seta-novo-user-data.no-margin-left").first
     if not await trigger.is_visible():
-        trigger = page.locator("div.novo-user-data").first
+        trigger = page.locator("i.material-icons.icone-seta-novo-user-data").first
+        if not await trigger.is_visible():
+            trigger = page.locator("div.novo-user-data").first
+
     await trigger.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
     await trigger.click()
+
     pane = page.locator("div.cdk-overlay-pane .mat-menu-panel, div.cdk-overlay-pane").last
     await pane.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
     return pane
 
+# === Seleção de unidade (robusta; inclui varredura com scroll) ===
 async def selecionar_unidade_por_nome(page, search_terms: List[str], target_regex: Pattern) -> None:
     pane = await abrir_menu_usuario(page)
     log("Localizando seletor 'Selecionar unidade' dentro do menu do usuário")
-    select_trigger = pane.locator("mat-select, .mat-select-trigger, div.mat-select-arrow-wrapper").first
+
+    # Abrir o mat-select pelo arrow wrapper (preferencial)
+    select_trigger = pane.locator(".mat-select-arrow-wrapper").first
     if not await select_trigger.is_visible():
-        select_trigger = pane.get_by_role("combobox").first
+        # fallbacks
+        select_trigger = pane.locator("mat-select, .mat-select-trigger, div.mat-select-arrow-wrapper").first
+        if not await select_trigger.is_visible():
+            select_trigger = pane.get_by_role("combobox").first
+
     await select_trigger.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
     await select_trigger.click()
 
     overlay = page.locator("div.cdk-overlay-pane").filter(
         has_not=page.locator(".cdk-overlay-pane[aria-hidden='true']")
     ).last
+    await overlay.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
 
+    # Normaliza "agulhas" (termos) para comparação sem acento
+    needles = [_strip_accents_lower(t) for t in (search_terms or [])]
+
+    # 1) Tentar com campo de busca (se existir)
     search_input = overlay.locator("input.pesquisar-dropdrown[placeholder='Pesquisar'], input[placeholder='Pesquisar']").first
-    await search_input.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    if await search_input.count():
+        for term in search_terms:
+            await search_input.fill("")
+            await search_input.type(term, delay=8)
 
-    for term in search_terms:
-        await search_input.fill("")
-        await search_input.type(term, delay=8)
+            # tentar por texto exato/regex
+            try:
+                item = overlay.get_by_text(target_regex).first
+                await item.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+                if await click_with_retries(item, f"Unidade alvo ({term})", attempts=3, timeout=DEFAULT_TIMEOUT):
+                    await wait_loading_quiet(page, fast=True)
+                    log("Unidade selecionada com sucesso (via busca)")
+                    return
+            except Exception:
+                pass
 
-        item = overlay.get_by_text(target_regex).first
-        try:
-            await item.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
-            if await click_with_retries(item, f"Unidade alvo ({term})", attempts=3, timeout=DEFAULT_TIMEOUT):
+            # fallback de teclado
+            try:
+                await search_input.press("ArrowDown")
+                await asyncio.sleep(0.1)
+                await search_input.press("Enter")
                 await wait_loading_quiet(page, fast=True)
-                log("Unidade selecionada com sucesso (via menu do usuário)")
+                log("Unidade selecionada (via setas/Enter)")
                 return
-        except Exception:
-            pass
+            except Exception:
+                pass
 
-        # fallback: primeiro item com teclado
-        try:
-            await search_input.press("ArrowDown")
-            await asyncio.sleep(0.1)
-            await search_input.press("Enter")
+    # 2) Tentar clicar direto no bloco <div> com texto — primeiro via regex
+    try:
+        item_bloco = overlay.locator("div.p-x-xs.p-y-sm", has_text=target_regex).first
+        await item_bloco.wait_for(state="visible", timeout=FAST_TIMEOUT)
+        if await click_with_retries(item_bloco, "Unidade alvo (div bloco - regex)", attempts=3, timeout=DEFAULT_TIMEOUT):
             await wait_loading_quiet(page, fast=True)
+            log("Unidade selecionada (div bloco - regex)")
             return
-        except Exception:
-            pass
+    except Exception:
+        pass
 
-    # último fallback direto
+    # 3) Varredura com SCROLL dentro do overlay procurando por termos normalizados
+    try:
+        options = overlay.locator("div.p-x-xs.p-y-sm")
+        seen_texts = set()
+        for _ in range(14):  # varre ~14 páginas com PageDown
+            count = await options.count()
+            for i in range(count):
+                opt = options.nth(i)
+                try:
+                    txt = (await opt.inner_text()).strip()
+                except Exception:
+                    continue
+                if txt in seen_texts:
+                    continue
+                seen_texts.add(txt)
+
+                if target_regex.search(txt) or _matches_any(txt, needles):
+                    try:
+                        await opt.scroll_into_view_if_needed(timeout=SHORT_TIMEOUT)
+                    except Exception:
+                        pass
+                    if await click_with_retries(opt, f"Unidade alvo (scan: '{txt}')", attempts=3, timeout=DEFAULT_TIMEOUT):
+                        await wait_loading_quiet(page, fast=True)
+                        log(f"Unidade selecionada (scan): {txt}")
+                        return
+            # rolar mais um "pedaço" da lista
+            try:
+                await overlay.hover()
+                await page.keyboard.press("PageDown")
+                await asyncio.sleep(0.25)
+            except Exception:
+                break
+    except Exception:
+        pass
+
+    # 4) Último fallback: texto cru
     item = overlay.get_by_text(target_regex).first
     if await click_with_retries(item, "Unidade alvo (fallback final)", attempts=3, timeout=DEFAULT_TIMEOUT):
         await wait_loading_quiet(page, fast=True)
@@ -308,11 +461,12 @@ async def abrir_menu_financeiro_e_ir_para_nfs(page) -> None:
         await financeiro_span.click()
     await asyncio.sleep(0.25)
 
-    nfs = page.get_by_text(re.compile(r"^\s*Notas Fiscais de Serviço\s*$", re.IGNORECASE)).first
+    # Preferir data-cy quando disponível
+    nfs = page.locator('span.nav-text[data-cy="Notas Fiscais de Serviço"]').first
     try:
         await nfs.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
     except PlaywrightTimeout:
-        await chevron.click(force=True)
+        nfs = page.get_by_text(re.compile(r"^\s*Notas Fiscais de Serviço\s*$", re.IGNORECASE)).first
         await nfs.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
 
     if not await click_with_retries(nfs, "Notas Fiscais de Serviço", attempts=2, timeout=DEFAULT_TIMEOUT):
@@ -536,13 +690,8 @@ async def cancelar_modal_enviar_nf(page) -> None:
     await wait_loading_quiet(page, fast=True)
     log("Modal 'Enviar NF' cancelado com sucesso")
 
-# === Pipeline por unidade (com validação de checkbox) ===
-async def processar_unidade(
-    page,
-    nome_log: str,
-    search_terms: List[str],
-    regex: Pattern
-) -> None:
+# === Pipeline por unidade
+async def processar_unidade(page, nome_log: str, search_terms: List[str], regex: Pattern) -> None:
     log(f"---- Iniciando unidade: {nome_log} ----")
     await selecionar_unidade_por_nome(page, search_terms, regex)
     await abrir_menu_financeiro_e_ir_para_nfs(page)
@@ -560,110 +709,171 @@ async def processar_unidade(
         log(f"Unidade {nome_log}: sem checkbox 'Selecionar todos' (sem registros). Pulando para a próxima.")
 
 # =========================
-# Runner
+# Execução por tenant
+# =========================
+async def run_for_tenant(page, tenant: str, base_login_url: str, user: str, pwd: str) -> None:
+    await do_login(page, tenant, base_login_url, user, pwd)
+
+    if tenant == "bodytech":
+        unidades_bt: List[Tuple[str, List[str], Pattern]] = [
+            ("BT TIJUC - Shopping Tijuca - 11",
+             ["shopping tijuca", "tijuca", "BT TIJUC"],
+             UNIDADE_ALVO_REGEX),
+            ("BT VELHA - Shop. Praia da Costa - 27",
+             ["Shop. Praia da Costa", "praia da costa", "BT VELHA"],
+             PRAIA_DA_COSTA_REGEX),
+            ("BT SLUIS - Shopping da Ilha - 80",
+             ["Shopping da Ilha", "da ilha", "BT SLUIS"],
+             SHOPPING_DA_ILHA_REGEX),
+            ("BT VITOR - Shopping Vitória - 89",
+             ["Shopping Vitória", "vitoria", "Vitória", "BT VITOR"],
+             SHOPPING_VITORIA_REGEX),
+            ("BT TERES - Shopping Rio Poty - 102",
+             ["Shopping Rio Poty", "Shop. Rio Poty", "rio poty", "BT TERES"],
+             SHOPPING_RIO_POTY_REGEX),
+        ]
+        for nome, termos, rx in unidades_bt:
+            try:
+                await processar_unidade(page, nome, termos, rx)
+            except Exception as e:
+                ts = int(datetime.now().timestamp())
+                img = SCREENSHOT_DIR / f"screenshot_erro_{re.sub(r'\\W+', '_', nome)}_{ts}.png"
+                try:
+                    await page.screenshot(path=str(img), full_page=True)
+                    log(f"Erro no fluxo ({nome}). Screenshot: {img}")
+                except Exception as se:
+                    log(f"Falha ao salvar screenshot ({nome}): {se}")
+                continue
+        return
+
+    elif tenant == "formula":
+        unidades_formula: List[Tuple[str, List[str], Pattern]] = [
+            ("FR MALVA - Shopping Mestre Álvaro - 71",
+             ["Mestre Álvaro", "MALVA", "Álvaro", "Mestre"],
+             SHOPPING_MESTRE_ALVARO_EXATO),
+            ("Shopping Moxuara",
+             ["moxuara", "shopping moxuara", "moxuará"],
+             SHOPPING_MOXUARA_REGEX),
+        ]
+        for nome, termos, rx in unidades_formula:
+            try:
+                await processar_unidade(page, nome, termos, rx)
+            except Exception as e:
+                ts = int(datetime.now().timestamp())
+                tag = re.sub(r'\\W+', '_', nome)
+                img = SCREENSHOT_DIR / f"screenshot_erro_{tag}_{ts}.png"
+                try:
+                    await page.screenshot(path=str(img), full_page=True)
+                    log(f"Erro no fluxo ({nome}). Screenshot: {img}")
+                except Exception as se:
+                    log(f"Falha ao salvar screenshot ({nome}): {se}")
+                continue
+        return
+
+    else:
+        log(f"Tenant '{tenant}' sem sequência definida. Nada a executar.")
+        return
+
+# =========================
+# Runner principal (contexto novo por tenant + pausa/fechar após bodytech)
 # =========================
 async def _run() -> None:
     user, pwd = ensure_env()
-    log("Iniciando fluxo com navegador visível")
+    urls = _env_urls_in_order()
+    if not urls:
+        raise RuntimeError("Nenhuma EVO_URL encontrada no ambiente.")
+
+    log(f"HEADLESS={'1' if HEADLESS else '0'} | DEBUG_LOGIN={'1' if DEBUG_LOGIN else '0'}")
+    log("Ordem de execução:")
+    for i, u in enumerate(urls, 1):
+        log(f"  {i}. {u}")
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False, args=["--start-maximized"])
-        context = await browser.new_context(viewport={"width": 1366, "height": 768})
+        browser = await p.chromium.launch(headless=HEADLESS, args=["--start-maximized"])
 
-        await context.add_init_script("""
-(() => {
-  try {
-    localStorage.setItem('tenant', 'bodytech');
-    localStorage.setItem('dominio', 'bodytech');
-    sessionStorage.setItem('tenant', 'bodytech');
-    sessionStorage.setItem('dominio', 'bodytech');
-    const forceTenant = () => {
-      try {
+        try:
+            for idx, url in enumerate(urls, 1):
+                tenant = _extract_tenant_from_url(url)
+                log(f"=== ({idx}/{len(urls)}) Tenant '{tenant}' ===")
+
+                # Contexto novo por tenant
+                context = await browser.new_context(viewport={"width": 1366, "height": 768})
+
+                # injeta script só deste tenant
+                tenant_js = tenant
+                await context.add_init_script(f"""
+(() => {{
+  try {{
+    localStorage.setItem('tenant', '{tenant_js}');
+    localStorage.setItem('dominio', '{tenant_js}');
+    sessionStorage.setItem('tenant', '{tenant_js}');
+    sessionStorage.setItem('dominio', '{tenant_js}');
+    const forceTenant = () => {{
+      try {{
         const h = location.hash || '';
-        if (h.includes('/acesso/evo5/')) {
-          location.hash = h.replace('/acesso/evo5/', '/acesso/bodytech/');
-        } else if (h.includes('/acesso//')) {
-          location.hash = h.replace('/acesso//', '/acesso/bodytech/');
-        }
-      } catch (_e) {}
-    };
+        if (h.includes('/acesso//')) {{
+          location.hash = h.replace('/acesso//', '/acesso/{tenant_js}/');
+        }} else {{
+          const rx = /\\/acesso\\/[^/]+\\//;
+          if (rx.test(h)) {{
+            location.hash = h.replace(rx, '/acesso/{tenant_js}/');
+          }}
+        }}
+      }} catch (_e) {{}}
+    }};
     forceTenant();
     const _ps = history.pushState;
     const _rs = history.replaceState;
-    history.pushState = function() { const r = _ps.apply(this, arguments); setTimeout(forceTenant, 0); return r; };
-    history.replaceState = function() { const r = _rs.apply(this, arguments); setTimeout(forceTenant, 0); return r; };
+    history.pushState = function() {{ const r = _ps.apply(this, arguments); setTimeout(forceTenant, 0); return r; }};
+    history.replaceState = function() {{ const r = _rs.apply(this, arguments); setTimeout(forceTenant, 0); return r; }};
     window.addEventListener('hashchange', forceTenant, true);
-  } catch (_err) {}
-})();
-        """)
+  }} catch (_err) {{}}
+}})();
+                """)
 
-        page = await context.new_page()
+                page = await context.new_page()
 
-        try:
-            # Login + primeira unidade obrigatória (Tijuca)
-            await do_login(page, user, pwd)
-            await processar_unidade(
-                page,
-                "BT TIJUC - Shopping Tijuca - 11",
-                ["shopping tijuca", "tijuca", "BT TIJUC"],
-                UNIDADE_ALVO_REGEX,
-            )
-
-            # Demais unidades
-            unidades: List[Tuple[str, List[str], Pattern]] = [
-                ("BT VELHA - Shop. Praia da Costa - 27",
-                 ["Shop. Praia da Costa", "praia da costa", "BT VELHA"],
-                 PRAIA_DA_COSTA_REGEX),
-                ("BT SLUIS - Shopping da Ilha - 80",
-                 ["Shopping da Ilha", "da ilha", "BT SLUIS"],
-                 SHOPPING_DA_ILHA_REGEX),
-                ("BT VITOR - Shopping Vitória - 89",
-                 ["Shopping Vitória", "vitoria", "Vitória", "BT VITOR"],
-                 SHOPPING_VITORIA_REGEX),
-                ("BT TERES - Shopping Rio Poty - 102",
-                 ["Shopping Rio Poty", "Shop. Rio Poty", "rio poty", "BT TERES"],
-                 SHOPPING_RIO_POTY_REGEX),
-            ]
-
-            for nome, termos, rx in unidades:
                 try:
-                    await processar_unidade(page, nome, termos, rx)
-                except Exception as e:
+                    await run_for_tenant(page, tenant, url, user, pwd)
+
+                    # Se acabamos de rodar bodytech (último é Rio Poty), esperar 5s e fechar a página
+                    if tenant == "bodytech":
+                        log("Finalizado fluxo do tenant 'bodytech'. Aguardando 5s antes de abrir a próxima URL…")
+                        await asyncio.sleep(5)
+                        try:
+                            await page.close()
+                        except Exception:
+                            pass
+
+                except Exception:
                     ts = int(datetime.now().timestamp())
-                    img = SCREENSHOT_DIR / f"screenshot_erro_{re.sub(r'\\W+', '_', nome)}_{ts}.png"
+                    img = SCREENSHOT_DIR / f"screenshot_erro_tenant_{tenant}_{ts}.png"
                     try:
                         await page.screenshot(path=str(img), full_page=True)
-                        log(f"Erro no fluxo ({nome}). Screenshot: {img}")
+                        log(f"Erro no fluxo (tenant={tenant}). Screenshot: {img}")
                     except Exception as se:
-                        log(f"Falha ao salvar screenshot ({nome}): {se}")
-                    # segue para a próxima unidade mesmo em caso de erro
-                    continue
+                        log(f"Falha ao salvar screenshot (tenant={tenant}): {se}")
+                    raise
+                finally:
+                    try:
+                        await context.close()
+                    except Exception:
+                        pass
 
             log("Pausa final de 5 segundos para inspeção")
             await asyncio.sleep(5)
 
-        except Exception:
-            ts = int(datetime.now().timestamp())
-            img = SCREENSHOT_DIR / f"screenshot_erro_{ts}.png"
-            try:
-                await page.screenshot(path=str(img), full_page=True)
-                log(f"Erro no fluxo. Screenshot salvo em: {img}")
-            except Exception as se:
-                log(f"Erro no fluxo e falha ao salvar screenshot: {se}")
-            raise
         finally:
-            try:
-                await context.close()
-            except Exception:
-                pass
             try:
                 await browser.close()
             except Exception:
                 pass
 
+# Mantém a assinatura esperada pelo seu app.py
 def run_rpa_enter_google_folder(extract_dir: str, target_folder: str, base_dir: str) -> None:
     asyncio.run(_run())
 
+# Stub antigo (mantido se for referenciado por app.py)
 def _ensure_local_zip_from_drive(dest_dir: str) -> str:
     system_tmp = Path(dest_dir) if dest_dir else Path("/tmp")
     system_tmp.mkdir(parents=True, exist_ok=True)
