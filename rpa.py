@@ -737,7 +737,9 @@ async def run_for_tenant(page, tenant: str, base_login_url: str, user: str, pwd:
                 await processar_unidade(page, nome, termos, rx)
             except Exception as e:
                 ts = int(datetime.now().timestamp())
-                img = SCREENSHOT_DIR / f"screenshot_erro_{re.sub(r'\\W+', '_', nome)}_{ts}.png"
+                safe_nome = re.sub(r'\W+', '_', nome)
+                img = SCREENSHOT_DIR / f"screenshot_erro_{safe_nome}_{ts}.png"
+
                 try:
                     await page.screenshot(path=str(img), full_page=True)
                     log(f"Erro no fluxo ({nome}). Screenshot: {img}")
@@ -760,8 +762,9 @@ async def run_for_tenant(page, tenant: str, base_login_url: str, user: str, pwd:
                 await processar_unidade(page, nome, termos, rx)
             except Exception as e:
                 ts = int(datetime.now().timestamp())
-                tag = re.sub(r'\\W+', '_', nome)
+                tag = re.sub(r'\W+', '_', nome)
                 img = SCREENSHOT_DIR / f"screenshot_erro_{tag}_{ts}.png"
+
                 try:
                     await page.screenshot(path=str(img), full_page=True)
                     log(f"Erro no fluxo ({nome}). Screenshot: {img}")
