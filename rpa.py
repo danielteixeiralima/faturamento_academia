@@ -1,6 +1,7 @@
 # rpa.py
 import os
 import re
+import json
 import asyncio
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -690,6 +691,136 @@ async def cancelar_modal_enviar_nf(page) -> None:
     await wait_loading_quiet(page, fast=True)
     log("Modal 'Enviar NF' cancelado com sucesso")
 
+# =========================================================
+# ======== Validação “sem paginação / via scroll” =========
+# =========================================================
+def _norm(s: str) -> str:
+    return re.sub(r"\s+", " ", (s or "")).strip()
+
+def _is_valido(status_txt: str) -> bool:
+    # "Válido" (case-insensitive; normalizando acentos)
+    return _norm(unicodedata.normalize("NFKD", status_txt)).lower() == "valido"
+
+async def _require_count_gt0(locator, err_msg: str):
+    if not await locator.count():
+        raise RuntimeError(err_msg)
+
+async def _scroll_table_step(page) -> None:
+    """Rola um passo para baixo para forçar render de novas linhas."""
+    await page.keyboard.press("PageDown")
+    await asyncio.sleep(0.25)
+
+async def _coletar_invalidos_novos(page, vistos: set) -> tuple[list[dict], int]:
+    """
+    Lê a grade ancorando em [data-cy='cliente'] (pivô da linha).
+    Para cada 'cliente', sobe ao ancestral que contém também:
+      - .label.very-tiny                 (status)
+      - span[data-cy='informacoes'].full (motivo)
+    Retorna (lista_de_invalidos, qtd_clientes_novos).
+    """
+    # espera até existir pelo menos 1 célula de cliente (2.5s)
+    try:
+        await page.wait_for_selector("[data-cy='cliente']", state="attached", timeout=2500)
+    except Exception:
+        # não há linhas visíveis
+        log("Validação: não há [data-cy='cliente'] visível (tabela vazia?).")
+        return [], 0
+
+    clientes = page.locator("[data-cy='cliente']")
+    total = await clientes.count()
+    if total == 0:
+        log("Validação: nenhum [data-cy='cliente'] encontrado.")
+        return [], 0
+
+    invalidos: list[dict] = []
+    novos = 0
+
+    for i in range(total):
+        cel_cliente = clientes.nth(i)
+        cliente_txt = _norm(await cel_cliente.inner_text())
+        if not cliente_txt or cliente_txt in vistos:
+            continue
+
+        # Ancestor que contenha também status e motivo
+        # (XPath único e determinístico, sem "fallback" leniente)
+        linha = cel_cliente.locator(
+            "xpath=ancestor::*[.//*[contains(@class,'label') and contains(@class,'very-tiny')]"
+            " and .//span[@data-cy='informacoes' and contains(@class,'full')]][1]"
+        )
+
+        if not await linha.count():
+            raise RuntimeError(
+                f"Não achei ancestral da linha para o cliente '{cliente_txt}' "
+                f"que contenha status (.label.very-tiny) e motivo (span[data-cy='informacoes'].full)."
+            )
+
+        cel_status = linha.locator(".label.very-tiny").first
+        if not await cel_status.count():
+            raise RuntimeError(f"Status ausente na linha do cliente '{cliente_txt}' (.label.very-tiny).")
+        status_txt = _norm(await cel_status.inner_text())
+
+        cel_motivo = linha.locator("span[data-cy='informacoes'].full").first
+        if not await cel_motivo.count():
+            raise RuntimeError(
+                f"Motivo ausente na linha do cliente '{cliente_txt}' (span[data-cy='informacoes'].full)."
+            )
+        motivo_txt = _norm(await cel_motivo.inner_text())
+
+        vistos.add(cliente_txt)
+        novos += 1
+
+        if not _is_valido(status_txt):
+            invalidos.append({
+                "cliente": cliente_txt,
+                "status": status_txt or "(sem status)",
+                "motivo": motivo_txt or "(sem detalhes)"
+            })
+
+    return invalidos, novos
+
+async def validar_antes_de_enviar(page) -> Optional[List[dict]]:
+    """
+    Varre a grade SEM paginação:
+    - Rola com PageDown até não surgirem clientes novos por 3 passos seguidos.
+    - Exige na mesma linha: [data-cy='cliente'], .label.very-tiny, span[data-cy='informacoes'].full
+    - Se houver inválidos, mostra alert e retorna a lista.
+    """
+    log("Validação (sem paginação): iniciando…")
+
+    vistos: set[str] = set()
+    invalidos_total: list[dict] = []
+    estagnado = 0
+    passos = 0
+    MAX_PASSOS = 400  # trava de segurança
+
+    while True:
+        passos += 1
+        if passos > MAX_PASSOS:
+            log(f"Validação: limite de passos atingido ({MAX_PASSOS}). Encerrando varredura.")
+            break
+
+        invalidos, novos = await _coletar_invalidos_novos(page, vistos)
+        invalidos_total.extend(invalidos)
+
+        if novos == 0:
+            estagnado += 1
+        else:
+            estagnado = 0
+
+        if estagnado >= 3:
+            break
+
+        await _scroll_table_step(page)
+
+    log(f"Validação: {len(vistos)} clientes varridos; {len(invalidos_total)} inválidos.")
+    if invalidos_total:
+        linhas = [f"- {i['cliente']} | status: {i['status']} | motivo: {i['motivo']}" for i in invalidos_total[:20]]
+        extra = "" if len(invalidos_total) <= 20 else f"\n(+ {len(invalidos_total)-20} outros)"
+        msg = "Foram encontrados cadastros NÃO válidos:\n\n" + "\n".join(linhas) + extra
+        await page.evaluate("m=>alert(m)", msg)
+
+    return invalidos_total
+
 # === Pipeline por unidade
 async def processar_unidade(page, nome_log: str, search_terms: List[str], regex: Pattern) -> None:
     log(f"---- Iniciando unidade: {nome_log} ----")
@@ -699,6 +830,13 @@ async def processar_unidade(page, nome_log: str, search_terms: List[str], regex:
     await exibir_por_data_lancamento(page)
     await aplicar_filtro_tributacao(page)
 
+    # >>> Validação estrita (sem paginação). Aborta se houver inválidos.
+    invalidos = await validar_antes_de_enviar(page)
+    if invalidos and len(invalidos) > 0:
+        log(f"Unidade {nome_log}: inválidos detectados. Abortando seleção/envio.")
+        return
+
+    # Fluxo normal, somente se todos válidos
     if await has_select_all_checkbox(page):
         log("Checkbox 'Selecionar todos' presente — seguindo fluxo normal")
         await selecionar_todos_e_enviar(page)
@@ -799,37 +937,49 @@ async def _run() -> None:
                 # Contexto novo por tenant
                 context = await browser.new_context(viewport={"width": 1366, "height": 768})
 
-                # injeta script só deste tenant
+                # ---- add_init_script sem f-string / chaves escapadas ----
                 tenant_js = tenant
-                await context.add_init_script(f"""
-(() => {{
-  try {{
-    localStorage.setItem('tenant', '{tenant_js}');
-    localStorage.setItem('dominio', '{tenant_js}');
-    sessionStorage.setItem('tenant', '{tenant_js}');
-    sessionStorage.setItem('dominio', '{tenant_js}');
-    const forceTenant = () => {{
-      try {{
+                await context.add_init_script(
+                    """
+((tenant) => {
+  try {
+    localStorage.setItem('tenant', tenant);
+    localStorage.setItem('dominio', tenant);
+    sessionStorage.setItem('tenant', tenant);
+    sessionStorage.setItem('dominio', tenant);
+
+    const forceTenant = () => {
+      try {
         const h = location.hash || '';
-        if (h.includes('/acesso//')) {{
-          location.hash = h.replace('/acesso//', '/acesso/{tenant_js}/');
-        }} else {{
+        if (h.includes('/acesso//')) {
+          location.hash = h.replace('/acesso//', '/acesso/' + tenant + '/');
+        } else {
           const rx = /\\/acesso\\/[^/]+\\//;
-          if (rx.test(h)) {{
-            location.hash = h.replace(rx, '/acesso/{tenant_js}/');
-          }}
-        }}
-      }} catch (_e) {{}}
-    }};
+          if (rx.test(h)) {
+            location.hash = h.replace(rx, '/acesso/' + tenant + '/');
+          }
+        }
+      } catch (_e) {}
+    };
+
     forceTenant();
     const _ps = history.pushState;
     const _rs = history.replaceState;
-    history.pushState = function() {{ const r = _ps.apply(this, arguments); setTimeout(forceTenant, 0); return r; }};
-    history.replaceState = function() {{ const r = _rs.apply(this, arguments); setTimeout(forceTenant, 0); return r; }};
+    history.pushState = function() {
+      const r = _ps.apply(this, arguments);
+      setTimeout(forceTenant, 0);
+      return r;
+    };
+    history.replaceState = function() {
+      const r = _rs.apply(this, arguments);
+      setTimeout(forceTenant, 0);
+      return r;
+    };
     window.addEventListener('hashchange', forceTenant, true);
-  }} catch (_err) {{}}
-}})();
-                """)
+  } catch (_err) {}
+})(__TENANT__);
+""".replace("__TENANT__", json.dumps(tenant_js))
+                )
 
                 page = await context.new_page()
 
