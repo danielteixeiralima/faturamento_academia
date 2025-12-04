@@ -137,6 +137,10 @@ def _matches_any(term: str, needles: List[str]) -> bool:
     t = _strip_accents_lower(term)
     return any(n in t for n in needles)
 
+def _normalize_str(s: str) -> str:
+    """Remove acentos e deixa minúsculo."""
+    return ''.join(c for c in unicodedata.normalize('NFKD', s) if not unicodedata.combining(c)).lower().strip()
+
 async def wait_loading_quiet(page, fast: bool = False) -> None:
     try:
         await page.wait_for_load_state("networkidle", timeout=(1500 if fast else DEFAULT_TIMEOUT))
@@ -475,18 +479,97 @@ async def abrir_menu_financeiro_e_ir_para_nfs(page) -> None:
 
     await wait_loading_quiet(page, fast=True)
 
+# async def aplicar_data_ontem(page) -> None:
+#     log("Aplicando filtro de data (modo de teste manual corrigido)")
+
+#     # 1️⃣ Abre o seletor de data
+#     btn_data = page.locator("button[data-cy='EFD-DatePickerBTN']").first
+#     await btn_data.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+#     await btn_data.click()
+#     await asyncio.sleep(1)
+
+#     # 2️⃣ Clica no campo de input principal (id=mat-input-1)
+#     campo_data = page.locator("input#mat-input-1")
+#     await campo_data.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+#     await campo_data.click(force=True)
+#     log("Campo de data clicado (mat-input-1)")
+
+#     # 3️⃣ Clica no botão de mês anterior
+#     btn_prev_mes = page.locator("button.mat-calendar-previous-button").first
+#     await btn_prev_mes.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+#     await btn_prev_mes.click()
+#     log("Botão 'Previous month' clicado")
+
+#     # 4️⃣ Clica no dia 29 duas vezes
+#     dia_29 = page.get_by_role("gridcell", name="29").first
+#     await dia_29.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+#     await dia_29.click()
+#     await asyncio.sleep(0.3)
+#     await dia_29.click()
+#     log("Dia 29 selecionado duas vezes")
+
+#     # 5️⃣ Clica no botão “Aplicar”
+#     aplicar = page.locator("button[data-cy='EFD-ApplyButton']").first
+#     await aplicar.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+#     await aplicar.click()
+#     log("Botão 'Aplicar' clicado")
+
+#     # Espera a página atualizar
+#     await wait_loading_quiet(page, fast=True)
+
+
 async def aplicar_data_ontem(page) -> None:
-    log("Aplicando filtro de data: Ontem")
+    log("Aplicando filtro de data personalizada (voltar até janeiro e selecionar dia 7)")
+
+    # 1️⃣ Abre o seletor de data
     btn_data = page.locator("button[data-cy='EFD-DatePickerBTN']").first
     await btn_data.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
     await btn_data.click()
-    ontem = page.get_by_text(re.compile(r"^\s*Ontem\s*$", re.IGNORECASE)).first
-    await ontem.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
-    await ontem.click()
-    aplicar = page.locator("button[data-cy='EFD-ApplyButton']").first
+    await asyncio.sleep(0.8)
+
+    # 2️⃣ Clica em “Período personalizado”
+    periodo_personalizado = page.get_by_text(re.compile(r"^\s*Período personalizado\s*$", re.IGNORECASE)).first
+    await periodo_personalizado.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await periodo_personalizado.click()
+    log("Selecionado: Período personalizado")
+
+    # 3️⃣ Clica no campo “Selecionar data” — seletor dinâmico (id pode variar)
+    campo_data = page.locator("input[placeholder='Selecionar data'], input[matinput][placeholder*='Selecionar']")
+    await campo_data.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await campo_data.click(force=True)
+    log("Campo 'Selecionar data' clicado com sucesso")
+
+    # 4️⃣ Clica 10 vezes na seta de mês anterior (Previous month) para chegar até janeiro
+    btn_prev_mes = page.locator("button.mat-calendar-previous-button[aria-label*='Previous month']").first
+    await btn_prev_mes.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    for i in range(10):
+        await btn_prev_mes.click()
+        log(f"Seta de mês anterior clicada ({i+1}/10)")
+        await asyncio.sleep(0.3)
+
+    # 5️⃣ Clica duas vezes no dia 7
+    dia_7 = page.locator("div.mat-calendar-body-cell-content", has_text="7").first
+    await dia_7.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await dia_7.click()
+    await asyncio.sleep(0.3)
+    await dia_7.click()
+    log("Dia 7 clicado duas vezes")
+
+    # 6️⃣ Clica no botão “Aplicar”
+    aplicar = page.locator(
+        "button[data-cy='EFD-ApplyButton'], button",
+        has_text=re.compile(r"Aplicar", re.IGNORECASE)
+    ).first
     await aplicar.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
     await aplicar.click()
+    log("Botão 'Aplicar' clicado")
+
+    # 7️⃣ Aguarda atualização
     await wait_loading_quiet(page, fast=True)
+
+
+
+
 
 async def exibir_por_data_lancamento(page) -> None:
     log("Configurando 'Exibir por' → 'Data de Lançamento'")
@@ -586,39 +669,24 @@ async def aplicar_filtro_tributacao(page) -> None:
     except Exception:
         pass
 
-    # 2) desmarcar TODOS os "Não usar - ..."
-    vistos = set()
-    for _ in range(5):
-        matches = pane.get_by_text(NAO_USAR_ANY)
-        count = await matches.count()
-        for i in range(count):
-            handle = matches.nth(i)
-            try:
-                text = (await handle.inner_text()).strip()
-            except Exception:
-                text = f"Não usar (idx {i})"
-            if text in vistos:
-                continue
-            vistos.add(text)
-            try:
-                await handle.scroll_into_view_if_needed(timeout=DEFAULT_TIMEOUT)
-            except Exception:
-                pass
-            try:
-                await handle.click()
-                log(f"Tributação: desmarcado '{text}'")
-            except Exception:
-                try:
-                    await handle.click(force=True)
-                    log(f"Tributação: desmarcado '{text}' (force)")
-                except Exception:
-                    log(f"Tributação: falha ao desmarcar '{text}'")
+    # 2) desmarcar todos os "Não usar - ..." visíveis (sem scroll)
+    matches = pane.get_by_text(NAO_USAR_ANY)
+    count = await matches.count()
+    for i in range(count):
+        handle = matches.nth(i)
         try:
-            await pane.hover()
-            await page.keyboard.press("PageDown")
-            await asyncio.sleep(0.2)
+            text = (await handle.inner_text()).strip()
         except Exception:
-            break
+            text = f"Não usar (idx {i})"
+        try:
+            await handle.click()
+            log(f"Tributação: desmarcado '{text}'")
+        except Exception:
+            try:
+                await handle.click(force=True)
+                log(f"Tributação: desmarcado '{text}' (force)")
+            except Exception:
+                log(f"Tributação: falha ao desmarcar '{text}'")
 
     # 3) aplicar
     aplicar = page.locator("button[data-cy='AplicarFiltro'], button#btn", has_text=re.compile(r"Aplicar", re.IGNORECASE)).first
@@ -627,6 +695,7 @@ async def aplicar_filtro_tributacao(page) -> None:
 
     await asyncio.sleep(0.4)
     await wait_loading_quiet(page, fast=True)
+
 
 # === Validação universal: existe "Selecionar todos"? ===
 async def has_select_all_checkbox(page) -> bool:
@@ -673,6 +742,48 @@ async def digitar_data_util_anterior_no_input(page) -> None:
     await campo.type(data_txt, delay=24)
     await asyncio.sleep(0.2)
 
+async def selecionar_data_ontem_modal(page) -> None:
+    """
+    Dentro do modal de envio:
+    - Abre o calendário
+    - Seleciona o dia anterior ao atual
+    - Se hoje for dia 1, volta um mês e seleciona o último dia
+    """
+    hoje = datetime.now()
+    ontem = hoje - timedelta(days=1)
+    log(f"Abrindo calendário e selecionando a data de ontem: {ontem.strftime('%d/%m/%Y')}")
+
+    # Abre o calendário (ícone do datepicker)
+    btn_calendar = page.locator("svg.mat-datepicker-toggle-default-icon").first
+    await btn_calendar.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await btn_calendar.click()
+    await asyncio.sleep(0.4)
+
+    # Caso o dia atual seja 1 → voltar um mês
+    if hoje.day == 1:
+        log("Hoje é dia 1 — voltando um mês e selecionando o último dia do mês anterior")
+        btn_prev = page.locator("button.mat-calendar-previous-button").first
+        await btn_prev.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+        await btn_prev.click()
+        await asyncio.sleep(0.4)
+
+        # Seleciona o último dia do mês (31, 30, 29 ou 28)
+        for dia in ["31", "30", "29", "28"]:
+            dia_loc = page.locator("div.mat-calendar-body-cell-content", has_text=dia).first
+            if await dia_loc.count():
+                await dia_loc.click()
+                log(f"Selecionado último dia do mês anterior: {dia}")
+                break
+    else:
+        # Seleciona o dia de ontem
+        dia_ontem = str(ontem.day)
+        dia_loc = page.locator("div.mat-calendar-body-cell-content", has_text=dia_ontem).first
+        await dia_loc.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+        await dia_loc.click()
+        log(f"Dia {dia_ontem} selecionado com sucesso")
+
+    await asyncio.sleep(0.5)
+
 async def cancelar_modal_enviar_nf(page) -> None:
     log("Cancelando modal 'Enviar NF'")
     dialog = page.get_by_role("dialog", name=re.compile(r"^\s*Enviar\s*NF\s*$", re.IGNORECASE)).first
@@ -698,8 +809,10 @@ def _norm(s: str) -> str:
     return re.sub(r"\s+", " ", (s or "")).strip()
 
 def _is_valido(status_txt: str) -> bool:
-    # "Válido" (case-insensitive; normalizando acentos)
-    return _norm(unicodedata.normalize("NFKD", status_txt)).lower() == "valido"
+    """Detecta se o status é 'Válido' (ignora acentos, case e espaços extras)."""
+    s = ''.join(c for c in unicodedata.normalize("NFKD", status_txt) if not unicodedata.combining(c))
+    s = re.sub(r"\s+", " ", s).strip().lower()
+    return s == "valido"
 
 async def _require_count_gt0(locator, err_msg: str):
     if not await locator.count():
@@ -754,7 +867,10 @@ async def _coletar_invalidos_novos(page, vistos: set) -> tuple[list[dict], int]:
                 f"que contenha status (.label.very-tiny) e motivo (span[data-cy='informacoes'].full)."
             )
 
-        cel_status = linha.locator(".label.very-tiny").first
+        cel_status = linha.locator(
+            "span.label.very-tiny.vermelho, span.label.very-tiny:has-text('Inválido'), span.label.very-tiny"
+        ).first
+
         if not await cel_status.count():
             raise RuntimeError(f"Status ausente na linha do cliente '{cliente_txt}' (.label.very-tiny).")
         status_txt = _norm(await cel_status.inner_text())
@@ -821,6 +937,325 @@ async def validar_antes_de_enviar(page) -> Optional[List[dict]]:
 
     return invalidos_total
 
+# === Abrir perfil do cliente inválido ===
+# === Abrir perfil do cliente inválido e verificar país ===
+async def abrir_perfil_cliente_invalido(page, cliente_id: str) -> None:
+    """
+    Duplica a aba atual, abre o perfil do cliente inválido e:
+      - Se País != Brasil: considera estrangeiro, fecha a aba e retorna.
+      - Se País == Brasil e CPF vazio: considera criança, ajusta Responsáveis e salva, fecha a aba e retorna.
+      - Se País == Brasil e CPF preenchido: fecha a aba e segue normalmente.
+    """
+    log(f"Abrindo perfil do cliente inválido: {cliente_id}")
+
+    # 1️⃣ Nova aba preservando filtros/URL da lista
+    new_page = await page.context.new_page()
+    await new_page.goto(page.url, wait_until="domcontentloaded")
+    await wait_loading_quiet(new_page, fast=True)
+
+    # 2️⃣ Buscar cliente pelo código no campo global
+    campo_busca = new_page.locator(
+        "input#evoAutocomplete[placeholder*='Pesquise por nome'], input.pesquisar-dropdown"
+    )
+    await campo_busca.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await campo_busca.fill("")
+    await campo_busca.type(str(cliente_id), delay=40)
+
+    resultado = new_page.locator("div.buscas").first
+    await resultado.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await resultado.click()
+    await wait_loading_quiet(new_page, fast=False)
+
+    # 3️⃣ Ir para "Cadastro"
+    aba_cadastro = new_page.locator("a[aria-label='Cadastro'], a[ui-sref*='dadosPessoais']").first
+    await aba_cadastro.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await aba_cadastro.click()
+    await wait_loading_quiet(new_page, fast=True)
+    await asyncio.sleep(0.5)
+
+    # 4️⃣ Ler valor do País — agora buscando especificamente um <span> com texto de país
+    try:
+        # Busca todos os <span> dentro de mat-select-value-text
+        spans_pais = new_page.locator("span.mat-select-value-text span")
+        qtd_spans = await spans_pais.count()
+        valor_pais = ""
+
+        for i in range(qtd_spans):
+            txt = (await spans_pais.nth(i).inner_text()).strip()
+            if re.search(r"brasil", _normalize_str(txt)):
+                valor_pais = txt
+                break
+        if not valor_pais and qtd_spans > 0:
+            # fallback: pega o último valor encontrado (geralmente País vem depois do DDI)
+            valor_pais = (await spans_pais.nth(qtd_spans - 1).inner_text()).strip()
+
+        if not valor_pais:
+            raise RuntimeError("Campo 'País' não encontrado entre spans.")
+
+    except Exception as e:
+        log(f"Falha ao localizar campo País: {e}")
+        valor_pais = ""
+
+    eh_brasil = "brasil" in _normalize_str(valor_pais)
+    log(f"Valor do campo País detectado: '{valor_pais}' → eh_brasil={eh_brasil}")
+
+    # 5️⃣ Ler valor do CPF
+    try:
+        campo_cpf = new_page.locator("input#cpf").first
+        valor_cpf = ""
+        if await campo_cpf.count():
+            await campo_cpf.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+            valor_cpf = (await campo_cpf.input_value()).strip()
+    except Exception as e:
+        log(f"Falha ao ler CPF: {e}")
+        valor_cpf = ""
+
+    log(f"Valor do CPF detectado: '{valor_cpf or '(vazio)'}'")
+
+    # 6️⃣ Decisões de validação
+    if not eh_brasil:
+        print("\n⚠️ Usuário estrangeiro detectado\n")
+        log("Usuário estrangeiro — fechando a aba e retornando ao fluxo.")
+        await new_page.close()
+        return
+
+    if eh_brasil and not valor_cpf:
+        print("\n👶 Usuário identificado como CRIANÇA (Brasil, sem CPF)\n")
+        log("Usuário brasileiro sem CPF — tratando como criança.")
+        await tratar_crianca_responsavel(new_page)
+        await new_page.close()
+        log("Aba do cliente (criança) fechada. Retomando o processo na aba principal.")
+        return
+
+    # Se chegou aqui: é brasileiro e tem CPF → seguir normalmente
+    log("Usuário brasileiro com CPF — nenhum tratamento adicional necessário.")
+    await new_page.close()
+    return
+
+
+
+async def _is_checked(checkbox) -> bool:
+    """
+    Retorna True se o mat-checkbox estiver marcado.
+    Checa por [class*='mat-checkbox-checked'] ou aria-checked='true'.
+    """
+    try:
+        root = checkbox.locator("xpath=ancestor::mat-checkbox[1]")
+        if await root.get_attribute("class") and "mat-checkbox-checked" in (await root.get_attribute("class")):
+            return True
+        aria = await root.get_attribute("aria-checked")
+        return (aria == "true")
+    except Exception:
+        return False
+
+async def _check_if_needed(checkbox, desc: str = "checkbox") -> None:
+    """
+    Marca o checkbox apenas se ainda estiver desmarcado.
+    Recebe o locator do ".mat-checkbox-inner-container".
+    """
+    if not await _is_checked(checkbox):
+        try:
+            await checkbox.click()
+            log(f"{desc}: marcado como True")
+        except Exception:
+            await checkbox.click(force=True)
+            log(f"{desc}: marcado como True (force)")
+    else:
+        log(f"{desc}: já estava True (mantido)")
+
+async def tratar_crianca_responsavel(page) -> None:
+    """
+    Fluxo para criança:
+      - Aba 'Responsáveis'
+      - Editar o 1º registro (ícone 'edit')
+      - Marcar 2 checkboxes como True
+      - Salvar
+    """
+    # 1) Ir para a aba Responsáveis
+    # (funciona tanto em AngularJS md-tabs quanto em Angular Material)
+    aba_resp = page.get_by_role("tab", name=re.compile(r"^\s*Respons[aá]veis\s*$", re.IGNORECASE)).first
+    if not await aba_resp.count():
+        aba_resp = page.locator("md-tab-item, .md-tab, [role='tab']").filter(
+            has_text=re.compile(r"Respons[aá]veis", re.IGNORECASE)
+        ).first
+    await aba_resp.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    await aba_resp.click()
+    await wait_loading_quiet(page, fast=True)
+    await asyncio.sleep(0.4)
+
+    # 2) Editar o primeiro registro (ícone 'edit')
+    botao_editar = page.locator("mat-icon", has_text=re.compile(r"^\s*edit\s*$", re.IGNORECASE)).first
+    # Caso o mat-icon esteja dentro de um botão:
+    if await botao_editar.count() == 0:
+        botao_editar = page.locator("button mat-icon", has_text=re.compile(r"^\s*edit\s*$", re.IGNORECASE)).first
+    await botao_editar.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    # clicar no container do botão se necessário
+    try:
+        await botao_editar.click()
+    except Exception:
+        await botao_editar.locator("xpath=ancestor::button[1]").click()
+    await wait_loading_quiet(page, fast=True)
+    await asyncio.sleep(0.3)
+
+    # 3) Marcar as duas checkboxes (as das imagens 3 e 4)
+    # Usamos os dois primeiros ".mat-checkbox-inner-container" do formulário de edição.
+    form_edit = page.locator("form, mat-dialog-container, .mat-dialog-content").first
+    cbs = form_edit.locator(".mat-checkbox-inner-container")
+    count = await cbs.count()
+    if count < 2:
+        # fallback para procurar globalmente no editor visível
+        cbs = page.locator(".mat-checkbox-inner-container")
+        count = await cbs.count()
+
+    if count == 0:
+        raise RuntimeError("Não encontrei checkboxes na edição do responsável.")
+
+    # Marca a 1ª e a 2ª checkbox como True (apenas se estiverem false)
+    await _check_if_needed(cbs.nth(0), "Checkbox #1 (responsável)")
+    if count > 1:
+        await _check_if_needed(cbs.nth(1), "Checkbox #2 (responsável)")
+
+    # 4) Salvar (botão da imagem 5)
+    # Preferimos por texto. Se não houver, clicamos no 'evo-button primary/success'.
+    salvar = page.get_by_role("button", name=re.compile(r"^\s*Salvar\s*$", re.IGNORECASE)).first
+    if not await salvar.count():
+        salvar = page.locator("button.evo-button.primary, button.evo-button.success, button.mat-button").filter(
+            has_text=re.compile(r"^\s*Salvar\s*$", re.IGNORECASE)
+        ).first
+    await salvar.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+    try:
+        await salvar.click()
+    except Exception:
+        await salvar.click(force=True)
+    await wait_loading_quiet(page, fast=True)
+    await asyncio.sleep(0.3)
+
+    log("Edição do responsável salva com sucesso (criança tratada).")
+
+
+
+async def coletar_registros_tabela(page, limite_por_pagina: int = 100):
+    """
+    Coleta todos os registros de todas as páginas da tabela.
+    Se encontrar cadastros inválidos (ex: CPF Inválido),
+    abre automaticamente o perfil de cada cliente inválido em sequência.
+    Após corrigir todos, atualiza a aba principal, refaz filtros e envia.
+    """
+    try:
+        todos_registros = []
+        pagina = 1
+
+        while True:
+            log(f"📄 Coletando página {pagina}…")
+            await page.evaluate("window.scrollTo(0, 0)")
+            await asyncio.sleep(1)
+
+            linhas = page.locator("mat-table mat-row, table tbody tr")
+            total = await linhas.count()
+            log(f"Total de linhas detectadas nesta página: {total}")
+
+            registros = []
+            for i in range(total):
+                linha = linhas.nth(i)
+                celulas = linha.locator("mat-cell, td")
+                qtd_celulas = await celulas.count()
+                if qtd_celulas == 0:
+                    continue
+
+                textos = []
+                for j in range(qtd_celulas):
+                    try:
+                        raw = (await celulas.nth(j).inner_text()).strip()
+                        clean = ' '.join(raw.split())
+                        textos.append(clean)
+                    except Exception:
+                        textos.append("")
+
+                registro = {
+                    "cliente": textos[1] if len(textos) > 1 else "",
+                    "cpf": textos[2] if len(textos) > 2 else "",
+                    "descricao": textos[3] if len(textos) > 3 else "",
+                    "recebimento": textos[4] if len(textos) > 4 else "",
+                    "lancamento": textos[5] if len(textos) > 5 else "",
+                    "vencimento": textos[6] if len(textos) > 6 else "",
+                    "valor": textos[7] if len(textos) > 7 else "",
+                    "valor_emissao": textos[8] if len(textos) > 8 else "",
+                    "cadastro": textos[9] if len(textos) > 9 else "",
+                    "detalhes": textos[10] if len(textos) > 10 else "",
+                }
+                registros.append(registro)
+
+            todos_registros.extend(registros)
+            log(f"✅ Página {pagina}: {len(registros)} registros coletados (total: {len(todos_registros)})")
+
+            # 🔎 Verifica todos os inválidos da página atual
+            invalidos = [
+                r for r in registros
+                if "invalido" in _normalize_str(r.get("cadastro", "")) or
+                   "invalido" in _normalize_str(r.get("detalhes", ""))
+            ]
+
+            if invalidos:
+                print("\n🚨 === CADASTROS INVÁLIDOS DETECTADOS === 🚨\n")
+                print(json.dumps(invalidos, ensure_ascii=False, indent=2))
+                print(f"\nTotal de inválidos nesta página: {len(invalidos)}\n")
+
+                # 👉 Processa todos os inválidos sequencialmente
+                for idx, cliente in enumerate(invalidos, 1):
+                    match = re.search(r"\b(\d{4,})\b", cliente.get("cliente", ""))
+                    if not match:
+                        log(f"⚠️ ({idx}/{len(invalidos)}) Não foi possível extrair ID de cliente: {cliente.get('cliente')}")
+                        continue
+
+                    cliente_id = match.group(1)
+                    log(f"[{idx}/{len(invalidos)}] Abrindo perfil do cliente inválido: {cliente_id}")
+                    await abrir_perfil_cliente_invalido(page, cliente_id)
+                    await asyncio.sleep(0.8)
+
+                log(f"✅ Todos os {len(invalidos)} clientes inválidos foram tratados. Recarregando a tela e aplicando filtros novamente…")
+
+                # 🔁 Atualiza e refaz os filtros
+                await page.reload(wait_until="domcontentloaded")
+                await wait_loading_quiet(page, fast=True)
+                await aplicar_data_ontem(page)
+                await exibir_por_data_lancamento(page)
+                await aplicar_filtro_tributacao(page)
+
+                # ✅ Todos válidos agora → enviar diretamente
+                if await has_select_all_checkbox(page):
+                    log("Todos os cadastros agora estão válidos — enviando notas fiscais.")
+                    await selecionar_todos_e_enviar(page)
+                    await selecionar_data_ontem_modal(page)
+                    await cancelar_modal_enviar_nf(page)
+                    log("Envio finalizado após correção dos cadastros inválidos.")
+                else:
+                    log("Nenhum registro encontrado após atualização.")
+
+                return todos_registros
+
+            # Continua paginação se houver mais páginas
+            btn_proximo = page.locator("button.mat-paginator-navigation-next:not([disabled])").first
+            if not await btn_proximo.count():
+                log("🚫 Botão 'Próximo' desabilitado — última página alcançada.")
+                break
+
+            await btn_proximo.click()
+            await wait_loading_quiet(page, fast=True)
+            pagina += 1
+            await asyncio.sleep(1.2)
+
+        print("\n✅ Nenhum cadastro inválido encontrado!\n")
+        return todos_registros
+
+    except Exception as e:
+        log(f"Erro ao coletar registros da tabela: {e}")
+        return []
+
+
+
+
+
+
 # === Pipeline por unidade
 async def processar_unidade(page, nome_log: str, search_terms: List[str], regex: Pattern) -> None:
     log(f"---- Iniciando unidade: {nome_log} ----")
@@ -829,22 +1264,43 @@ async def processar_unidade(page, nome_log: str, search_terms: List[str], regex:
     await aplicar_data_ontem(page)
     await exibir_por_data_lancamento(page)
     await aplicar_filtro_tributacao(page)
+    await definir_itens_por_pagina(page, 100)
+    await coletar_registros_tabela(page)
+
 
     # >>> Validação estrita (sem paginação). Aborta se houver inválidos.
+    # >>> Validação estrita (sem paginação). Se houver inválidos, abre o primeiro.
     invalidos = await validar_antes_de_enviar(page)
-    if invalidos and len(invalidos) > 0:
-        log(f"Unidade {nome_log}: inválidos detectados. Abortando seleção/envio.")
-        return
+    tem_invalidos = invalidos and len(invalidos) > 0
+
+    if tem_invalidos:
+        log(f"Unidade {nome_log}: inválidos detectados. Abrindo primeiro cliente inválido para análise...")
+        primeiro = invalidos[0]
+        match = re.search(r"\b(\d{4,})\b", primeiro["cliente"])
+        if match:
+            cliente_id = match.group(1)
+            await abrir_perfil_cliente_invalido(page, cliente_id)
+        else:
+            log("⚠️ Não foi possível extrair o número do cliente inválido.")
+    else:
+        log(f"Unidade {nome_log}: nenhum inválido detectado (todos válidos).")
+
+
+      
 
     # Fluxo normal, somente se todos válidos
+    # Envia cadastros válidos (sempre roda — com ou sem inválidos)
     if await has_select_all_checkbox(page):
-        log("Checkbox 'Selecionar todos' presente — seguindo fluxo normal")
+        log("Checkbox 'Selecionar todos' presente — iniciando envio de notas fiscais")
+
         await selecionar_todos_e_enviar(page)
-        await digitar_data_util_anterior_no_input(page)
+        await selecionar_data_ontem_modal(page)
         await cancelar_modal_enviar_nf(page)
-        log(f"Unidade {nome_log}: fluxo concluído")
+
+        log(f"Unidade {nome_log}: processo de envio finalizado com sucesso.")
     else:
         log(f"Unidade {nome_log}: sem checkbox 'Selecionar todos' (sem registros). Pulando para a próxima.")
+
 
 # =========================
 # Execução por tenant
@@ -870,18 +1326,36 @@ async def run_for_tenant(page, tenant: str, base_login_url: str, user: str, pwd:
              ["Shopping Rio Poty", "Shop. Rio Poty", "rio poty", "BT TERES"],
              SHOPPING_RIO_POTY_REGEX),
         ]
-        for nome, termos, rx in unidades_bt:
+        # for nome, termos, rx in unidades_bt:
+        #     try:
+        #         await processar_unidade(page, nome, termos, rx)
+        #     except Exception as e:
+        #         ts = int(datetime.now().timestamp())
+        #         nome_sanitizado = re.sub(r'\W+', '_', nome)
+        #         img = SCREENSHOT_DIR / f"screenshot_erro_{nome_sanitizado}_{ts}.png"
+        #         try:
+        #             await page.screenshot(path=str(img), full_page=True)
+        #             log(f"Erro no fluxo ({nome}). Screenshot: {img}")
+        #         except Exception as se:
+        #             log(f"Falha ao salvar screenshot ({nome}): {se}")
+        #         continue
+
+        ## ORDEM DOS SHOPPINGS
+
+        for nome, termos, rx in unidades_bt[2:]:
             try:
                 await processar_unidade(page, nome, termos, rx)
             except Exception as e:
                 ts = int(datetime.now().timestamp())
-                img = SCREENSHOT_DIR / f"screenshot_erro_{re.sub(r'\\W+', '_', nome)}_{ts}.png"
+                nome_sanitizado = re.sub(r'\W+', '_', nome)
+                img = SCREENSHOT_DIR / f"screenshot_erro_{nome_sanitizado}_{ts}.png"
                 try:
                     await page.screenshot(path=str(img), full_page=True)
                     log(f"Erro no fluxo ({nome}). Screenshot: {img}")
                 except Exception as se:
                     log(f"Falha ao salvar screenshot ({nome}): {se}")
                 continue
+
         return
 
     elif tenant == "formula":
@@ -912,6 +1386,24 @@ async def run_for_tenant(page, tenant: str, base_login_url: str, user: str, pwd:
         log(f"Tenant '{tenant}' sem sequência definida. Nada a executar.")
         return
 
+async def definir_itens_por_pagina(page, qtd: int = 100) -> None:
+    try:
+        log(f"Ajustando 'Itens por página' para {qtd}")
+        paginator = page.locator("mat-paginator").first
+        await paginator.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+
+        seletor = paginator.locator("mat-select").first
+        await seletor.click()
+
+        opcao = page.get_by_role("option", name=re.compile(fr"^\s*{qtd}\s*$")).first
+        await opcao.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+        await opcao.click()
+
+        await wait_loading_quiet(page, fast=True)
+        log(f"Itens por página ajustado para {qtd}")
+    except Exception as e:
+        log(f"Falha ao ajustar itens por página: {e}")
+
 # =========================
 # Runner principal (contexto novo por tenant + pausa/fechar após bodytech)
 # =========================
@@ -928,16 +1420,11 @@ async def _run() -> None:
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=HEADLESS, args=["--start-maximized"])
-
         try:
             for idx, url in enumerate(urls, 1):
                 tenant = _extract_tenant_from_url(url)
                 log(f"=== ({idx}/{len(urls)}) Tenant '{tenant}' ===")
-
-                # Contexto novo por tenant
-                context = await browser.new_context(viewport={"width": 1366, "height": 768})
-
-                # ---- add_init_script sem f-string / chaves escapadas ----
+                context = await browser.new_context(no_viewport=True)
                 tenant_js = tenant
                 await context.add_init_script(
                     """
@@ -947,7 +1434,6 @@ async def _run() -> None:
     localStorage.setItem('dominio', tenant);
     sessionStorage.setItem('tenant', tenant);
     sessionStorage.setItem('dominio', tenant);
-
     const forceTenant = () => {
       try {
         const h = location.hash || '';
@@ -961,7 +1447,6 @@ async def _run() -> None:
         }
       } catch (_e) {}
     };
-
     forceTenant();
     const _ps = history.pushState;
     const _rs = history.replaceState;
@@ -980,13 +1465,10 @@ async def _run() -> None:
 })(__TENANT__);
 """.replace("__TENANT__", json.dumps(tenant_js))
                 )
-
                 page = await context.new_page()
-
+                await page.set_viewport_size({"width": 1920, "height": 1080})
                 try:
                     await run_for_tenant(page, tenant, url, user, pwd)
-
-                    # Se acabamos de rodar bodytech (último é Rio Poty), esperar 5s e fechar a página
                     if tenant == "bodytech":
                         log("Finalizado fluxo do tenant 'bodytech'. Aguardando 5s antes de abrir a próxima URL…")
                         await asyncio.sleep(5)
@@ -994,7 +1476,6 @@ async def _run() -> None:
                             await page.close()
                         except Exception:
                             pass
-
                 except Exception:
                     ts = int(datetime.now().timestamp())
                     img = SCREENSHOT_DIR / f"screenshot_erro_tenant_{tenant}_{ts}.png"
@@ -1009,15 +1490,15 @@ async def _run() -> None:
                         await context.close()
                     except Exception:
                         pass
-
             log("Pausa final de 5 segundos para inspeção")
             await asyncio.sleep(5)
-
         finally:
             try:
                 await browser.close()
             except Exception:
                 pass
+
+
 
 # Mantém a assinatura esperada pelo seu app.py
 def run_rpa_enter_google_folder(extract_dir: str, target_folder: str, base_dir: str) -> None:
